@@ -25,13 +25,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -95,7 +89,7 @@ public class RoomTypeServiceImpl implements RoomTypeService {
     }
 
     // check if a room is sold out or not
-    public boolean isRoomSoldOut(RoomType roomType, List<UserBooking> listBookingInThisRoom, Date dateIn, Date dateOut){
+    public int numberOfRoomLeft(RoomType roomType, List<UserBooking> listBookingInThisRoom, Date dateIn, Date dateOut){
         // get total quantity room available
         int numberOfRoomsTotal = roomType.getQuantity();
         // check if some user cancel booking in this day, plus total quantity 1
@@ -118,11 +112,19 @@ public class RoomTypeServiceImpl implements RoomTypeService {
                     || dateIn.equals(userBookingCheckIn) && dateOut.equals(userBookingCheckOut)
                     || dateIn.equals(userBookingCheckIn) && dateOut.before(userBookingCheckOut)
                     || dateIn.after(userBookingCheckIn) && dateOut.equals(userBookingCheckOut)) {
-                // minus 1 with number of room booked
-                numberOfRoomsTotal = numberOfRoomsTotal - 1;
+                // minus number of room total with number of room booked
+                // get list user booking detail
+                Set<UserBookingDetail> setBookingDetail = userBooking.getListUserBookingDetail();
+                // get room type equal w/ room type user want to book
+                UserBookingDetail userBookingDetail = setBookingDetail
+                        .stream()
+                        .filter(item -> item.getRoomType().equals(roomType))
+                        .findFirst()
+                        .orElse(new UserBookingDetail());
+                numberOfRoomsTotal = numberOfRoomsTotal - userBookingDetail.getQuantity();
             }
         }
-        return numberOfRoomsTotal <= 0;
+        return numberOfRoomsTotal;
     }
 
     @Override
@@ -157,9 +159,13 @@ public class RoomTypeServiceImpl implements RoomTypeService {
         // for loop through map and set available room = 0 for these rooms that sold out
         for(var entry : mapRoomAndBooking.entrySet()){
             // check if a room is sold out or not
-            if(isRoomSoldOut(entry.getKey(), entry.getValue(), dateIn, dateOut)){
-                // set available room
+            int numberRoomLeft = numberOfRoomLeft(entry.getKey(), entry.getValue(), dateIn, dateOut);
+            if(numberRoomLeft <= 0){
+                // set available room = 0
                 entry.getKey().setAvailableRooms(0);
+            }else {
+                // set available room left
+                entry.getKey().setAvailableRooms(numberRoomLeft);
             }
         }
 
