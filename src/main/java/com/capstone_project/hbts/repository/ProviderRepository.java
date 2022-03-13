@@ -16,17 +16,17 @@ public interface ProviderRepository extends JpaRepository<Provider, Integer> {
 
     Provider getProviderByEmail(String email);
 
-    @Query(value = "select username from capstone.provider where username = :username",
+    @Query(value = "select username from heroku_4fe5c149618a3f9.provider where username = :username",
             nativeQuery = true)
     String getUsername(@Param("username") String username);
 
-    @Query(value = "select email from capstone.provider where email = :email",
+    @Query(value = "select email from heroku_4fe5c149618a3f9.provider where email = :email",
             nativeQuery = true)
     String getEmail(@Param("email") String email);
 
     @Modifying
-    @Query(value = "UPDATE capstone.provider SET provider_name = :providerName, phone = :phone, " +
-            "address = :address WHERE capstone.provider.id = :id",
+    @Query(value = "UPDATE heroku_4fe5c149618a3f9.provider SET provider_name = :providerName, phone = :phone, " +
+            "address = :address WHERE heroku_4fe5c149618a3f9.provider.id = :id",
             nativeQuery = true)
     void updateProviderProfile(
             @Param("providerName") String providerName,
@@ -35,21 +35,21 @@ public interface ProviderRepository extends JpaRepository<Provider, Integer> {
             @Param("id") Integer id);
 
     @Modifying
-    @Query(value = "UPDATE capstone.provider SET password = :newPass WHERE capstone.provider.username = :username",
+    @Query(value = "UPDATE heroku_4fe5c149618a3f9.provider SET password = :newPass WHERE heroku_4fe5c149618a3f9.provider.username = :username",
             nativeQuery = true)
     void changePass(
             @Param("username") String username,
             @Param("newPass") String newPass);
 
-    @Query(value = "SELECT password from capstone.provider WHERE capstone.provider.username = :username",
+    @Query(value = "SELECT password from heroku_4fe5c149618a3f9.provider WHERE heroku_4fe5c149618a3f9.provider.username = :username",
             nativeQuery = true)
     String getOldPassword(@Param("username") String username);
 
-    @Query(value = "SELECT * from capstone.provider", nativeQuery = true)
+    @Query(value = "SELECT * from heroku_4fe5c149618a3f9.provider", nativeQuery = true)
     Page<Provider> findAllProvider(Pageable pageable);
 
     @Modifying
-    @Query(value = "UPDATE capstone.provider set status = 0 WHERE id = :providerId",
+    @Query(value = "UPDATE heroku_4fe5c149618a3f9.provider set status = 0 WHERE id = :providerId",
             nativeQuery = true)
     void banProviderById(@Param("providerId") int providerId);
 

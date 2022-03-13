@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BenefitTypeRepository extends JpaRepository<BenefitType, Integer> {
 
-    @Query(value = "select * from capstone.benefit_type where id = :id limit 1", nativeQuery = true)
+    @Query(value = "select * from heroku_4fe5c149618a3f9.benefit_type where id = :id limit 1", nativeQuery = true)
     BenefitType getBenefitTypeById(@Param("id") int id);
 
 }

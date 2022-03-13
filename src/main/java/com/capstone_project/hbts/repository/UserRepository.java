@@ -19,19 +19,19 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
     Users getUsersByEmail(String email);
 
     @Modifying
-    @Query(value = "UPDATE capstone.users SET password = :newPass WHERE capstone.users.username = :username",
+    @Query(value = "UPDATE heroku_4fe5c149618a3f9.users SET password = :newPass WHERE heroku_4fe5c149618a3f9.users.username = :username",
             nativeQuery = true)
     void changePass(
             @Param("username") String username,
             @Param("newPass") String newPass);
 
-    @Query(value = "SELECT password from capstone.users WHERE capstone.users.username = :username",
+    @Query(value = "SELECT password from heroku_4fe5c149618a3f9.users WHERE heroku_4fe5c149618a3f9.users.username = :username",
             nativeQuery = true)
     String getOldPassword(@Param("username") String username);
 
     @Modifying
-    @Query(value = "UPDATE capstone.users SET firstname = :firstName, lastname = :lastName, phone = :phone, " +
-            "address = :address, avatar = :avatar, spend = :spend WHERE capstone.users.id = :id",
+    @Query(value = "UPDATE heroku_4fe5c149618a3f9.users SET firstname = :firstName, lastname = :lastName, phone = :phone, " +
+            "address = :address, avatar = :avatar, spend = :spend WHERE heroku_4fe5c149618a3f9.users.id = :id",
             nativeQuery = true)
     void updateUserProfile(
             @Param("firstName") String firstName,
@@ -42,45 +42,45 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
             @Param("spend") BigDecimal spend,
             @Param("id") Integer id);
 
-    @Query(value = "select username from capstone.users where username = :username",
+    @Query(value = "select username from heroku_4fe5c149618a3f9.users where username = :username",
             nativeQuery = true)
     String getUsername(@Param("username") String username);
 
-    @Query(value = "select email from capstone.users where email = :email",
+    @Query(value = "select email from heroku_4fe5c149618a3f9.users where email = :email",
             nativeQuery = true)
     String getEmail(@Param("email") String email);
 
     @Modifying
-    @Query(value = "UPDATE capstone.users SET id_vip = :idVip WHERE capstone.users.id = :userId",
+    @Query(value = "UPDATE heroku_4fe5c149618a3f9.users SET id_vip = :idVip WHERE heroku_4fe5c149618a3f9.users.id = :userId",
             nativeQuery = true)
     void updateVipStatus(
             @Param("idVip") int idVip,
             @Param("userId") int userId);
 
     @Modifying
-    @Query(value = "UPDATE capstone.users SET password = :newPass WHERE capstone.users.email = :email",
+    @Query(value = "UPDATE heroku_4fe5c149618a3f9.users SET password = :newPass WHERE heroku_4fe5c149618a3f9.users.email = :email",
             nativeQuery = true)
     void changeForgotPassword(
             @Param("email") String email,
             @Param("newPass") String newPass);
 
-    @Query(value = "SELECT * from capstone.users", nativeQuery = true)
+    @Query(value = "SELECT * from heroku_4fe5c149618a3f9.users", nativeQuery = true)
     Page<Users> findAllUser(Pageable pageable);
 
-    @Query(value = "SELECT * from capstone.users WHERE type = 1", nativeQuery = true)
+    @Query(value = "SELECT * from heroku_4fe5c149618a3f9.users WHERE type = 1", nativeQuery = true)
     List<Users> findAllManager();
 
     @Modifying
-    @Query(value = "UPDATE capstone.users SET type = 0 WHERE capstone.users.id = :userId",
+    @Query(value = "UPDATE heroku_4fe5c149618a3f9.users SET type = 0 WHERE heroku_4fe5c149618a3f9.users.id = :userId",
             nativeQuery = true)
     void deleteManager(@Param("userId") int userId);
 
-    @Query(value = "select id from capstone.users where username = :username limit 1",
+    @Query(value = "select id from heroku_4fe5c149618a3f9.users where username = :username limit 1",
             nativeQuery = true)
     int getUserId(@Param("username") String username);
 
     @Modifying
-    @Query(value = "UPDATE capstone.users SET status = 0 WHERE capstone.users.id = :userId",
+    @Query(value = "UPDATE heroku_4fe5c149618a3f9.users SET status = 0 WHERE heroku_4fe5c149618a3f9.users.id = :userId",
             nativeQuery = true)
     void deleteAccount(@Param("userId") int userId);
 

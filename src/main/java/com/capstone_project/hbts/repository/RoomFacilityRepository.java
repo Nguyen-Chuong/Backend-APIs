@@ -13,7 +13,7 @@ public interface RoomFacilityRepository extends JpaRepository<RoomFacility, Inte
 
     List<RoomFacility> getAllByRoomTypeId(int roomTypeId);
 
-    @Query(value = "SELECT facility_id from capstone.room_facility WHERE room_type_id = :roomTypeId",
+    @Query(value = "SELECT facility_id from heroku_4fe5c149618a3f9.room_facility WHERE room_type_id = :roomTypeId",
             nativeQuery = true)
     List<Integer> getListFacilityIds(@Param("roomTypeId") int roomTypeId);
 

@@ -15,13 +15,13 @@ import java.util.ArrayList;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
 
-    @Query(value = "select * from capstone.review where user_booking_id in :userBookingIds", nativeQuery = true)
+    @Query(value = "select * from heroku_4fe5c149618a3f9.review where user_booking_id in :userBookingIds", nativeQuery = true)
     Page<Review> loadReviewByBookingId(
             @Param("userBookingIds") ArrayList<Integer> userBookingIds,
             Pageable pageable);
 
     @Modifying
-    @Query(value = "insert into capstone.review(cleanliness, facilities, location, " +
+    @Query(value = "insert into heroku_4fe5c149618a3f9.review(cleanliness, facilities, location, " +
             "service, value_money, review_title, review_detail, user_booking_id, review_date) " +
             "values (:cleanliness, :facilities, :location, :service, :valueMoney, " +
             ":reviewTitle, :reviewDetail, :userBookingId, :reviewDate);",

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 public interface RoleRepository extends JpaRepository<Role, Integer> {
 
     @Modifying
-    @Query(value = "UPDATE capstone.role SET role_name = 'ROLE_USER' WHERE user_id = :userId",
+    @Query(value = "UPDATE heroku_4fe5c149618a3f9.role SET role_name = 'ROLE_USER' WHERE user_id = :userId",
             nativeQuery = true)
     void deleteManagerRole(@Param("userId") int userId);
 

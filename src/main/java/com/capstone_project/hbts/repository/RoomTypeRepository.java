@@ -13,14 +13,14 @@ import java.util.List;
 @Repository
 public interface RoomTypeRepository extends JpaRepository<RoomType, Integer> {
 
-    @Query(value = "SELECT * FROM capstone.room_type where hotel_id = :hotelId and status = 1", nativeQuery = true)
+    @Query(value = "SELECT * FROM heroku_4fe5c149618a3f9.room_type where hotel_id = :hotelId and status = 1", nativeQuery = true)
     List<RoomType> findRoomTypeByHotelId(@Param("hotelId") int hotelId);
 
-    @Query(value = "SELECT * FROM capstone.room_type where id = :id limit 1", nativeQuery = true)
+    @Query(value = "SELECT * FROM heroku_4fe5c149618a3f9.room_type where id = :id limit 1", nativeQuery = true)
     RoomType getRoomTypeById(@Param("id") int id);
 
     @Modifying
-    @Query(value = "insert into capstone.room_type(available_rooms, deal_expire, deal_percentage, " +
+    @Query(value = "insert into heroku_4fe5c149618a3f9.room_type(available_rooms, deal_expire, deal_percentage, " +
             "name, number_of_people, price, quantity, hotel_id) " +
             "values (:availableRooms, :dealExpire, :dealPercentage, :name, :numberOfPeople, " +
             ":price, :quantity, :hotelId);",
@@ -35,17 +35,17 @@ public interface RoomTypeRepository extends JpaRepository<RoomType, Integer> {
             @Param("quantity") int quantity,
             @Param("hotelId") int hotelId);
 
-    @Query(value = "select last_insert_id(id) from capstone.room_type order by last_insert_id(id) desc limit 1;",
+    @Query(value = "select last_insert_id(id) from heroku_4fe5c149618a3f9.room_type order by last_insert_id(id) desc limit 1;",
             nativeQuery = true)
     Integer getRoomTypeIdJustInsert();
 
     @Modifying
-    @Query(value = "UPDATE capstone.room_type set status = 0 WHERE id = :roomTypeId",
+    @Query(value = "UPDATE heroku_4fe5c149618a3f9.room_type set status = 0 WHERE id = :roomTypeId",
             nativeQuery = true)
     void disableRoomTypeById(@Param("roomTypeId") int roomTypeId);
 
     @Modifying
-    @Query(value = "UPDATE capstone.room_type set status = 1 WHERE id = :roomTypeId",
+    @Query(value = "UPDATE heroku_4fe5c149618a3f9.room_type set status = 1 WHERE id = :roomTypeId",
             nativeQuery = true)
     void enableRoomTypeById(@Param("roomTypeId") int roomTypeId);
 
@@ -56,7 +56,7 @@ public interface RoomTypeRepository extends JpaRepository<RoomType, Integer> {
             "starts current_timestamp \n" +
             "ends current_timestamp + interval 3 month\n" +
             "do\n" +
-            "UPDATE capstone.room_type SET deal_percentage = 0 WHERE deal_expire < now();",
+            "UPDATE heroku_4fe5c149618a3f9.room_type SET deal_percentage = 0 WHERE deal_expire < now();",
             nativeQuery = true)
     void createSQLEventUpdateDealViaDateExpired();
 

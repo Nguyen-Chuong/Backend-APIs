@@ -13,10 +13,10 @@ import java.util.List;
 public interface BookingDetailRepository extends JpaRepository<UserBookingDetail, Integer> {
 
     // select when user click to view detail of a booking
-    @Query(value = "SELECT * from capstone.user_booking_detail WHERE booking_id = :bookingId", nativeQuery = true)
+    @Query(value = "SELECT * from heroku_4fe5c149618a3f9.user_booking_detail WHERE booking_id = :bookingId", nativeQuery = true)
     List<UserBookingDetail> getAllByBookingId(@Param("bookingId") int bookingId);
 
-    @Query(value = "SELECT * from capstone.user_booking_detail WHERE room_type_id in :listRoomIds", nativeQuery = true)
+    @Query(value = "SELECT * from heroku_4fe5c149618a3f9.user_booking_detail WHERE room_type_id in :listRoomIds", nativeQuery = true)
     List<UserBookingDetail> getAllByRoomTypeId(@Param("listRoomIds") ArrayList<Integer> listRoomIds);
 
 }

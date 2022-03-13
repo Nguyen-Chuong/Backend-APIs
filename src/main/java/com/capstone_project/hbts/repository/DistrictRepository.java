@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface DistrictRepository extends JpaRepository<District, Integer> {
 
-    @Query(value = "SELECT * from capstone.district WHERE name_district like lower(concat('%',:text,'%')) ",
+    @Query(value = "SELECT * from heroku_4fe5c149618a3f9.district WHERE name_district like lower(concat('%',:text,'%')) ",
             nativeQuery = true)
     List<District> searchDistrict(@Param("text") String text);
 

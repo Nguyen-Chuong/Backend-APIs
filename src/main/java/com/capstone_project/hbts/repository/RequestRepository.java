@@ -16,7 +16,7 @@ import java.util.List;
 public interface RequestRepository extends JpaRepository<Request, Integer> {
 
     @Modifying
-    @Query(value = "insert into capstone.request(request_date, status, hotel_id, provider_id) " +
+    @Query(value = "insert into heroku_4fe5c149618a3f9.request(request_date, status, hotel_id, provider_id) " +
             "values (:requestDate, :status, :hotelId, :providerId)",
             nativeQuery = true)
     void addNewRequest(
@@ -26,37 +26,37 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
             @Param("providerId") int providerId);
 
     @Modifying
-    @Query(value = "UPDATE capstone.request set status = 2 where id = :requestId",
+    @Query(value = "UPDATE heroku_4fe5c149618a3f9.request set status = 2 where id = :requestId",
             nativeQuery = true)
     void acceptRequest(@Param("requestId") int requestId);
 
-    @Query(value = "select * from capstone.request where id = :requestId limit 1",
+    @Query(value = "select * from heroku_4fe5c149618a3f9.request where id = :requestId limit 1",
             nativeQuery = true)
     Request getRequestById(@Param("requestId") int requestId);
 
     @Modifying
-    @Query(value = "UPDATE capstone.request set status = 3 where id = :requestId",
+    @Query(value = "UPDATE heroku_4fe5c149618a3f9.request set status = 3 where id = :requestId",
             nativeQuery = true)
     void denyRequest(@Param("requestId") int requestId);
 
-    @Query(value = "select * from capstone.request where status = :status ORDER BY request_date DESC",
+    @Query(value = "select * from heroku_4fe5c149618a3f9.request where status = :status ORDER BY request_date DESC",
             nativeQuery = true)
     Page<Request> getAllRequestByStatus(@Param("status") int status, Pageable pageable);
 
     Page<Request> findAllByOrderByRequestDateDesc(Pageable pageable);
 
-    @Query(value = "select status from capstone.request where hotel_id = :hotelId",
+    @Query(value = "select status from heroku_4fe5c149618a3f9.request where hotel_id = :hotelId",
             nativeQuery = true)
     List<Integer> getRequestStatusByHotelId(@Param("hotelId") int hotelId);
 
     List<Request> getAllByProviderIdOrderByRequestDateDesc(int providerId);
 
-    @Query(value = "SELECT status FROM capstone.request WHERE id = :requestId",
+    @Query(value = "SELECT status FROM heroku_4fe5c149618a3f9.request WHERE id = :requestId",
             nativeQuery = true)
     Integer viewRequestStatus(@Param("requestId") int requestId);
 
     @Modifying
-    @Query(value = "UPDATE capstone.request set status = 4 where id = :requestId",
+    @Query(value = "UPDATE heroku_4fe5c149618a3f9.request set status = 4 where id = :requestId",
             nativeQuery = true)
     void cancelRequest(@Param("requestId") int requestId);
 

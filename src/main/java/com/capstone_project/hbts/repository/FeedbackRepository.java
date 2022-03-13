@@ -16,7 +16,7 @@ import java.util.List;
 public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
 
     @Modifying
-    @Query(value = "insert into capstone.feedback(type, sender_id, message, modify_date, is_completed) " +
+    @Query(value = "insert into heroku_4fe5c149618a3f9.feedback(type, sender_id, message, modify_date, is_completed) " +
             "values (:type, :senderId, :message, :modifyDate, :isCompleted);",
             nativeQuery = true)
     void sendFeedback(
@@ -28,16 +28,16 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
 
     Page<Feedback> findAllByOrderByModifyDateDesc(Pageable pageable);
 
-    @Query(value = "SELECT * from capstone.feedback WHERE sender_id = :userId",
+    @Query(value = "SELECT * from heroku_4fe5c149618a3f9.feedback WHERE sender_id = :userId",
             nativeQuery = true)
     List<Feedback> getUserFeedback(@Param("userId") int userId);
 
-    @Query(value = "SELECT * from capstone.feedback WHERE id = :feedbackId limit 1",
+    @Query(value = "SELECT * from heroku_4fe5c149618a3f9.feedback WHERE id = :feedbackId limit 1",
             nativeQuery = true)
     Feedback getFeedbackById(@Param("feedbackId") int feedbackId);
 
     @Modifying
-    @Query(value = "UPDATE capstone.feedback set receiver_id = :adminId, is_completed = 1 WHERE id = :feedbackId",
+    @Query(value = "UPDATE heroku_4fe5c149618a3f9.feedback set receiver_id = :adminId, is_completed = 1 WHERE id = :feedbackId",
             nativeQuery = true)
     void updateFeedbackReceiver(@Param("feedbackId") int feedbackId,
                                 @Param("adminId") int adminId);

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface JwtRepository extends JpaRepository<Jwt, Integer> {
 
-    @Query(value = "select * from capstone.jwt where id = :id limit 1", nativeQuery = true)
+    @Query(value = "select * from heroku_4fe5c149618a3f9.jwt where id = :id limit 1", nativeQuery = true)
     Jwt getJwtById(@Param("id") int id);
 
 }
