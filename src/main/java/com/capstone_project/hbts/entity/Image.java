@@ -25,7 +25,6 @@ import javax.validation.constraints.NotNull;
 public class Image {
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
