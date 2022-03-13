@@ -1,6 +1,7 @@
 package com.capstone_project.hbts.service;
 
 
+import com.capstone_project.hbts.dto.ImageDTO;
 import com.capstone_project.hbts.request.ImageRequest;
 
 public interface ImageService {
@@ -16,5 +17,11 @@ public interface ImageService {
      * @param roomTypeId
      */
     Integer getTotalNumberRoomTypeImage(int roomTypeId);
+
+    /**
+     * Update an image in list room type image
+     * @param imageDTO
+     */
+    void updateImage(ImageDTO imageDTO);
 
 }

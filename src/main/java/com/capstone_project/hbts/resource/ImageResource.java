@@ -1,12 +1,14 @@
 package com.capstone_project.hbts.resource;
 
 import com.capstone_project.hbts.constants.ErrorConstant;
+import com.capstone_project.hbts.dto.ImageDTO;
 import com.capstone_project.hbts.request.ImageRequest;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.service.ImageService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +42,28 @@ public class ImageResource {
         }
         try {
             imageService.addListImageToRoomType(imageRequest);
+            return ResponseEntity.ok()
+                    .body(new ApiResponse<>(200, null,
+                            null, null));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(400, null,
+                            ErrorConstant.ERR_000, ErrorConstant.ERR_000_LABEL));
+        }
+    }
+
+    /**
+     * @param imageDTO
+     * @apiNote for provider can update an image
+     * return
+     */
+    @PatchMapping("/update-image")
+    public ResponseEntity<?> updateImage(@RequestBody ImageDTO imageDTO) {
+        log.info("REST request to update an image for provider");
+
+        try {
+            imageService.updateImage(imageDTO);
             return ResponseEntity.ok()
                     .body(new ApiResponse<>(200, null,
                             null, null));

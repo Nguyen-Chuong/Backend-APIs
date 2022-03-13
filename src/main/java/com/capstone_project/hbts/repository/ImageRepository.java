@@ -13,4 +13,8 @@ public interface ImageRepository extends JpaRepository<Image, Integer> {
             nativeQuery = true)
     Integer getTotalNumberOfRoomImage(@Param("roomTypeId") int roomTypeId);
 
+    @Query(value = "SELECT * FROM heroku_4fe5c149618a3f9.image WHERE id = :id limit 1",
+            nativeQuery = true)
+    Image getImageById(@Param("id") int id);
+
 }

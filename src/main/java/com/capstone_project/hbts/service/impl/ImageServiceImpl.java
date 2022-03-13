@@ -1,5 +1,6 @@
 package com.capstone_project.hbts.service.impl;
 
+import com.capstone_project.hbts.dto.ImageDTO;
 import com.capstone_project.hbts.entity.Image;
 import com.capstone_project.hbts.entity.RoomType;
 import com.capstone_project.hbts.repository.ImageRepository;
@@ -47,6 +48,15 @@ public class ImageServiceImpl implements ImageService {
     public Integer getTotalNumberRoomTypeImage(int roomTypeId) {
         log.info("Request to get total number image of a room type");
         return imageRepository.getTotalNumberOfRoomImage(roomTypeId);
+    }
+
+    @Override
+    public void updateImage(ImageDTO imageDTO) {
+        log.info("Request to update an image of a room type");
+        Image image = imageRepository.getImageById(imageDTO.getId());
+        // set new url
+        image.setSrc(imageDTO.getSrc());
+        imageRepository.save(image);
     }
 
 }
