@@ -98,6 +98,13 @@ public class RoomTypeServiceImpl implements RoomTypeService {
     public boolean isRoomSoldOut(RoomType roomType, List<UserBooking> listBookingInThisRoom, Date dateIn, Date dateOut){
         // get total quantity room available
         int numberOfRoomsTotal = roomType.getQuantity();
+        // check if some user cancel booking in this day, plus total quantity 1
+        for(UserBooking userBooking : listBookingInThisRoom){
+            // cancelled
+            if(userBooking.getStatus() == 3){
+                numberOfRoomsTotal = numberOfRoomsTotal + 1;
+            }
+        }
         for(UserBooking userBooking : listBookingInThisRoom){
             // get date user booking checkin
             Date userBookingCheckIn = new Date(userBooking.getCheckIn().getTime());
