@@ -43,4 +43,10 @@ public class ImageServiceImpl implements ImageService {
         imageRepository.saveAll(listImage);
     }
 
+    @Override
+    public Integer getTotalNumberRoomTypeImage(int roomTypeId) {
+        log.info("Request to get total number image of a room type");
+        return imageRepository.getTotalNumberOfRoomImage(roomTypeId);
+    }
+
 }

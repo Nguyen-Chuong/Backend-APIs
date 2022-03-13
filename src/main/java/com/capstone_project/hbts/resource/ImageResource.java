@@ -1,7 +1,6 @@
 package com.capstone_project.hbts.resource;
 
 import com.capstone_project.hbts.constants.ErrorConstant;
-import com.capstone_project.hbts.decryption.DataDecryption;
 import com.capstone_project.hbts.request.ImageRequest;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.service.ImageService;
@@ -21,11 +20,8 @@ public class ImageResource {
 
     private final ImageService imageService;
 
-    private final DataDecryption dataDecryption;
-
-    public ImageResource(ImageService imageService, DataDecryption dataDecryption) {
+    public ImageResource(ImageService imageService) {
         this.imageService = imageService;
-        this.dataDecryption = dataDecryption;
     }
 
     /**
@@ -36,7 +32,12 @@ public class ImageResource {
     @PostMapping("/add-list-image")
     public ResponseEntity<?> addListImageForRoomType(@RequestBody ImageRequest imageRequest) {
         log.info("REST request to add a list image to provider's room type");
-
+        int totalImageInDb = imageService.getTotalNumberRoomTypeImage(imageRequest.getRoomTypeId());
+        if(totalImageInDb >= 10 || totalImageInDb + imageRequest.getSourceUrl().size() > 10){
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(400, null,
+                            ErrorConstant.ERR_ITEM_003, ErrorConstant.ERR_ITEM_003_LABEL));
+        }
         try {
             imageService.addListImageToRoomType(imageRequest);
             return ResponseEntity.ok()

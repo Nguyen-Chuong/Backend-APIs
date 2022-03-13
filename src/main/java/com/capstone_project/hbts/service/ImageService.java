@@ -11,4 +11,10 @@ public interface ImageService {
      */
     void addListImageToRoomType(ImageRequest imageRequest);
 
+    /**
+     * get total number image of a room type
+     * @param roomTypeId
+     */
+    Integer getTotalNumberRoomTypeImage(int roomTypeId);
+
 }

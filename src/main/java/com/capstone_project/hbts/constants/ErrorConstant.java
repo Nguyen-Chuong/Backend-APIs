@@ -124,4 +124,11 @@ public class ErrorConstant {
     public static final String ERR_ITEM_002 = "ERR_ITEM_002";
     public static final String ERR_ITEM_002_LABEL = "You already have this item in your list";
 
+    /**
+     * Bạn đã đạt giới hạn, không thể thêm item
+     */
+    public static final String ERR_ITEM_003 = "ERR_ITEM_003";
+    public static final String ERR_ITEM_003_LABEL = "You have reached max item limit, " +
+            "please select less item or delete the old one";
+
 }
