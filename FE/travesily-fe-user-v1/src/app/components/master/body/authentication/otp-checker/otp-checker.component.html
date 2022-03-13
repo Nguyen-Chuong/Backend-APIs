@@ -1,8 +1,0 @@
-<h3>Please check your email</h3>
-<div class="alert"><app-alert></app-alert></div>
-<label>
-  We've sent you an email with a 6-digit OTP
-  Please check your email and enter below
-</label>
-<ng-otp-input (onInputChange)="onOtpChange($event)" [config]="{length:6}"></ng-otp-input>
-<button class="btn-resend btn-md btn-fill" (click)="resend()">Re-send</button>

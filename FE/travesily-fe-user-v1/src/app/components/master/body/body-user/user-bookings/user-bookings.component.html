@@ -1,9 +1,0 @@
-  <ul class="nav nav-tabs">
-    <li class="nav-item" *ngFor="let item of navItems">
-      <a routerLinkActive="nav-active" class="nav-link"
-         [routerLink]="['/user','bookings',item.id]">{{item.name}}</a>
-    </li>
-  </ul>
-  <div class="bookings__body">
-    <router-outlet></router-outlet>
-  </div>
