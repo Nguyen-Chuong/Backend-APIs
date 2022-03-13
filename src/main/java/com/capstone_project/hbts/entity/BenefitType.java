@@ -25,7 +25,6 @@ import java.util.Set;
 public class BenefitType {
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 

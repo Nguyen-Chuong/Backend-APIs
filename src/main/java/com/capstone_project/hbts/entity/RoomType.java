@@ -30,7 +30,6 @@ import java.util.Set;
 public class RoomType {
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 

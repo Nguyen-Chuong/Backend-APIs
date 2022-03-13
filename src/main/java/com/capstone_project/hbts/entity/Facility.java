@@ -28,7 +28,6 @@ import java.util.Set;
 public class Facility {
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
