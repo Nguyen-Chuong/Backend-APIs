@@ -15,7 +15,8 @@ import java.util.ArrayList;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
 
-    @Query(value = "select * from heroku_4fe5c149618a3f9.review where user_booking_id in :userBookingIds", nativeQuery = true)
+    @Query(value = "select * from heroku_4fe5c149618a3f9.review where user_booking_id in :userBookingIds",
+            nativeQuery = true)
     Page<Review> loadReviewByBookingId(
             @Param("userBookingIds") ArrayList<Integer> userBookingIds,
             Pageable pageable);

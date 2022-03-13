@@ -44,9 +44,9 @@ public class RoomTypeResource {
      */
     @GetMapping("/public/room-type")
     public ResponseEntity<?> getListRoomTypeByHotel(@RequestParam String hotelId,
-                                                    @RequestParam(required = false) @DateTimeFormat
+                                                    @RequestParam @DateTimeFormat
                                                             (pattern = "yyyy-MM-dd") Date dateIn,
-                                                    @RequestParam(required = false) @DateTimeFormat
+                                                    @RequestParam @DateTimeFormat
                                                             (pattern = "yyyy-MM-dd") Date dateOut) {
         log.info("REST request to get list room type by hotel id");
         int id;

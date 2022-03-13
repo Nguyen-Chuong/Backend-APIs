@@ -37,7 +37,8 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
     Feedback getFeedbackById(@Param("feedbackId") int feedbackId);
 
     @Modifying
-    @Query(value = "UPDATE heroku_4fe5c149618a3f9.feedback set receiver_id = :adminId, is_completed = 1 WHERE id = :feedbackId",
+    @Query(value = "UPDATE heroku_4fe5c149618a3f9.feedback set receiver_id = :adminId, is_completed = 1 " +
+            "WHERE id = :feedbackId",
             nativeQuery = true)
     void updateFeedbackReceiver(@Param("feedbackId") int feedbackId,
                                 @Param("adminId") int adminId);

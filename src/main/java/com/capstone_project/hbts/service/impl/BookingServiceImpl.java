@@ -2,9 +2,12 @@ package com.capstone_project.hbts.service.impl;
 
 import com.capstone_project.hbts.dto.Booking.BookingListDTO;
 import com.capstone_project.hbts.dto.Booking.UserBookingDTO;
+import com.capstone_project.hbts.entity.RoomType;
 import com.capstone_project.hbts.entity.UserBooking;
 import com.capstone_project.hbts.entity.UserBookingDetail;
+import com.capstone_project.hbts.repository.BookingDetailRepository;
 import com.capstone_project.hbts.repository.BookingRepository;
+import com.capstone_project.hbts.request.BookingDetailRequest;
 import com.capstone_project.hbts.request.BookingRequest;
 import com.capstone_project.hbts.response.CustomPageImpl;
 import com.capstone_project.hbts.service.BookingService;
@@ -17,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -29,9 +33,13 @@ public class BookingServiceImpl implements BookingService {
 
     private final ModelMapper modelMapper;
 
-    public BookingServiceImpl(BookingRepository bookingRepository, ModelMapper modelMapper) {
+    private final BookingDetailRepository bookingDetailRepository;
+
+    public BookingServiceImpl(BookingRepository bookingRepository, ModelMapper modelMapper,
+                              BookingDetailRepository bookingDetailRepository) {
         this.bookingRepository = bookingRepository;
         this.modelMapper = modelMapper;
+        this.bookingDetailRepository = bookingDetailRepository;
     }
 
     public BigDecimal countTotalPaidForABooking(UserBooking userBooking){
@@ -180,6 +188,33 @@ public class BookingServiceImpl implements BookingService {
                 bookingRequest.getStatus(),
                 bookingRequest.getHotelId(),
                 bookingRequest.getUserId());
+        // get booking that just insert to db
+        Integer bookingId = bookingRepository.getBookingIdJustInsert();
+        // new list user booking detail for adding
+        List<UserBookingDetail> listBookingDetailToAdd = new ArrayList<>();
+        // get list booking detail request
+        List<BookingDetailRequest> list = bookingRequest.getBookingDetail();
+        // loop through collection
+        for (BookingDetailRequest bookingDetailRequest : list) {
+            // new a booking detail
+            UserBookingDetail userBookingDetail = new UserBookingDetail();
+            // set paid
+            userBookingDetail.setPaid(bookingDetailRequest.getPaid());
+            // set quantity
+            userBookingDetail.setQuantity(bookingDetailRequest.getQuantity());
+            // set room type
+            RoomType roomType = new RoomType();
+            roomType.setId(bookingDetailRequest.getRoomTypeId());
+            userBookingDetail.setRoomType(roomType);
+            // set user booking
+            UserBooking userBooking = new UserBooking();
+            userBooking.setId(bookingId);
+            userBookingDetail.setUserBooking(userBooking);
+            // add all of them to list
+            listBookingDetailToAdd.add(userBookingDetail);
+        }
+        // add all to db using batch processing
+        bookingDetailRepository.saveAll(listBookingDetailToAdd);
     }
 
 }

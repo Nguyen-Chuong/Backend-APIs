@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -24,5 +25,7 @@ public class BookingRequest {
     private int hotelId;
 
     private int userId; // not required
+
+    private List<BookingDetailRequest> bookingDetail;
 
 }

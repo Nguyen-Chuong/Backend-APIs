@@ -47,7 +47,7 @@ public class UserBooking {
     private Timestamp bookingDate;
 
     @Column(name = "booked_quantity")
-    private int bookedQuantity; // number of people booked
+    private int bookedQuantity; // number of people booked = total booking detail, process on FE
 
     @ManyToOne
     @JsonIgnore

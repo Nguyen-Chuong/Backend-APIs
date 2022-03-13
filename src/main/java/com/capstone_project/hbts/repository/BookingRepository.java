@@ -18,7 +18,8 @@ public interface BookingRepository extends JpaRepository<UserBooking, Integer> {
     @Query(value = "SELECT * from heroku_4fe5c149618a3f9.user_booking WHERE user_id = :userId", nativeQuery = true)
     List<UserBooking> findAllByUserId(@Param("userId") int userId);
 
-    @Query(value = "SELECT * from heroku_4fe5c149618a3f9.user_booking WHERE review_status = :reviewStatus and user_id = :userId", nativeQuery = true)
+    @Query(value = "SELECT * from heroku_4fe5c149618a3f9.user_booking WHERE review_status = :reviewStatus " +
+            "and user_id = :userId", nativeQuery = true)
     List<UserBooking> findBookingsReview(@Param("reviewStatus") int reviewStatus,
                                          @Param("userId") int userId);
 
@@ -27,10 +28,12 @@ public interface BookingRepository extends JpaRepository<UserBooking, Integer> {
 
     // status user booking: cancelled, completed, when check vip status, only get number of booking that
     // have been completed, conditionally status = 1 for completed, may change later
-    @Query(value = "SELECT count(id) from heroku_4fe5c149618a3f9.user_booking WHERE user_id = :userId and status = 1", nativeQuery = true)
+    @Query(value = "SELECT count(id) from heroku_4fe5c149618a3f9.user_booking WHERE user_id = :userId and status = 1",
+            nativeQuery = true)
     int numberBookingCompleted(@Param("userId") int userId);
 
-    @Query(value = "SELECT * from heroku_4fe5c149618a3f9.user_booking WHERE status = :status and user_id = :userId", nativeQuery = true)
+    @Query(value = "SELECT * from heroku_4fe5c149618a3f9.user_booking WHERE status = :status and user_id = :userId",
+            nativeQuery = true)
     List<UserBooking> findBookingsByStatus(@Param("status") int status,
                                          @Param("userId") int userId);
 
@@ -46,8 +49,8 @@ public interface BookingRepository extends JpaRepository<UserBooking, Integer> {
     UserBooking getBookingById(@Param("id") int id);
 
     @Modifying
-    @Query(value = "insert into heroku_4fe5c149618a3f9.user_booking(booked_quantity, booking_date, check_in, check_out, " +
-            "review_status, status, hotel_id, user_id) " +
+    @Query(value = "insert into heroku_4fe5c149618a3f9.user_booking(booked_quantity, booking_date, check_in, " +
+            "check_out, review_status, status, hotel_id, user_id) " +
             "values (:bookedQuantity, :bookingDate, :checkIn, :checkOut, " +
             ":reviewStatus, :status, :hotelId, :userId);",
             nativeQuery = true)
@@ -60,5 +63,10 @@ public interface BookingRepository extends JpaRepository<UserBooking, Integer> {
             @Param("status") int status,
             @Param("hotelId") int hotelId,
             @Param("userId") int userId);
+
+    @Query(value = "select last_insert_id(id) from heroku_4fe5c149618a3f9.user_booking order" +
+            " by last_insert_id(id) desc limit 1;",
+            nativeQuery = true)
+    Integer getBookingIdJustInsert();
 
 }

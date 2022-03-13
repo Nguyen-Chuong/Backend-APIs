@@ -19,13 +19,15 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
     Users getUsersByEmail(String email);
 
     @Modifying
-    @Query(value = "UPDATE heroku_4fe5c149618a3f9.users SET password = :newPass WHERE heroku_4fe5c149618a3f9.users.username = :username",
+    @Query(value = "UPDATE heroku_4fe5c149618a3f9.users SET password = :newPass " +
+            "WHERE heroku_4fe5c149618a3f9.users.username = :username",
             nativeQuery = true)
     void changePass(
             @Param("username") String username,
             @Param("newPass") String newPass);
 
-    @Query(value = "SELECT password from heroku_4fe5c149618a3f9.users WHERE heroku_4fe5c149618a3f9.users.username = :username",
+    @Query(value = "SELECT password from heroku_4fe5c149618a3f9.users " +
+            "WHERE heroku_4fe5c149618a3f9.users.username = :username",
             nativeQuery = true)
     String getOldPassword(@Param("username") String username);
 
@@ -51,14 +53,16 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
     String getEmail(@Param("email") String email);
 
     @Modifying
-    @Query(value = "UPDATE heroku_4fe5c149618a3f9.users SET id_vip = :idVip WHERE heroku_4fe5c149618a3f9.users.id = :userId",
+    @Query(value = "UPDATE heroku_4fe5c149618a3f9.users SET id_vip = :idVip " +
+            "WHERE heroku_4fe5c149618a3f9.users.id = :userId",
             nativeQuery = true)
     void updateVipStatus(
             @Param("idVip") int idVip,
             @Param("userId") int userId);
 
     @Modifying
-    @Query(value = "UPDATE heroku_4fe5c149618a3f9.users SET password = :newPass WHERE heroku_4fe5c149618a3f9.users.email = :email",
+    @Query(value = "UPDATE heroku_4fe5c149618a3f9.users SET password = :newPass " +
+            "WHERE heroku_4fe5c149618a3f9.users.email = :email",
             nativeQuery = true)
     void changeForgotPassword(
             @Param("email") String email,

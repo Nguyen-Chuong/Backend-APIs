@@ -13,7 +13,8 @@ import java.util.List;
 @Repository
 public interface RoomTypeRepository extends JpaRepository<RoomType, Integer> {
 
-    @Query(value = "SELECT * FROM heroku_4fe5c149618a3f9.room_type where hotel_id = :hotelId and status = 1", nativeQuery = true)
+    @Query(value = "SELECT * FROM heroku_4fe5c149618a3f9.room_type where hotel_id = :hotelId and status = 1",
+            nativeQuery = true)
     List<RoomType> findRoomTypeByHotelId(@Param("hotelId") int hotelId);
 
     @Query(value = "SELECT * FROM heroku_4fe5c149618a3f9.room_type where id = :id limit 1", nativeQuery = true)
@@ -35,7 +36,8 @@ public interface RoomTypeRepository extends JpaRepository<RoomType, Integer> {
             @Param("quantity") int quantity,
             @Param("hotelId") int hotelId);
 
-    @Query(value = "select last_insert_id(id) from heroku_4fe5c149618a3f9.room_type order by last_insert_id(id) desc limit 1;",
+    @Query(value = "select last_insert_id(id) from heroku_4fe5c149618a3f9.room_type order by " +
+            "last_insert_id(id) desc limit 1;",
             nativeQuery = true)
     Integer getRoomTypeIdJustInsert();
 

@@ -35,13 +35,15 @@ public interface ProviderRepository extends JpaRepository<Provider, Integer> {
             @Param("id") Integer id);
 
     @Modifying
-    @Query(value = "UPDATE heroku_4fe5c149618a3f9.provider SET password = :newPass WHERE heroku_4fe5c149618a3f9.provider.username = :username",
+    @Query(value = "UPDATE heroku_4fe5c149618a3f9.provider SET password = :newPass " +
+            "WHERE heroku_4fe5c149618a3f9.provider.username = :username",
             nativeQuery = true)
     void changePass(
             @Param("username") String username,
             @Param("newPass") String newPass);
 
-    @Query(value = "SELECT password from heroku_4fe5c149618a3f9.provider WHERE heroku_4fe5c149618a3f9.provider.username = :username",
+    @Query(value = "SELECT password from heroku_4fe5c149618a3f9.provider " +
+            "WHERE heroku_4fe5c149618a3f9.provider.username = :username",
             nativeQuery = true)
     String getOldPassword(@Param("username") String username);
 
