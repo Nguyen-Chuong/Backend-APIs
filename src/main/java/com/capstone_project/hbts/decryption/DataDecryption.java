@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.Mac;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 import java.net.URI;
@@ -119,6 +120,34 @@ public class DataDecryption {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public String hmacSHA512(final String key, final String data) {
+        try {
+            if (key == null || data == null) {
+                throw new NullPointerException();
+            }
+            // new mac object to encrypt
+            final Mac hmac512 = Mac.getInstance("HmacSHA512");
+            // convert key to byte
+            byte[] hmacKeyBytes = key.getBytes();
+            // new secret key spec
+            final SecretKeySpec secretKey = new SecretKeySpec(hmacKeyBytes, "HmacSHA512");
+            hmac512.init(secretKey);
+            // convert data to byte
+            byte[] dataBytes = data.getBytes(StandardCharsets.UTF_8);
+            // encrypt data to byte
+            byte[] result = hmac512.doFinal(dataBytes);
+            // convert byte to string
+            StringBuilder stringBuilder = new StringBuilder(2 * result.length);
+            for (byte b : result) {
+                stringBuilder.append(String.format("%02x", b & 0xff));
+            }
+            return stringBuilder.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
 //    public static void main(String[] args) {

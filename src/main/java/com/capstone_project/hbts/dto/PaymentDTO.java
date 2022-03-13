@@ -6,8 +6,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class PaymentDTO {
-    private Integer idService;
-    private int amount;
+
+    private Integer idService; // unique
+
+    private long amount;
+
     private String description;
-    private String bank_code;
+
+    private String bankCode;
+
 }
