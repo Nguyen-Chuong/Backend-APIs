@@ -59,4 +59,18 @@ public class ImageServiceImpl implements ImageService {
         imageRepository.save(image);
     }
 
+    @Override
+    public void deleteListImage(List<Integer> imageIds) {
+        log.info("Request to delete a list image of a room type");
+        List<Image> listImageDelete = new ArrayList<>();
+        for(Integer integer : imageIds){
+            // set id for image need to delete
+            Image image = new Image();
+            image.setId(integer);
+            listImageDelete.add(image);
+        }
+        // delete all
+        imageRepository.deleteAll(listImageDelete);
+    }
+
 }

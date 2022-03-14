@@ -4,6 +4,8 @@ package com.capstone_project.hbts.service;
 import com.capstone_project.hbts.dto.ImageDTO;
 import com.capstone_project.hbts.request.ImageRequest;
 
+import java.util.List;
+
 public interface ImageService {
 
     /**
@@ -23,5 +25,11 @@ public interface ImageService {
      * @param imageDTO
      */
     void updateImage(ImageDTO imageDTO);
+
+    /**
+     * delete a list image in provider's room type
+     * @param imageIds
+     */
+    void deleteListImage(List<Integer> imageIds);
 
 }
