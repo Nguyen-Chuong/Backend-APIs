@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 @Log4j2
 public class OTPServiceImpl implements OTPService {
     //cache based on username and OTP MAX 8
-    private static final Integer EXPIRE_MINUTES = 1;
+    private static final Integer EXPIRE_MINUTES = 3;
 
     private final LoadingCache<String, Integer> otpCache;
 
