@@ -79,8 +79,6 @@ public class HotelServiceImpl implements HotelService {
         // get all hotel in this district
         Page<Hotel> hotelPage = hotelRepository.searchHotelByDistrict(districtId, pageable);
 
-        // call booking repo, date in, date out to check
-
         // convert page to list to process
         List<Hotel> result = new ArrayList<>(hotelPage.getContent());
 

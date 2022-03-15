@@ -134,7 +134,7 @@ public class RoomTypeServiceImpl implements RoomTypeService {
     }
 
     @Override
-    public List<RoomTypeDTO> loadRoomTypeByHotelId(int hotelId, Date dateIn, Date dateOut) {
+    public List<RoomTypeDTO> loadRoomTypeByHotelIdForSearch(int hotelId, Date dateIn, Date dateOut) {
         log.info("Request to load room type by hotel id");
 
         List<RoomType> list = roomTypeRepository.findRoomTypeByHotelId(hotelId);
@@ -287,6 +287,17 @@ public class RoomTypeServiceImpl implements RoomTypeService {
     public void createSQLEventUpdateDealViaDateExpired() {
         log.info("Request to create sql event update deal percentage");
         roomTypeRepository.createSQLEventUpdateDealViaDateExpired();
+    }
+
+    @Override
+    public List<RoomTypeDTO> loadRoomTypeByHotelId(int hotelId) {
+        log.info("Request to load room type by hotel id for admin or provider");
+
+        List<RoomType> list = roomTypeRepository.findRoomTypeByHotelId(hotelId);
+
+        return list.stream()
+                .map(item -> modelMapper.map(item, RoomTypeDTO.class))
+                .collect(Collectors.toList());
     }
 
 }

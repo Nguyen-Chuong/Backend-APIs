@@ -28,10 +28,10 @@ public interface RoomTypeService {
     void updateRoomType(RoomTypeDTO roomTypeDTO);
 
     /**
-     * Get room type by hotel id
+     * Get room type by hotel id for guest and user
      * @param hotelId
      */
-    List<RoomTypeDTO> loadRoomTypeByHotelId(int hotelId, Date dateIn, Date dateOut);
+    List<RoomTypeDTO> loadRoomTypeByHotelIdForSearch(int hotelId, Date dateIn, Date dateOut);
 
     /**
      * Disable room type
@@ -59,5 +59,11 @@ public interface RoomTypeService {
      * @param
      */
     void createSQLEventUpdateDealViaDateExpired();
+
+    /**
+     * Get room type by hotel id for admin and provider
+     * @param hotelId
+     */
+    List<RoomTypeDTO> loadRoomTypeByHotelId(int hotelId);
 
 }

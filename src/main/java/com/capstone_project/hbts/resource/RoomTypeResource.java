@@ -43,7 +43,7 @@ public class RoomTypeResource {
      * return
      */
     @GetMapping("/public/room-type")
-    public ResponseEntity<?> getListRoomTypeByHotel(@RequestParam String hotelId,
+    public ResponseEntity<?> getListRoomTypeByHotelForSearch(@RequestParam String hotelId,
                                                     @RequestParam @DateTimeFormat
                                                             (pattern = "yyyy-MM-dd") Date dateIn,
                                                     @RequestParam @DateTimeFormat
@@ -58,7 +58,7 @@ public class RoomTypeResource {
                             ErrorConstant.ERR_DATA_001, ErrorConstant.ERR_DATA_001_LABEL));
         }
         try {
-            List<RoomTypeDTO> list = roomTypeService.loadRoomTypeByHotelId(id, dateIn, dateOut);
+            List<RoomTypeDTO> list = roomTypeService.loadRoomTypeByHotelIdForSearch(id, dateIn, dateOut);
             return ResponseEntity.ok()
                     .body(new ApiResponse<>(200, list,
                             null, null));
@@ -216,6 +216,35 @@ public class RoomTypeResource {
             roomTypeService.createSQLEventUpdateDealViaDateExpired();
             return ResponseEntity.ok()
                     .body(new ApiResponse<>(200, null,
+                            null, null));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(400, null,
+                            ErrorConstant.ERR_000, ErrorConstant.ERR_000_LABEL));
+        }
+    }
+
+    /**
+     * @param hotelId
+     * @apiNote for admin or provider can view
+     * return
+     */
+    @GetMapping("/list-room-type")
+    public ResponseEntity<?> getListRoomTypeByHotel(@RequestParam String hotelId) {
+        log.info("REST request to get list room type by hotel id for admin or provider");
+        int id;
+        try {
+            id = dataDecryption.convertEncryptedDataToInt(hotelId);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(400, null,
+                            ErrorConstant.ERR_DATA_001, ErrorConstant.ERR_DATA_001_LABEL));
+        }
+        try {
+            List<RoomTypeDTO> list = roomTypeService.loadRoomTypeByHotelId(id);
+            return ResponseEntity.ok()
+                    .body(new ApiResponse<>(200, list,
                             null, null));
         } catch (Exception e) {
             e.printStackTrace();
