@@ -2,7 +2,9 @@ package com.capstone_project.hbts.service.impl;
 
 import com.capstone_project.hbts.dto.Facility.FacilityResult;
 import com.capstone_project.hbts.dto.Facility.FacilityTypeDTO;
+import com.capstone_project.hbts.entity.FacilityType;
 import com.capstone_project.hbts.repository.FacilityTypeRepository;
+import com.capstone_project.hbts.request.FacilityTypeRequest;
 import com.capstone_project.hbts.service.FacilityTypeService;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
@@ -41,5 +43,12 @@ public class FacilityTypeServiceImpl implements FacilityTypeService {
                 .stream()
                 .map(item -> modelMapper.map(item, FacilityResult.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void addFacilityType(FacilityTypeRequest facilityTypeRequest) {
+        log.info("Request to add facility type");
+        FacilityType facilityType = modelMapper.map(facilityTypeRequest, FacilityType.class);
+        facilityTypeRepository.save(facilityType);
     }
 }

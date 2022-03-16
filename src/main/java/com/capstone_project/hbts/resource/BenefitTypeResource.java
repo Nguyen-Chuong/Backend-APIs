@@ -48,7 +48,7 @@ public class BenefitTypeResource {
     }
 
     /**
-     * @param
+     * @param benefitTypeRequest
      */
     @PostMapping("/add-benefit-type")
     public ResponseEntity<?> addBenefitType(@RequestBody BenefitTypeRequest benefitTypeRequest) {

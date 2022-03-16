@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FacilityRepository extends JpaRepository<Facility, Integer> {
-    // crud facility (for admin or provider)
+
 }

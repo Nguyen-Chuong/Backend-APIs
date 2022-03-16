@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BenefitRepository extends JpaRepository<Benefit, Integer> {
-    // crud benefit (for admin or provider)
+
 }
