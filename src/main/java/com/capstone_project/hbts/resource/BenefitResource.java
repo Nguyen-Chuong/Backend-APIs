@@ -126,4 +126,26 @@ public class BenefitResource {
         }
     }
 
+    /**
+     * @param benefitName
+     * return
+     * @apiNote add benefit for provider that doesn't have in db
+     */
+    @PostMapping("/add-other-benefit")
+    public ResponseEntity<?> addBenefitOtherType(@RequestBody String benefitName) {
+        log.info("REST request to add a benefit for provider in other type");
+
+        try {
+            benefitService.addBenefitOtherType(benefitName);
+            return ResponseEntity.ok()
+                    .body(new ApiResponse<>(200, null,
+                            null, null));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(400, null,
+                            ErrorConstant.ERR_000, ErrorConstant.ERR_000_LABEL));
+        }
+    }
+
 }

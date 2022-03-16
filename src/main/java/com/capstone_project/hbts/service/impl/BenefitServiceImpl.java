@@ -103,4 +103,18 @@ public class BenefitServiceImpl implements BenefitService {
         benefitRepository.saveAll(benefitList);
     }
 
+    @Override
+    public void addBenefitOtherType(String benefitName) {
+        log.info("Request to add a benefit for provider that doesn't have in db");
+        Benefit benefit = new Benefit();
+        // set name
+        benefit.setName(benefitName);
+        BenefitType benefitType = new BenefitType();
+        benefitType.setId(1);
+        // set type other
+        benefit.setBenefitType(benefitType);
+        // save
+        benefitRepository.save(benefit);
+    }
+
 }

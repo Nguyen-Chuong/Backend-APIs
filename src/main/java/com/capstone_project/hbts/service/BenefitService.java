@@ -20,4 +20,10 @@ public interface BenefitService {
      */
     void addBenefit(int benefitTypeId, List<BenefitRequest> listBenefit);
 
+    /**
+     * add a benefit for provider that doesn't have in db
+     * @param benefitName
+     */
+    void addBenefitOtherType(String benefitName);
+
 }
