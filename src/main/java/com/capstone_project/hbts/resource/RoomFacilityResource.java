@@ -3,7 +3,7 @@ package com.capstone_project.hbts.resource;
 import com.capstone_project.hbts.constants.ErrorConstant;
 import com.capstone_project.hbts.decryption.DataDecryption;
 import com.capstone_project.hbts.dto.Room.RoomFacilityDTO;
-import com.capstone_project.hbts.request.FacilityRequest;
+import com.capstone_project.hbts.request.RoomFacilityRequest;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.service.RoomFacilityService;
 import lombok.extern.log4j.Log4j2;
@@ -38,17 +38,17 @@ public class RoomFacilityResource {
     }
 
     /**
-     * @param facilityRequest
+     * @param roomFacilityRequest
      * @apiNote for provider can add a list facility to their room type
      * return
      */
     @PostMapping("/add-list-facility")
-    public ResponseEntity<?> addListRoomFacility(@RequestBody FacilityRequest facilityRequest) {
+    public ResponseEntity<?> addListRoomFacility(@RequestBody RoomFacilityRequest roomFacilityRequest) {
         log.info("REST request to add a list facility to provider's room type");
         // get all facility ids from db
-        List<Integer> listFacilityIds = roomFacilityService.getListFacilityIds(facilityRequest.getRoomTypeId());
+        List<Integer> listFacilityIds = roomFacilityService.getListFacilityIds(roomFacilityRequest.getRoomTypeId());
         // list all ids from user request
-        List<Integer> listIds = facilityRequest.getFacilityIds();
+        List<Integer> listIds = roomFacilityRequest.getFacilityIds();
         // check list common items in two lists (if have)
         List<Integer> common = new ArrayList<>(listFacilityIds);
         common.retainAll(listIds);
@@ -65,7 +65,7 @@ public class RoomFacilityResource {
                             ErrorConstant.ERR_ITEM_001, ErrorConstant.ERR_ITEM_001_LABEL));
         }
         try {
-            roomFacilityService.addListFacilityToRoomType(facilityRequest);
+            roomFacilityService.addListFacilityToRoomType(roomFacilityRequest);
             return ResponseEntity.ok()
                     .body(new ApiResponse<>(200, null,
                             null, null));

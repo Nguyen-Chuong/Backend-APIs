@@ -4,9 +4,12 @@ import com.capstone_project.hbts.dto.Benefit.BenefitDTO;
 import com.capstone_project.hbts.dto.Benefit.BenefitResult;
 import com.capstone_project.hbts.dto.Benefit.BenefitTypeDTO;
 import com.capstone_project.hbts.dto.Benefit.ObjectBenefit;
+import com.capstone_project.hbts.entity.Benefit;
+import com.capstone_project.hbts.entity.BenefitType;
 import com.capstone_project.hbts.entity.RoomType;
 import com.capstone_project.hbts.repository.BenefitRepository;
 import com.capstone_project.hbts.repository.HotelRepository;
+import com.capstone_project.hbts.request.BenefitRequest;
 import com.capstone_project.hbts.service.BenefitService;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
@@ -79,6 +82,25 @@ public class BenefitServiceImpl implements BenefitService {
             finalResultBenefit.add(obj);
         }
         return finalResultBenefit;
+    }
+
+    @Override
+    public void addBenefit(int benefitTypeId, List<BenefitRequest> listBenefit) {
+        log.info("Request to add a list benefit for admin");
+        List<Benefit> benefitList = new ArrayList<>();
+        for(BenefitRequest benefitRequest : listBenefit){
+            Benefit benefit = new Benefit();
+            benefit.setName(benefitRequest.getName());
+            benefit.setIcon(benefitRequest.getIcon());
+            // set benefit type
+            BenefitType benefitType = new BenefitType();
+            benefitType.setId(benefitTypeId);
+            benefit.setBenefitType(benefitType);
+            // add them to list
+            benefitList.add(benefit);
+        }
+        // batch processing
+        benefitRepository.saveAll(benefitList);
     }
 
 }

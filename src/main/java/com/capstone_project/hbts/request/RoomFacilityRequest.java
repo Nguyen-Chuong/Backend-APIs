@@ -3,12 +3,14 @@ package com.capstone_project.hbts.request;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
-public class BenefitRequest {
+public class RoomFacilityRequest {
 
-    private String name;
+    private int roomTypeId;
 
-    private String icon;
+    private List<Integer> facilityIds;
 
 }

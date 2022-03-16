@@ -3,7 +3,7 @@ package com.capstone_project.hbts.resource;
 import com.capstone_project.hbts.constants.ErrorConstant;
 import com.capstone_project.hbts.decryption.DataDecryption;
 import com.capstone_project.hbts.dto.Room.RoomBenefitDTO;
-import com.capstone_project.hbts.request.BenefitRequest;
+import com.capstone_project.hbts.request.RoomBenefitRequest;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.service.RoomBenefitService;
 import lombok.extern.log4j.Log4j2;
@@ -38,17 +38,17 @@ public class RoomBenefitResource {
     }
 
     /**
-     * @param benefitRequest
+     * @param roomBenefitRequest
      * @apiNote for provider can add a list benefit to their room type
      * return
      */
     @PostMapping("/add-list-benefit")
-    public ResponseEntity<?> addListRoomBenefit(@RequestBody BenefitRequest benefitRequest) {
+    public ResponseEntity<?> addListRoomBenefit(@RequestBody RoomBenefitRequest roomBenefitRequest) {
         log.info("REST request to add a list benefit to provider's room type");
         // get all benefit ids from db
-        List<Integer> listBenefitIds = roomBenefitService.getListBenefitIds(benefitRequest.getRoomTypeId());
+        List<Integer> listBenefitIds = roomBenefitService.getListBenefitIds(roomBenefitRequest.getRoomTypeId());
         // list all ids from user request
-        List<Integer> listIds = benefitRequest.getBenefitIds();
+        List<Integer> listIds = roomBenefitRequest.getBenefitIds();
         // check list common items in two lists (if have)
         List<Integer> common = new ArrayList<>(listBenefitIds);
         common.retainAll(listIds);
@@ -65,7 +65,7 @@ public class RoomBenefitResource {
                             ErrorConstant.ERR_ITEM_001, ErrorConstant.ERR_ITEM_001_LABEL));
         }
         try {
-            roomBenefitService.addListBenefitToRoomType(benefitRequest);
+            roomBenefitService.addListBenefitToRoomType(roomBenefitRequest);
             return ResponseEntity.ok()
                     .body(new ApiResponse<>(200, null,
                             null, null));

@@ -1,7 +1,7 @@
 package com.capstone_project.hbts.service;
 
 import com.capstone_project.hbts.dto.Room.RoomFacilityDTO;
-import com.capstone_project.hbts.request.FacilityRequest;
+import com.capstone_project.hbts.request.RoomFacilityRequest;
 
 import java.util.List;
 
@@ -9,9 +9,9 @@ public interface RoomFacilityService {
 
     /**
      * Insert list facility to a room type
-     * @param facilityRequest
+     * @param roomFacilityRequest
      */
-    void addListFacilityToRoomType(FacilityRequest facilityRequest);
+    void addListFacilityToRoomType(RoomFacilityRequest roomFacilityRequest);
 
     /**
      * view list facility of a room type
