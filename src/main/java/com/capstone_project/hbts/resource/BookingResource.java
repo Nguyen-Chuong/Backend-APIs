@@ -290,6 +290,16 @@ public class BookingResource {
     public ResponseEntity<?> addNewBooking(@RequestBody BookingRequest bookingRequest,
                                            @RequestHeader("Authorization") String jwttoken) {
         log.info("REST request to add a new booking");
+        int numberRoomBooked = bookingRequest
+                .getBookingDetail()
+                .stream()
+                .reduce(0, (result, item) -> result + item.getQuantity(), Integer::sum);
+        // number room booking > 2, cannot accept
+        if(numberRoomBooked > 2){
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(400, null,
+                            ErrorConstant.ERR_BOOK_001, ErrorConstant.ERR_BOOK_001_LABEL));
+        }
         int userId = Integer.parseInt(jwtTokenUtil.getUserIdFromToken(jwttoken.substring(7)));
         try {
             bookingRequest.setUserId(userId);

@@ -137,4 +137,10 @@ public class ErrorConstant {
     public static final String ERR_ITEM_003_LABEL = "You have reached max item limit, " +
             "please select less item or delete the old one";
 
+    /**
+     * Đã đạt số lượng phòng tối đa có thể book
+     */
+    public static final String ERR_BOOK_001 = "ERR_BOOK_001";
+    public static final String ERR_BOOK_001_LABEL = "You reached the maximum number rooms can book";
+
 }
