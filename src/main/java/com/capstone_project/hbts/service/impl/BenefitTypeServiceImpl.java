@@ -2,7 +2,9 @@ package com.capstone_project.hbts.service.impl;
 
 import com.capstone_project.hbts.dto.Benefit.BenefitResult;
 import com.capstone_project.hbts.dto.Benefit.BenefitTypeDTO;
+import com.capstone_project.hbts.entity.BenefitType;
 import com.capstone_project.hbts.repository.BenefitTypeRepository;
+import com.capstone_project.hbts.request.BenefitTypeRequest;
 import com.capstone_project.hbts.service.BenefitTypeService;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
@@ -41,6 +43,13 @@ public class BenefitTypeServiceImpl implements BenefitTypeService {
                 .stream()
                 .map(item -> modelMapper.map(item, BenefitResult.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void addBenefitType(BenefitTypeRequest benefitTypeRequest) {
+        log.info("Request to add benefit type");
+        BenefitType benefitType = modelMapper.map(benefitTypeRequest, BenefitType.class);
+        benefitTypeRepository.save(benefitType);
     }
 
 }
