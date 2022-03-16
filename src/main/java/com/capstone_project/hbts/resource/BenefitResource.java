@@ -8,6 +8,7 @@ import com.capstone_project.hbts.request.BenefitRequest;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.service.BenefitService;
 import com.capstone_project.hbts.service.BenefitTypeService;
+import com.fasterxml.jackson.databind.node.TextNode;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -132,11 +133,11 @@ public class BenefitResource {
      * @apiNote add benefit for provider that doesn't have in db
      */
     @PostMapping("/add-other-benefit")
-    public ResponseEntity<?> addBenefitOtherType(@RequestBody String benefitName) {
+    public ResponseEntity<?> addBenefitOtherType(@RequestBody TextNode benefitName) {
         log.info("REST request to add a benefit for provider in other type");
 
         try {
-            benefitService.addBenefitOtherType(benefitName);
+            benefitService.addBenefitOtherType(benefitName.asText());
             return ResponseEntity.ok()
                     .body(new ApiResponse<>(200, null,
                             null, null));

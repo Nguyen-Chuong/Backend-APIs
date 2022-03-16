@@ -7,6 +7,7 @@ import com.capstone_project.hbts.request.FacilityRequest;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.service.FacilityService;
 import com.capstone_project.hbts.service.FacilityTypeService;
+import com.fasterxml.jackson.databind.node.TextNode;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -86,6 +87,28 @@ public class FacilityResource {
         }
         try {
             facilityService.addFacility(id, facilityList);
+            return ResponseEntity.ok()
+                    .body(new ApiResponse<>(200, null,
+                            null, null));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(400, null,
+                            ErrorConstant.ERR_000, ErrorConstant.ERR_000_LABEL));
+        }
+    }
+
+    /**
+     * @param facilityName
+     * return
+     * @apiNote add facility for provider that doesn't have in db
+     */
+    @PostMapping("/add-other-facility")
+    public ResponseEntity<?> addFacilityOtherType(@RequestBody TextNode facilityName) {
+        log.info("REST request to add a facility for provider in other type");
+
+        try {
+            facilityService.addFacilityOtherType(facilityName.asText());
             return ResponseEntity.ok()
                     .body(new ApiResponse<>(200, null,
                             null, null));

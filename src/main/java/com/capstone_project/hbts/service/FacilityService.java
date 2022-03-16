@@ -13,4 +13,10 @@ public interface FacilityService {
      */
     void addFacility(int facilityTypeId, List<FacilityRequest> listFacility);
 
+    /**
+     * add a facility for provider that doesn't have in db
+     * @param facilityName
+     */
+    void addFacilityOtherType(String facilityName);
+
 }

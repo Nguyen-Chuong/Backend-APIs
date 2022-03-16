@@ -40,4 +40,18 @@ public class FacilityServiceImpl implements FacilityService {
         facilityRepository.saveAll(facilityList);
     }
 
+    @Override
+    public void addFacilityOtherType(String facilityName) {
+        log.info("Request to add a facility for provider that doesn't have in db");
+        Facility facility = new Facility();
+        // set name
+        facility.setName(facilityName);
+        FacilityType facilityType = new FacilityType();
+        facilityType.setId(1);
+        // set type other
+        facility.setFacilityType(facilityType);
+        // save
+        facilityRepository.save(facility);
+    }
+
 }
