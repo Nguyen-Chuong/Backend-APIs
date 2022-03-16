@@ -52,10 +52,11 @@ public class PaymentServiceImpl implements PaymentService {
         vnp_Params.put("vnp_CurrencyCode", ValidateConstant.VNP_CURRENCY_CODE);
         vnp_Params.put("vnp_Locale", ValidateConstant.VNP_LOCALE);
         vnp_Params.put("vnp_OrderInfo", paymentDTO.getDescription());
+//        vnp_Params.put("vnp_IpAddr", ValidateConstant.VNP_IP_ADDRESS);
         vnp_Params.put("vnp_OrderType", ValidateConstant.VNP_ORDER_TYPE);
         vnp_Params.put("vnp_ReturnUrl", ValidateConstant.VNP_RETURN_URL);
         vnp_Params.put("vnp_TxnRef", String.valueOf(1));
-        vnp_Params.put("vnp_SecureHash", ValidateConstant.VNP_SECURE_HASH);
+        //vnp_Params.put("vnp_SecureHash", ValidateConstant.VNP_SECURE_HASH);
 
         List<String> fieldNames = new ArrayList<>(vnp_Params.keySet());
         Collections.sort(fieldNames);
@@ -85,6 +86,8 @@ public class PaymentServiceImpl implements PaymentService {
         String queryUrl = query.toString();
         // after encrypt data
         String vnp_SecureHash = dataDecryption.hmacSHA512(ValidateConstant.VNP_SECURE_HASH, hashData.toString());
+        // secure hash
+        queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
         // generate payment url
         String paymentUrl = ValidateConstant.VNP_API_URL + "?" + queryUrl;
 
