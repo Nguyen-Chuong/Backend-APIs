@@ -6,4 +6,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class FacilityRequest {
+
+    private String name;
+
+    private String icon;
+
 }

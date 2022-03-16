@@ -104,7 +104,7 @@ public class BenefitResource {
     @PostMapping("/add-benefit")
     public ResponseEntity<?> addListBenefit(@RequestParam String benefitTypeId,
                                             @RequestBody List<BenefitRequest> benefitList) {
-        log.info("REST request to add list benefit by");
+        log.info("REST request to add list benefit");
         int id;
         try {
             id = dataDecryption.convertEncryptedDataToInt(benefitTypeId);

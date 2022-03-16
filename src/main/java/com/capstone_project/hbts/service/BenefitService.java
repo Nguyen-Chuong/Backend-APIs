@@ -14,8 +14,9 @@ public interface BenefitService {
     List<ObjectBenefit> getListBenefitByHotelId(int hotelId);
 
     /**
-     * Get all room's benefit in hotel
+     * add list benefit
      * @param listBenefit
+     * @param benefitTypeId
      */
     void addBenefit(int benefitTypeId, List<BenefitRequest> listBenefit);
 
