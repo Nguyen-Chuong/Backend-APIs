@@ -87,6 +87,12 @@ public class ErrorConstant {
     public static final String ERR_DATA_001_LABEL = "Your data url decrypted is not valid";
 
     /**
+     * Dữ liệu tải lên không đúng định dạng
+     */
+    public static final String ERR_DATA_002 = "ERR_DATA_002";
+    public static final String ERR_DATA_002_LABEL = "Your data upload is not in correct type";
+
+    /**
      * Không thể gửi tiếp request
      */
     public static final String ERR_REQ_001 = "ERR_REQ_001";
