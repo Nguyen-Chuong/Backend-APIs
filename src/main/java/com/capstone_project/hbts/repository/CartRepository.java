@@ -7,11 +7,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface CartRepository extends JpaRepository<Cart, Integer> {
 
     @Modifying
     @Query(value = "delete from heroku_4fe5c149618a3f9.cart where user_id = :userId", nativeQuery = true)
     void clearCart(@Param("userId") int userId);
+
+    @Query(value = "select * from heroku_4fe5c149618a3f9.cart where user_id = :userId", nativeQuery = true)
+    List<Cart> getAllCartItem(@Param("userId") int userId);
 
 }

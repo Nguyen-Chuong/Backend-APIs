@@ -1,5 +1,9 @@
 package com.capstone_project.hbts.service;
 
+import com.capstone_project.hbts.dto.CartDTO;
+
+import java.util.List;
+
 public interface CartService {
 
     /**
@@ -15,5 +19,11 @@ public interface CartService {
      * @param userId
      */
     void clearCart(int userId);
+
+    /**
+     * to get all item in cart
+     * @param userId
+     */
+    List<CartDTO> getAllCartItem(int userId);
 
 }
