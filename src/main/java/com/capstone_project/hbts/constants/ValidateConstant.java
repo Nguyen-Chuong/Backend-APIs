@@ -20,13 +20,13 @@ public class ValidateConstant {
 
     public static final String VNP_CURRENCY_CODE = "VND";
 
-    public static final String VNP_IP_ADDRESS = "192.168.1.4";
+    public static final String VNP_IP_ADDRESS = "192.168.1.4"; // get from client
 
     public static final String VNP_LOCALE = "vn";
 
     public static final String VNP_ORDER_TYPE = "170000";
 
-    public static final String VNP_RETURN_URL = "https://travesily.herokuapp.com";
+    public static final String VNP_RETURN_URL = "https://travesily.herokuapp.com/transaction-info"; // component
 
     public static final String VNP_API_URL = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
 
