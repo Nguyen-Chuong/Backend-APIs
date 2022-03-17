@@ -49,14 +49,13 @@ public class PaymentServiceImpl implements PaymentService {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
         String vnp_CreateDate = formatter.format(calendar.getTime());
         vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
-        vnp_Params.put("vnp_CurrencyCode", ValidateConstant.VNP_CURRENCY_CODE);
+        vnp_Params.put("vnp_CurrCode", ValidateConstant.VNP_CURRENCY_CODE);
         vnp_Params.put("vnp_Locale", ValidateConstant.VNP_LOCALE);
         vnp_Params.put("vnp_OrderInfo", paymentDTO.getDescription());
-//        vnp_Params.put("vnp_IpAddr", ValidateConstant.VNP_IP_ADDRESS);
+        vnp_Params.put("vnp_IpAddr", ValidateConstant.VNP_IP_ADDRESS);
         vnp_Params.put("vnp_OrderType", ValidateConstant.VNP_ORDER_TYPE);
         vnp_Params.put("vnp_ReturnUrl", ValidateConstant.VNP_RETURN_URL);
-        vnp_Params.put("vnp_TxnRef", String.valueOf(1));
-        //vnp_Params.put("vnp_SecureHash", ValidateConstant.VNP_SECURE_HASH);
+        vnp_Params.put("vnp_TxnRef", String.valueOf(paymentDTO.getIdService()));
 
         List<String> fieldNames = new ArrayList<>(vnp_Params.keySet());
         Collections.sort(fieldNames);
