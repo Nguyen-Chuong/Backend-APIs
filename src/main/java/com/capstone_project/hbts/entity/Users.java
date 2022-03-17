@@ -93,4 +93,7 @@ public class Users {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
     private Set<Transaction> listTransaction;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
+    private Set<Cart> listCart;
+
 }
