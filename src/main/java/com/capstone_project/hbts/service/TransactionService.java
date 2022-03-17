@@ -21,6 +21,6 @@ public interface TransactionService {
      */
     TransactionDTO getTransactionInfo(long amount, String bankCode, String bankTranNo, String cardType,
                                       String orderInfo, String payDate, String responseCode, String transactionNo,
-                                      int idService, int userId);
+                                      long idService, int userId);
 
 }

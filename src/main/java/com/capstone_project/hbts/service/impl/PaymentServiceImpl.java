@@ -11,24 +11,34 @@ import org.springframework.stereotype.Service;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 @Log4j2
 public class PaymentServiceImpl implements PaymentService {
 
+    private static final AtomicLong idCounter = new AtomicLong();
+
     private final DataDecryption dataDecryption;
 
     public PaymentServiceImpl(DataDecryption dataDecryption) {
         this.dataDecryption = dataDecryption;
+    }
+
+    public static String createID(){
+        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        return dateFormat.format(new Date()) + idCounter.getAndIncrement();
     }
 
     @SneakyThrows
@@ -55,7 +65,7 @@ public class PaymentServiceImpl implements PaymentService {
         vnp_Params.put("vnp_IpAddr", ValidateConstant.VNP_IP_ADDRESS);
         vnp_Params.put("vnp_OrderType", ValidateConstant.VNP_ORDER_TYPE);
         vnp_Params.put("vnp_ReturnUrl", ValidateConstant.VNP_RETURN_URL);
-        vnp_Params.put("vnp_TxnRef", String.valueOf(paymentDTO.getIdService()));
+        vnp_Params.put("vnp_TxnRef", createID());
 
         List<String> fieldNames = new ArrayList<>(vnp_Params.keySet());
         Collections.sort(fieldNames);

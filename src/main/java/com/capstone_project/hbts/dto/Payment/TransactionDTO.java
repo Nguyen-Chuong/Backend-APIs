@@ -25,6 +25,6 @@ public class TransactionDTO {
 
     private String transactionNo;
 
-    private int idService; // unique
+    private long idService; // unique
 
 }

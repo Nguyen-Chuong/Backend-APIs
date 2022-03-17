@@ -25,7 +25,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public TransactionDTO getTransactionInfo(long amount, String bankCode, String bankTranNo, String cardType,
                                              String orderInfo, String payDate, String responseCode,
-                                             String transactionNo, int idService, int userId) {
+                                             String transactionNo, long idService, int userId) {
         log.info("Request to get transaction just process");
 
         Transaction transaction = new Transaction();

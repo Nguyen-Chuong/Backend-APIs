@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PaymentDTO {
 
-    private Integer idService; // unique
+    private Integer idService; // unique - not required
 
     private long amount;
 

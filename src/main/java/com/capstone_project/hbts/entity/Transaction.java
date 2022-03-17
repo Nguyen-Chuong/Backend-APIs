@@ -53,7 +53,7 @@ public class Transaction {
     private String transactionNo; // transaction no at vnpay
 
     @Column(name = "id_service")
-    private int idService; // unique
+    private long idService; // unique
 
     @ManyToOne
     @JoinColumn(name = "user_id")

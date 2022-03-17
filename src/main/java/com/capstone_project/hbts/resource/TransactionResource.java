@@ -53,7 +53,7 @@ public class TransactionResource {
                                                 @RequestParam String vnp_PayDate,
                                                 @RequestParam String vnp_ResponseCode,
                                                 @RequestParam String vnp_TransactionNo,
-                                                @RequestParam int vnp_TxnRef) {
+                                                @RequestParam long vnp_TxnRef) {
         log.info("REST request to get detail transaction info that user just process");
 
         int userId = Integer.parseInt(jwtTokenUtil.getUserIdFromToken(jwttoken.substring(7)));
