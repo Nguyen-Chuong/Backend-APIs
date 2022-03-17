@@ -57,4 +57,10 @@ public class CartServiceImpl implements CartService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public Integer getTotalNumberItemInCart(int userId) {
+        log.info("Request to get total number of item in cart");
+        return cartRepository.getTotalNumberItemInCart(userId);
+    }
+
 }

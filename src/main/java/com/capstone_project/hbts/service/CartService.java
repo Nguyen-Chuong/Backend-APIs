@@ -26,4 +26,10 @@ public interface CartService {
      */
     List<CartDTO> getAllCartItem(int userId);
 
+    /**
+     * to get total item in cart
+     * @param userId
+     */
+    Integer getTotalNumberItemInCart(int userId);
+
 }

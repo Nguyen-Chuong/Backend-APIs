@@ -45,13 +45,18 @@ public class CartResource {
                                        @RequestParam int quantity) {
         log.info("REST request to add item to cart");
 
+        int userId = Integer.parseInt(jwtTokenUtil.getUserIdFromToken(jwttoken.substring(7)));
         if (quantity > 2) {
             return ResponseEntity.badRequest()
                     .body(new ApiResponse<>(400, null,
                             ErrorConstant.ERR_ITEM_004, ErrorConstant.ERR_ITEM_004_LABEL));
         }
+        if(cartService.getTotalNumberItemInCart(userId) >= 2){
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(400, null,
+                            ErrorConstant.ERR_ITEM_004, ErrorConstant.ERR_ITEM_004_LABEL));
+        }
         try {
-            int userId = Integer.parseInt(jwtTokenUtil.getUserIdFromToken(jwttoken.substring(7)));
             cartService.addToCart(roomTypeId, quantity, userId);
             return ResponseEntity.ok()
                     .body(new ApiResponse<>(200, null,
