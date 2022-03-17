@@ -138,6 +138,12 @@ public class ErrorConstant {
             "please select less item or delete the old one";
 
     /**
+     * Add item quá số lượng cho phép
+     */
+    public static final String ERR_ITEM_004 = "ERR_ITEM_004";
+    public static final String ERR_ITEM_004_LABEL = "You added over number item limit";
+
+    /**
      * Đã đạt số lượng phòng tối đa có thể book
      */
     public static final String ERR_BOOK_001 = "ERR_BOOK_001";

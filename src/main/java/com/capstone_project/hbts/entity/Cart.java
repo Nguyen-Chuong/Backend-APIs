@@ -29,6 +29,9 @@ public class Cart {
     @Column(name = "room_type_id")
     private int roomTypeId;
 
+    @Column(name = "quantity")
+    private int quantity; // room quantity
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Users users;
