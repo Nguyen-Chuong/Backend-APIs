@@ -90,4 +90,7 @@ public class Users {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "users")
     private Set<Role> listRole;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
+    private Set<Transaction> listTransaction;
+
 }
