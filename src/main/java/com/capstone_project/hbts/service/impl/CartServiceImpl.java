@@ -6,6 +6,7 @@ import com.capstone_project.hbts.repository.CartRepository;
 import com.capstone_project.hbts.service.CartService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Log4j2
@@ -30,6 +31,13 @@ public class CartServiceImpl implements CartService {
         users.setId(userId);
         cart.setUsers(users);
         cartRepository.save(cart);
+    }
+
+    @Override
+    @Transactional
+    public void clearCart(int userId) {
+        log.info("Request to clear cart");
+        cartRepository.clearCart(userId);
     }
 
 }

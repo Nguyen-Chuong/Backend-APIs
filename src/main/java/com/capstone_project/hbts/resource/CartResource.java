@@ -38,21 +38,44 @@ public class CartResource {
     @PatchMapping("/add-to-cart")
     public ResponseEntity<?> addToCart(@RequestHeader("Authorization") String jwttoken,
                                        @RequestParam int roomTypeId,
-                                       @RequestParam int quantity){
+                                       @RequestParam int quantity) {
         log.info("REST request to add item to cart");
 
-        if(quantity > 2){
+        if (quantity > 2) {
             return ResponseEntity.badRequest()
                     .body(new ApiResponse<>(400, null,
                             ErrorConstant.ERR_ITEM_004, ErrorConstant.ERR_ITEM_004_LABEL));
         }
-        try{
+        try {
             int userId = Integer.parseInt(jwtTokenUtil.getUserIdFromToken(jwttoken.substring(7)));
             cartService.addToCart(roomTypeId, quantity, userId);
             return ResponseEntity.ok()
                     .body(new ApiResponse<>(200, null,
                             null, null));
-        }catch (Exception e){
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(400, null,
+                            ErrorConstant.ERR_000, ErrorConstant.ERR_000_LABEL));
+        }
+    }
+
+    /**
+     * @param jwttoken
+     * @apiNote for user to clear cart
+     * return
+     */
+    @PatchMapping("/clear-cart")
+    public ResponseEntity<?> clearCart(@RequestHeader("Authorization") String jwttoken) {
+        log.info("REST request to clear all item in cart");
+
+        try {
+            int userId = Integer.parseInt(jwtTokenUtil.getUserIdFromToken(jwttoken.substring(7)));
+            cartService.clearCart(userId);
+            return ResponseEntity.ok()
+                    .body(new ApiResponse<>(200, null,
+                            null, null));
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest()
                     .body(new ApiResponse<>(400, null,

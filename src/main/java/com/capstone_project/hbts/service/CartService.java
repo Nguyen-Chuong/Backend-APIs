@@ -10,4 +10,10 @@ public interface CartService {
      */
     void addToCart(int roomTypeId, int quantity, int userId);
 
+    /**
+     * to clear cart
+     * @param userId
+     */
+    void clearCart(int userId);
+
 }
