@@ -2,8 +2,12 @@ package com.capstone_project.hbts.service.impl;
 
 import com.capstone_project.hbts.dto.Hotel.HotelDTO;
 import com.capstone_project.hbts.dto.Hotel.HotelDetailDTO;
+import com.capstone_project.hbts.dto.RatingDTO;
 import com.capstone_project.hbts.entity.Hotel;
+import com.capstone_project.hbts.entity.Review;
 import com.capstone_project.hbts.entity.RoomType;
+import com.capstone_project.hbts.entity.UserBooking;
+import com.capstone_project.hbts.repository.BookingRepository;
 import com.capstone_project.hbts.repository.HotelRepository;
 import com.capstone_project.hbts.request.HotelRequest;
 import com.capstone_project.hbts.response.CustomPageImpl;
@@ -30,9 +34,13 @@ public class HotelServiceImpl implements HotelService {
 
     private final ModelMapper modelMapper;
 
-    public HotelServiceImpl(HotelRepository hotelRepository, ModelMapper modelMapper) {
+    private final BookingRepository bookingRepository;
+
+    public HotelServiceImpl(HotelRepository hotelRepository, ModelMapper modelMapper,
+                            BookingRepository bookingRepository) {
         this.hotelRepository = hotelRepository;
         this.modelMapper = modelMapper;
+        this.bookingRepository = bookingRepository;
     }
 
     // get total room available in a hotel
@@ -59,11 +67,11 @@ public class HotelServiceImpl implements HotelService {
         List<Long> listPrice = new ArrayList<>();
         // add room prices to list to compare
         for (RoomType roomType : roomTypes) {
-            listPrice.add(roomType.getPrice() - roomType.getPrice() * roomType.getDealPercentage()/100);
+            listPrice.add(roomType.getPrice() - roomType.getPrice() * roomType.getDealPercentage() / 100);
         }
         // loop list room and return the room that have lowest price
         for (RoomType roomType : roomTypes) {
-            if (roomType.getPrice() - roomType.getPrice() * roomType.getDealPercentage()/100 == Collections.min(listPrice)) {
+            if (roomType.getPrice() - roomType.getPrice() * roomType.getDealPercentage() / 100 == Collections.min(listPrice)) {
                 return roomType;
             }
         }
@@ -289,6 +297,48 @@ public class HotelServiceImpl implements HotelService {
         log.info("Request to check if a hotel had rooms or not");
         Hotel hotel = hotelRepository.getHotelById(hotelId);
         return hotel.getListRoomType().size() != 0;
+    }
+
+    @Override
+    public RatingDTO getRatingByHotel(int hotelId) {
+        log.info("Request to get average user's rating about hotel");
+        RatingDTO ratingDTO = new RatingDTO();
+        // get all booking
+        List<UserBooking> listBookingInHotel = bookingRepository.findUserBookingReviewedByHotelId(hotelId);
+        // get total number booking rated
+        int number = listBookingInHotel.size();
+        // if this hotel has no booking that reviewed
+        if (number == 0) {
+            return new RatingDTO();
+        } else {
+            // get total score
+            float totalService = 0;
+            float totalValueForMoney = 0;
+            float totalCleanliness = 0;
+            float totalLocation = 0;
+            float totalFacilities = 0;
+            for (UserBooking userBooking : listBookingInHotel) {
+                Review review = userBooking.getListReview().iterator().next();
+                totalService = totalService + review.getService();
+                totalValueForMoney = totalValueForMoney + review.getValueForMoney();
+                totalCleanliness = totalCleanliness + review.getCleanliness();
+                totalLocation = totalLocation + review.getLocation();
+                totalFacilities = totalFacilities + review.getFacilities();
+            }
+            // get average score
+            float averageService = totalService / number;
+            float averageValueForMoney = totalValueForMoney / number;
+            float averageCleanliness = totalCleanliness / number;
+            float averageLocation = totalLocation / number;
+            float averageFacilities = totalFacilities / number;
+            // set props
+            ratingDTO.setAverageService(averageService);
+            ratingDTO.setAverageValueForMoney(averageValueForMoney);
+            ratingDTO.setAverageCleanliness(averageCleanliness);
+            ratingDTO.setAverageLocation(averageLocation);
+            ratingDTO.setAverageFacilities(averageFacilities);
+            return ratingDTO;
+        }
     }
 
 }

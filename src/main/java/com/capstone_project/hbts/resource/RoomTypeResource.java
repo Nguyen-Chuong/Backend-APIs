@@ -2,10 +2,13 @@ package com.capstone_project.hbts.resource;
 
 import com.capstone_project.hbts.constants.ErrorConstant;
 import com.capstone_project.hbts.decryption.DataDecryption;
+import com.capstone_project.hbts.dto.Hotel.HotelRatingDTO;
+import com.capstone_project.hbts.dto.RatingDTO;
 import com.capstone_project.hbts.dto.Room.RoomDetailDTO;
 import com.capstone_project.hbts.dto.Room.RoomTypeDTO;
 import com.capstone_project.hbts.request.RoomTypeRequest;
 import com.capstone_project.hbts.response.ApiResponse;
+import com.capstone_project.hbts.service.HotelService;
 import com.capstone_project.hbts.service.RoomTypeService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -32,9 +35,13 @@ public class RoomTypeResource {
 
     private final DataDecryption dataDecryption;
 
-    public RoomTypeResource(RoomTypeService roomTypeService, DataDecryption dataDecryption) {
+    private final HotelService hotelService;
+
+    public RoomTypeResource(RoomTypeService roomTypeService, DataDecryption dataDecryption,
+                            HotelService hotelService) {
         this.roomTypeService = roomTypeService;
         this.dataDecryption = dataDecryption;
+        this.hotelService = hotelService;
     }
 
     /**
@@ -59,8 +66,13 @@ public class RoomTypeResource {
         }
         try {
             List<RoomTypeDTO> list = roomTypeService.loadRoomTypeByHotelIdForSearch(id, dateIn, dateOut);
+            RatingDTO ratingDTO = hotelService.getRatingByHotel(id);
+            // return hotel rating include rooms and average score user rating
+            HotelRatingDTO hotelRatingDTO = new HotelRatingDTO();
+            hotelRatingDTO.setListRooms(list);
+            hotelRatingDTO.setRating(ratingDTO);
             return ResponseEntity.ok()
-                    .body(new ApiResponse<>(200, list,
+                    .body(new ApiResponse<>(200, hotelRatingDTO,
                             null, null));
         } catch (Exception e) {
             e.printStackTrace();
