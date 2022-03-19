@@ -11,8 +11,9 @@ public interface CartService {
      * @param roomTypeId
      * @param quantity
      * @param userId
+     * @param hotelId
      */
-    void addToCart(int roomTypeId, int quantity, int userId);
+    void addToCart(int roomTypeId, int hotelId, int quantity, int userId);
 
     /**
      * to clear cart
@@ -31,5 +32,11 @@ public interface CartService {
      * @param userId
      */
     Integer getTotalNumberItemInCart(int userId);
+
+    /**
+     * to get hotel id by user id
+     * @param userId
+     */
+    Integer getHotelIdByUserId(int userId);
 
 }

@@ -144,6 +144,12 @@ public class ErrorConstant {
     public static final String ERR_ITEM_004_LABEL = "You added over number item limit";
 
     /**
+     * Chi được chọn tối đa 2 phòng của cùng 1 khách sạn
+     */
+    public static final String ERR_ITEM_005 = "ERR_ITEM_005";
+    public static final String ERR_ITEM_005_LABEL = "You can only add rooms of one hotel at a time";
+
+    /**
      * Đã đạt số lượng phòng tối đa có thể book
      */
     public static final String ERR_BOOK_001 = "ERR_BOOK_001";

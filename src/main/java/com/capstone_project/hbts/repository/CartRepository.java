@@ -22,4 +22,7 @@ public interface CartRepository extends JpaRepository<Cart, Integer> {
     @Query(value = "select count(id) from heroku_4fe5c149618a3f9.cart where user_id = :userId", nativeQuery = true)
     Integer getTotalNumberItemInCart(@Param("userId") int userId);
 
+    @Query(value = "select hotel_id from heroku_4fe5c149618a3f9.cart where user_id = :userId", nativeQuery = true)
+    Integer getHotelIdByUserId(@Param("userId") int userId);
+
 }

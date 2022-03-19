@@ -42,22 +42,34 @@ public class CartResource {
     @PatchMapping("/add-to-cart")
     public ResponseEntity<?> addToCart(@RequestHeader("Authorization") String jwttoken,
                                        @RequestParam int roomTypeId,
-                                       @RequestParam int quantity) {
+                                       @RequestParam int quantity,
+                                       @RequestParam int hotelId) {
         log.info("REST request to add item to cart");
 
         int userId = Integer.parseInt(jwtTokenUtil.getUserIdFromToken(jwttoken.substring(7)));
+        // check if user add more than 2 item
         if (quantity > 2) {
             return ResponseEntity.badRequest()
                     .body(new ApiResponse<>(400, null,
                             ErrorConstant.ERR_ITEM_004, ErrorConstant.ERR_ITEM_004_LABEL));
         }
+        // check if user picked some items in db
         if(cartService.getTotalNumberItemInCart(userId) >= 2){
             return ResponseEntity.badRequest()
                     .body(new ApiResponse<>(400, null,
                             ErrorConstant.ERR_ITEM_004, ErrorConstant.ERR_ITEM_004_LABEL));
         }
+        // check if user pick 2 room of 2 hotel
+        int hotel_id = cartService.getHotelIdByUserId(userId);
+        if(hotel_id != 0){
+            if(hotel_id != hotelId){
+                return ResponseEntity.badRequest()
+                        .body(new ApiResponse<>(400, null,
+                                ErrorConstant.ERR_ITEM_005, ErrorConstant.ERR_ITEM_005_LABEL));
+            }
+        }
         try {
-            cartService.addToCart(roomTypeId, quantity, userId);
+            cartService.addToCart(roomTypeId, hotelId, quantity, userId);
             return ResponseEntity.ok()
                     .body(new ApiResponse<>(200, null,
                             null, null));

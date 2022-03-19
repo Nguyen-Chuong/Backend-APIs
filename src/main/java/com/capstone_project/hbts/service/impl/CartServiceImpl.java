@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,7 +28,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void addToCart(int roomTypeId, int quantity, int userId) {
+    public void addToCart(int roomTypeId, int hotelId, int quantity, int userId) {
         log.info("Request to add room type to cart");
         Cart cart = new Cart();
         // set room type id
@@ -38,6 +39,8 @@ public class CartServiceImpl implements CartService {
         Users users = new Users();
         users.setId(userId);
         cart.setUsers(users);
+        // set hotel id
+        cart.setHotelId(hotelId);
         cartRepository.save(cart);
     }
 
@@ -61,6 +64,13 @@ public class CartServiceImpl implements CartService {
     public Integer getTotalNumberItemInCart(int userId) {
         log.info("Request to get total number of item in cart");
         return cartRepository.getTotalNumberItemInCart(userId);
+    }
+
+    @Override
+    public Integer getHotelIdByUserId(int userId) {
+        log.info("Request to get hotel id by user id");
+        Integer hotelId = cartRepository.getHotelIdByUserId(userId);
+        return Objects.requireNonNullElse(hotelId, 0);
     }
 
 }
