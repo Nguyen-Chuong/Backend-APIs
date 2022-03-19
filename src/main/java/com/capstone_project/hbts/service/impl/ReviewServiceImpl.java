@@ -81,4 +81,11 @@ public class ReviewServiceImpl implements ReviewService {
         bookingRepository.save(userBooking);
     }
 
+    @Override
+    public boolean isUserReviewAboutBooking(int bookingId) {
+        log.info("Request to check if user added review about booking or not");
+        Review review = reviewRepository.loadOneReviewByUserBookingId(bookingId);
+        return review != null;
+    }
+
 }

@@ -20,4 +20,10 @@ public interface ReviewService {
      */
     void addReview(ReviewRequest reviewRequest);
 
+    /**
+     * to check if user add a review or not
+     * @param bookingId
+     */
+    boolean isUserReviewAboutBooking(int bookingId);
+
 }

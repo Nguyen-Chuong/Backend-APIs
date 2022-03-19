@@ -82,11 +82,16 @@ public class ReviewResource {
         log.info("REST request to add a new review ");
 
         try {
-            reviewService.addReview(reviewRequest);
-
-            return ResponseEntity.ok()
-                    .body(new ApiResponse<>(200, null,
-                            null, null));
+            if(reviewService.isUserReviewAboutBooking(reviewRequest.getUserBookingId())){
+                return ResponseEntity.badRequest()
+                        .body(new ApiResponse<>(400, null,
+                                ErrorConstant.ERR_REVIEW_001, ErrorConstant.ERR_REVIEW_001_LABEL));
+            }else {
+                reviewService.addReview(reviewRequest);
+                return ResponseEntity.ok()
+                        .body(new ApiResponse<>(200, null,
+                                null, null));
+            }
         }catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.badRequest()

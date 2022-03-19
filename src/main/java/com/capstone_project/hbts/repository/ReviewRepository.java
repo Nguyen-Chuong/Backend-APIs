@@ -38,4 +38,8 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
             @Param("userBookingId") int userBookingId,
             @Param("reviewDate") Timestamp reviewDate);
 
+    @Query(value = "select * from heroku_4fe5c149618a3f9.review where user_booking_id = :userBookingId limit 1",
+            nativeQuery = true)
+    Review loadOneReviewByUserBookingId(@Param("userBookingId") int userBookingId);
+
 }

@@ -155,4 +155,11 @@ public class ErrorConstant {
     public static final String ERR_BOOK_001 = "ERR_BOOK_001";
     public static final String ERR_BOOK_001_LABEL = "You reached the maximum number rooms can book";
 
+    /**
+     * Không thể thêm review
+     */
+    public static final String ERR_REVIEW_001 = "ERR_REVIEW_001";
+    public static final String ERR_REVIEW_001_LABEL = "You have already review about booking";
+
+
 }
