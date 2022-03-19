@@ -252,7 +252,8 @@ public class HotelServiceImpl implements HotelService {
                 hotelRequest.getPhone(),
                 hotelRequest.getStatus(),
                 hotelRequest.getDistrictId(),
-                hotelRequest.getProviderId());
+                hotelRequest.getProviderId(),
+                hotelRequest.getStar());
     }
 
     @Override

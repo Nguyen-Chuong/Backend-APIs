@@ -52,9 +52,9 @@ public interface HotelRepository extends JpaRepository<Hotel, Integer> {
 
     @Modifying
     @Query(value = "insert into heroku_4fe5c149618a3f9.hotel(address, avatar, description, email, " +
-            "name, phone, status, district_id, provider_id) " +
+            "name, phone, status, district_id, provider_id, star) " +
             "values (:address, :avatar, :description, :email, :name, " +
-            ":phone, :status, :districtId, :providerId);",
+            ":phone, :status, :districtId, :providerId, :star)",
             nativeQuery = true)
     void addNewHotel(
             @Param("address") String address,
@@ -65,7 +65,8 @@ public interface HotelRepository extends JpaRepository<Hotel, Integer> {
             @Param("phone") String phone,
             @Param("status") int status,
             @Param("districtId") int districtId,
-            @Param("providerId") int providerId);
+            @Param("providerId") int providerId,
+            @Param("star") int star);
 
     @Modifying
     @Query(value = "UPDATE heroku_4fe5c149618a3f9.hotel set status = 5 WHERE id = :hotelId",

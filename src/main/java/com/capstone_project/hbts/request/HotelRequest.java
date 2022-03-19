@@ -19,6 +19,8 @@ public class HotelRequest {
 
     private String email;
 
+    private int star;
+
     private int status; // not required
 
     private int districtId; // drop down list to pick
