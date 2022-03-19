@@ -26,6 +26,8 @@ public class HotelDTO {
 
     private String email;
 
+    private int star;
+
     private DistrictDTO district;
 
     private long price;
