@@ -35,7 +35,7 @@ public interface BookingRepository extends JpaRepository<UserBooking, Integer> {
     @Query(value = "SELECT * from heroku_4fe5c149618a3f9.user_booking WHERE status = :status and user_id = :userId",
             nativeQuery = true)
     List<UserBooking> findBookingsByStatus(@Param("status") int status,
-                                         @Param("userId") int userId);
+                                           @Param("userId") int userId);
 
     Page<UserBooking> findAllByOrderByBookingDateDesc(Pageable pageable);
 
@@ -50,9 +50,9 @@ public interface BookingRepository extends JpaRepository<UserBooking, Integer> {
 
     @Modifying
     @Query(value = "insert into heroku_4fe5c149618a3f9.user_booking(booked_quantity, booking_date, check_in, " +
-            "check_out, review_status, status, hotel_id, user_id) " +
+            "check_out, review_status, status, hotel_id, user_id, other_requirement) " +
             "values (:bookedQuantity, :bookingDate, :checkIn, :checkOut, " +
-            ":reviewStatus, :status, :hotelId, :userId);",
+            ":reviewStatus, :status, :hotelId, :userId, :otherRequirement)",
             nativeQuery = true)
     void addNewBooking(
             @Param("bookedQuantity") int bookedQuantity,
@@ -62,7 +62,8 @@ public interface BookingRepository extends JpaRepository<UserBooking, Integer> {
             @Param("reviewStatus") int reviewStatus,
             @Param("status") int status,
             @Param("hotelId") int hotelId,
-            @Param("userId") int userId);
+            @Param("userId") int userId,
+            @Param("otherRequirement") String otherRequirement);
 
     @Query(value = "select last_insert_id(id) from heroku_4fe5c149618a3f9.user_booking order" +
             " by last_insert_id(id) desc limit 1;",

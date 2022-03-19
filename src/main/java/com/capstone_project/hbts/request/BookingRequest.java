@@ -28,4 +28,6 @@ public class BookingRequest {
 
     private List<BookingDetailRequest> bookingDetail;
 
+    private String otherRequirement;
+
 }

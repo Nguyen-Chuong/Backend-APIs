@@ -187,7 +187,8 @@ public class BookingServiceImpl implements BookingService {
                 bookingRequest.getReviewStatus(),
                 bookingRequest.getStatus(),
                 bookingRequest.getHotelId(),
-                bookingRequest.getUserId());
+                bookingRequest.getUserId(),
+                bookingRequest.getOtherRequirement());
         // get booking that just insert to db
         Integer bookingId = bookingRepository.getBookingIdJustInsert();
         // new list user booking detail for adding
