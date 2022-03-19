@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -28,7 +29,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void addToCart(int roomTypeId, int hotelId, int quantity, int userId) {
+    public void addToCart(int roomTypeId, int hotelId, int quantity, int userId, Date dateIn, Date dateOut) {
         log.info("Request to add room type to cart");
         Cart cart = new Cart();
         // set room type id
@@ -41,6 +42,8 @@ public class CartServiceImpl implements CartService {
         cart.setUsers(users);
         // set hotel id
         cart.setHotelId(hotelId);
+        cart.setDateIn(dateIn);
+        cart.setDateOut(dateOut);
         cartRepository.save(cart);
     }
 

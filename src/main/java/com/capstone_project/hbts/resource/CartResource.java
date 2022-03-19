@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Date;
 import java.util.List;
 
 @CrossOrigin
@@ -43,7 +44,9 @@ public class CartResource {
     public ResponseEntity<?> addToCart(@RequestHeader("Authorization") String jwttoken,
                                        @RequestParam int roomTypeId,
                                        @RequestParam int quantity,
-                                       @RequestParam int hotelId) {
+                                       @RequestParam int hotelId,
+                                       @RequestParam Date dateIn,
+                                       @RequestParam Date dateOut) {
         log.info("REST request to add item to cart");
 
         int userId = Integer.parseInt(jwtTokenUtil.getUserIdFromToken(jwttoken.substring(7)));
@@ -82,7 +85,7 @@ public class CartResource {
             }
         }
         try {
-            cartService.addToCart(roomTypeId, hotelId, quantity, userId);
+            cartService.addToCart(roomTypeId, hotelId, quantity, userId, dateIn, dateOut);
             return ResponseEntity.ok()
                     .body(new ApiResponse<>(200, null,
                             null, null));

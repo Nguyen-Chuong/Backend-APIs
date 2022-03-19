@@ -2,6 +2,7 @@ package com.capstone_project.hbts.service;
 
 import com.capstone_project.hbts.dto.CartDTO;
 
+import java.sql.Date;
 import java.util.List;
 
 public interface CartService {
@@ -12,8 +13,10 @@ public interface CartService {
      * @param quantity
      * @param userId
      * @param hotelId
+     * @param dateIn
+     * @param dateOut
      */
-    void addToCart(int roomTypeId, int hotelId, int quantity, int userId);
+    void addToCart(int roomTypeId, int hotelId, int quantity, int userId, Date dateIn, Date dateOut);
 
     /**
      * to clear cart
