@@ -11,6 +11,8 @@ public class CartDTO {
 
     private int roomTypeId;
 
+    private int hotelId;
+
     private int quantity;
 
 }

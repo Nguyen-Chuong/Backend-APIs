@@ -29,6 +29,9 @@ public class Cart {
     @Column(name = "room_type_id")
     private int roomTypeId;
 
+    @Column(name = "hotel_id")
+    private int hotelId;
+
     @Column(name = "quantity")
     private int quantity; // room quantity
 
