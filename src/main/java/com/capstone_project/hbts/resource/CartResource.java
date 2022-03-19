@@ -50,41 +50,51 @@ public class CartResource {
         log.info("REST request to add item to cart");
 
         int userId = Integer.parseInt(jwtTokenUtil.getUserIdFromToken(jwttoken.substring(7)));
-        // check if user add more than 2 item a time
-        if (quantity > 2) {
-            return ResponseEntity.badRequest()
-                    .body(new ApiResponse<>(400, null,
-                            ErrorConstant.ERR_ITEM_004, ErrorConstant.ERR_ITEM_004_LABEL));
-        }
-        // check if user add 1 item quantity 1 in the same type, update quantity ++ = 2
-        List<CartDTO> roomTypes = cartService.getRoomTypeByUserId(userId);
-        if(!roomTypes.isEmpty()){
-            if(roomTypes.size() == 1 && roomTypes.get(0).getQuantity() == 1 &&
-                    roomTypes.get(0).getRoomTypeId() == roomTypeId && quantity == 1){
-                // update count ++
-                cartService.updateQuantityCart(roomTypes.get(0).getId());
-                return ResponseEntity.ok()
-                        .body(new ApiResponse<>(200, null,
-                                null, null));
-            }
-        }
-        // check if user picked some items in db and over number allowed
-        int totalItemInCart = cartService.getTotalNumberItemInCart(userId);
-        if(totalItemInCart >= 2 || totalItemInCart + quantity > 2){
-            return ResponseEntity.badRequest()
-                    .body(new ApiResponse<>(400, null,
-                            ErrorConstant.ERR_ITEM_004, ErrorConstant.ERR_ITEM_004_LABEL));
-        }
-        // check if user pick 2 room of 2 hotel
-        int hotel_id = cartService.getHotelIdByUserId(userId);
-        if(hotel_id != 0){
-            if(hotel_id != hotelId){
+        try {
+            // check if user add more than 2 item a time
+            if (quantity > 2) {
                 return ResponseEntity.badRequest()
                         .body(new ApiResponse<>(400, null,
-                                ErrorConstant.ERR_ITEM_005, ErrorConstant.ERR_ITEM_005_LABEL));
+                                ErrorConstant.ERR_ITEM_004, ErrorConstant.ERR_ITEM_004_LABEL));
             }
-        }
-        try {
+            List<CartDTO> roomTypes = cartService.getRoomTypeByUserId(userId);
+            if (!roomTypes.isEmpty()) {
+                // check if user choose an other day, delete the old one and add the new one
+                if (roomTypes.size() == 1 && !dateIn.equals(roomTypes.get(0).getDateIn()) ||
+                        !dateOut.equals(roomTypes.get(0).getDateOut())) {
+                    cartService.deleteCartItem(roomTypes.get(0).getId());
+                    // add the new one
+                    cartService.addToCart(roomTypeId, hotelId, quantity, userId, dateIn, dateOut);
+                    return ResponseEntity.ok()
+                            .body(new ApiResponse<>(200, null,
+                                    null, null));
+                }
+                // check if user add 1 item quantity 1 in the same type, update quantity ++ = 2
+                if (roomTypes.size() == 1 && roomTypes.get(0).getQuantity() == 1 &&
+                        roomTypes.get(0).getRoomTypeId() == roomTypeId && quantity == 1) {
+                    // update count ++
+                    cartService.updateQuantityCart(roomTypes.get(0).getId());
+                    return ResponseEntity.ok()
+                            .body(new ApiResponse<>(200, null,
+                                    null, null));
+                }
+            }
+            // check if user picked some items in db and over number allowed
+            int totalItemInCart = cartService.getTotalNumberItemInCart(userId);
+            if (totalItemInCart >= 2 || totalItemInCart + quantity > 2) {
+                return ResponseEntity.badRequest()
+                        .body(new ApiResponse<>(400, null,
+                                ErrorConstant.ERR_ITEM_004, ErrorConstant.ERR_ITEM_004_LABEL));
+            }
+            // check if user pick 2 room of 2 hotel
+            int hotel_id = cartService.getHotelIdByUserId(userId);
+            if (hotel_id != 0) {
+                if (hotel_id != hotelId) {
+                    return ResponseEntity.badRequest()
+                            .body(new ApiResponse<>(400, null,
+                                    ErrorConstant.ERR_ITEM_005, ErrorConstant.ERR_ITEM_005_LABEL));
+                }
+            }
             cartService.addToCart(roomTypeId, hotelId, quantity, userId, dateIn, dateOut);
             return ResponseEntity.ok()
                     .body(new ApiResponse<>(200, null,

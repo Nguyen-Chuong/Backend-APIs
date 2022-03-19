@@ -92,4 +92,10 @@ public class CartServiceImpl implements CartService {
         cartRepository.updateQuantityCart(cartId);
     }
 
+    @Override
+    public void deleteCartItem(int cartId) {
+        log.info("Request to delete item cart");
+        cartRepository.deleteById(cartId);
+    }
+
 }

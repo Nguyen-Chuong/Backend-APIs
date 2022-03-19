@@ -54,4 +54,10 @@ public interface CartService {
      */
     void updateQuantityCart(int cartId);
 
+    /**
+     * to delete an item in cart
+     * @param cartId
+     */
+    void deleteCartItem(int cartId);
+
 }
