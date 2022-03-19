@@ -3,6 +3,8 @@ package com.capstone_project.hbts.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
+
 @Data
 @NoArgsConstructor
 public class CartDTO {
@@ -14,5 +16,9 @@ public class CartDTO {
     private int hotelId;
 
     private int quantity;
+
+    private Date dateIn;
+
+    private Date dateOut;
 
 }

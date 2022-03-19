@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.sql.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -34,6 +35,12 @@ public class Cart {
 
     @Column(name = "quantity")
     private int quantity; // room quantity
+
+    @Column(name = "date_in")
+    private Date dateIn;
+
+    @Column(name = "date_out")
+    private Date dateOut;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
