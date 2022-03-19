@@ -63,7 +63,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public Integer getTotalNumberItemInCart(int userId) {
         log.info("Request to get total number of item in cart");
-        return cartRepository.getTotalNumberItemInCart(userId);
+        return Objects.requireNonNullElse(cartRepository.getTotalNumberItemInCart(userId), 0);
     }
 
     @Override
@@ -71,6 +71,22 @@ public class CartServiceImpl implements CartService {
         log.info("Request to get hotel id by user id");
         Integer hotelId = cartRepository.getHotelIdByUserId(userId);
         return Objects.requireNonNullElse(hotelId, 0);
+    }
+
+    @Override
+    public List<CartDTO> getRoomTypeByUserId(int userId) {
+        log.info("Request to get room type id by user id");
+        return cartRepository.getRoomTypeByUserId(userId)
+                .stream()
+                .map(item -> modelMapper.map(item, CartDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void updateQuantityCart(int cartId) {
+        log.info("Request to update quantity cart");
+        cartRepository.updateQuantityCart(cartId);
     }
 
 }

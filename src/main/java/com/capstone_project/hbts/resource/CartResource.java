@@ -47,14 +47,27 @@ public class CartResource {
         log.info("REST request to add item to cart");
 
         int userId = Integer.parseInt(jwtTokenUtil.getUserIdFromToken(jwttoken.substring(7)));
-        // check if user add more than 2 item
+        // check if user add more than 2 item a time
         if (quantity > 2) {
             return ResponseEntity.badRequest()
                     .body(new ApiResponse<>(400, null,
                             ErrorConstant.ERR_ITEM_004, ErrorConstant.ERR_ITEM_004_LABEL));
         }
-        // check if user picked some items in db
-        if(cartService.getTotalNumberItemInCart(userId) >= 2){
+        // check if user add 1 item quantity 1 in the same type, update quantity ++ = 2
+        List<CartDTO> roomTypes = cartService.getRoomTypeByUserId(userId);
+        if(!roomTypes.isEmpty()){
+            if(roomTypes.size() == 1 && roomTypes.get(0).getQuantity() == 1 &&
+                    roomTypes.get(0).getRoomTypeId() == roomTypeId && quantity == 1){
+                // update count ++
+                cartService.updateQuantityCart(roomTypes.get(0).getId());
+                return ResponseEntity.ok()
+                        .body(new ApiResponse<>(200, null,
+                                null, null));
+            }
+        }
+        // check if user picked some items in db and over number allowed
+        int totalItemInCart = cartService.getTotalNumberItemInCart(userId);
+        if(totalItemInCart >= 2 || totalItemInCart + quantity > 2){
             return ResponseEntity.badRequest()
                     .body(new ApiResponse<>(400, null,
                             ErrorConstant.ERR_ITEM_004, ErrorConstant.ERR_ITEM_004_LABEL));

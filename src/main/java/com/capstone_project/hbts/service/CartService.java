@@ -39,4 +39,16 @@ public interface CartService {
      */
     Integer getHotelIdByUserId(int userId);
 
+    /**
+     * to get room type by user id
+     * @param userId
+     */
+    List<CartDTO> getRoomTypeByUserId(int userId);
+
+    /**
+     * to update quantity cart
+     * @param cartId
+     */
+    void updateQuantityCart(int cartId);
+
 }

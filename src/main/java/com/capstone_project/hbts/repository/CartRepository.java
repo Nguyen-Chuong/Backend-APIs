@@ -19,10 +19,17 @@ public interface CartRepository extends JpaRepository<Cart, Integer> {
     @Query(value = "select * from heroku_4fe5c149618a3f9.cart where user_id = :userId", nativeQuery = true)
     List<Cart> getAllCartItem(@Param("userId") int userId);
 
-    @Query(value = "select count(id) from heroku_4fe5c149618a3f9.cart where user_id = :userId", nativeQuery = true)
+    @Query(value = "select sum(quantity) from heroku_4fe5c149618a3f9.cart where user_id = :userId", nativeQuery = true)
     Integer getTotalNumberItemInCart(@Param("userId") int userId);
 
     @Query(value = "select hotel_id from heroku_4fe5c149618a3f9.cart where user_id = :userId", nativeQuery = true)
     Integer getHotelIdByUserId(@Param("userId") int userId);
+
+    @Query(value = "select * from heroku_4fe5c149618a3f9.cart where user_id = :userId", nativeQuery = true)
+    List<Cart> getRoomTypeByUserId(@Param("userId") int userId);
+
+    @Modifying
+    @Query(value = "UPDATE heroku_4fe5c149618a3f9.cart set quantity = 2 where id = :cartId", nativeQuery = true)
+    void updateQuantityCart(@Param("cartId") int cartId);
 
 }
