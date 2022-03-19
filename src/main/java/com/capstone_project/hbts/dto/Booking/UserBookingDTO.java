@@ -29,4 +29,6 @@ public class UserBookingDTO {
 
     private int bookedQuantity;
 
+    private String otherRequirement;
+
 }

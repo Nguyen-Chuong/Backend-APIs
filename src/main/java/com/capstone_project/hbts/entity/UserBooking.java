@@ -49,6 +49,9 @@ public class UserBooking {
     @Column(name = "booked_quantity")
     private int bookedQuantity; // number of people booked = total booking detail, process on FE
 
+    @Column(name = "other_requirement")
+    private String otherRequirement;
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "userId")
