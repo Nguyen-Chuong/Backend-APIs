@@ -73,6 +73,12 @@ public class ReviewServiceImpl implements ReviewService {
                 reviewRequest.getReviewDetail(),
                 reviewRequest.getUserBookingId(),
                 new Timestamp(System.currentTimeMillis()));
+        // get user booking need to update review status
+        UserBooking userBooking = bookingRepository.getBookingById(reviewRequest.getUserBookingId());
+        // set status
+        userBooking.setReviewStatus(1);
+        // save it again
+        bookingRepository.save(userBooking);
     }
 
 }
