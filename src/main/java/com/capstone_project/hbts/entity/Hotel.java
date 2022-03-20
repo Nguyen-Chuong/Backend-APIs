@@ -50,6 +50,9 @@ public class Hotel {
     @Column(name = "star")
     private int star;
 
+    @Column(name = "tax_percentage")
+    private int taxPercentage;
+
     @Column(name = "status")
     private int status; // 1-active, 2-deactivated, 3-pending, 4-banned, 5-denied
     // (if pending: approved -> 1-active, denied -> 5-denied)

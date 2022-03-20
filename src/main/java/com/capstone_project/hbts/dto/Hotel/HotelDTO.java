@@ -28,6 +28,8 @@ public class HotelDTO {
 
     private int star;
 
+    private int taxPercentage;
+
     private DistrictDTO district;
 
     private long price;
