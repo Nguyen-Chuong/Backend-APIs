@@ -21,6 +21,8 @@ public class HotelRequest {
 
     private int star;
 
+    private int taxPercentage;
+
     private int status; // not required
 
     private int districtId; // drop down list to pick
