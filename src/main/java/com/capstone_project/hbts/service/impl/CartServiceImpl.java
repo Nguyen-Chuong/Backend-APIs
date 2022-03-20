@@ -29,7 +29,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void addToCart(int roomTypeId, int hotelId, int quantity, int userId, Date dateIn, Date dateOut) {
+    public void addToCart(int roomTypeId, int hotelId, int quantity, int bookedQuantity,
+                          int userId, Date dateIn, Date dateOut) {
         log.info("Request to add room type to cart");
         Cart cart = new Cart();
         // set room type id
@@ -44,6 +45,7 @@ public class CartServiceImpl implements CartService {
         cart.setHotelId(hotelId);
         cart.setDateIn(dateIn);
         cart.setDateOut(dateOut);
+        cart.setBookedQuantity(bookedQuantity);
         cartRepository.save(cart);
     }
 

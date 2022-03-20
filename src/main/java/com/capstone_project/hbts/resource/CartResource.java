@@ -46,7 +46,8 @@ public class CartResource {
                                        @RequestParam int quantity,
                                        @RequestParam int hotelId,
                                        @RequestParam Date dateIn,
-                                       @RequestParam Date dateOut) {
+                                       @RequestParam Date dateOut,
+                                       @RequestParam int bookedQuantity) {
         log.info("REST request to add item to cart");
 
         int userId = Integer.parseInt(jwtTokenUtil.getUserIdFromToken(jwttoken.substring(7)));
@@ -64,7 +65,7 @@ public class CartResource {
                         !dateOut.equals(roomTypes.get(0).getDateOut())) {
                     cartService.deleteCartItem(roomTypes.get(0).getId());
                     // add the new one
-                    cartService.addToCart(roomTypeId, hotelId, quantity, userId, dateIn, dateOut);
+                    cartService.addToCart(roomTypeId, hotelId, quantity, bookedQuantity, userId, dateIn, dateOut);
                     return ResponseEntity.ok()
                             .body(new ApiResponse<>(200, null,
                                     null, null));
@@ -95,7 +96,7 @@ public class CartResource {
                                     ErrorConstant.ERR_ITEM_005, ErrorConstant.ERR_ITEM_005_LABEL));
                 }
             }
-            cartService.addToCart(roomTypeId, hotelId, quantity, userId, dateIn, dateOut);
+            cartService.addToCart(roomTypeId, hotelId, quantity, bookedQuantity, userId, dateIn, dateOut);
             return ResponseEntity.ok()
                     .body(new ApiResponse<>(200, null,
                             null, null));

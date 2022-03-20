@@ -15,8 +15,10 @@ public interface CartService {
      * @param hotelId
      * @param dateIn
      * @param dateOut
+     * @param bookedQuantity
      */
-    void addToCart(int roomTypeId, int hotelId, int quantity, int userId, Date dateIn, Date dateOut);
+    void addToCart(int roomTypeId, int hotelId, int quantity, int bookedQuantity,int userId,
+                   Date dateIn, Date dateOut);
 
     /**
      * to clear cart
