@@ -332,6 +332,7 @@ public class HotelServiceImpl implements HotelService {
             float averageLocation = totalLocation / number;
             float averageFacilities = totalFacilities / number;
             // set props
+            ratingDTO.setTotalReview(number);
             ratingDTO.setAverageService(averageService);
             ratingDTO.setAverageValueForMoney(averageValueForMoney);
             ratingDTO.setAverageCleanliness(averageCleanliness);

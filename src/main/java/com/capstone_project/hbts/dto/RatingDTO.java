@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RatingDTO {
 
+    private int totalReview;
+
     private float averageService;
 
     private float averageValueForMoney;
