@@ -37,6 +37,9 @@ public class Cart {
     @Column(name = "quantity")
     private int quantity; // room quantity
 
+    @Column(name = "booked_quantity")
+    private int bookedQuantity; // number of people
+
     @Column(name = "date_in")
     private Date dateIn;
 

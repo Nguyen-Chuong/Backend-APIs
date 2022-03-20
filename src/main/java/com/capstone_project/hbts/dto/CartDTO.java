@@ -17,6 +17,8 @@ public class CartDTO {
 
     private int quantity;
 
+    private int bookedQuantity;
+
     private Date dateIn;
 
     private Date dateOut;
