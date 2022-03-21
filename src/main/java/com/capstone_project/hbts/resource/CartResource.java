@@ -52,29 +52,14 @@ public class CartResource {
 
         int userId = Integer.parseInt(jwtTokenUtil.getUserIdFromToken(jwttoken.substring(7)));
         try {
-            // check if user add more than 2 item a time
-            if (quantity > 2) {
-                return ResponseEntity.badRequest()
-                        .body(new ApiResponse<>(400, null,
-                                ErrorConstant.ERR_ITEM_004, ErrorConstant.ERR_ITEM_004_LABEL));
-            }
-            List<CartDTO> roomTypes = cartService.getRoomTypeByUserId(userId);
-            if (!roomTypes.isEmpty()) {
+            List<CartDTO> carts = cartService.getAllCartItem(userId);
+            if (!carts.isEmpty()) {
                 // check if user choose an other day, delete the old one and add the new one
-                if (roomTypes.size() == 1 && !dateIn.equals(roomTypes.get(0).getDateIn()) ||
-                        !dateOut.equals(roomTypes.get(0).getDateOut())) {
-                    cartService.deleteCartItem(roomTypes.get(0).getId());
+                if (carts.size() == 1 && !dateIn.equals(carts.get(0).getDateIn()) ||
+                        !dateOut.equals(carts.get(0).getDateOut())) {
+                    cartService.deleteCartItem(carts.get(0).getId());
                     // add the new one
                     cartService.addToCart(roomTypeId, hotelId, quantity, bookedQuantity, userId, dateIn, dateOut);
-                    return ResponseEntity.ok()
-                            .body(new ApiResponse<>(200, null,
-                                    null, null));
-                }
-                // check if user add 1 item quantity 1 in the same type, update quantity ++ = 2
-                if (roomTypes.size() == 1 && roomTypes.get(0).getQuantity() == 1 &&
-                        roomTypes.get(0).getRoomTypeId() == roomTypeId && quantity == 1) {
-                    // update count ++
-                    cartService.updateQuantityCart(roomTypes.get(0).getId());
                     return ResponseEntity.ok()
                             .body(new ApiResponse<>(200, null,
                                     null, null));
@@ -82,7 +67,7 @@ public class CartResource {
             }
             // check if user picked some items in db and over number allowed
             int totalItemInCart = cartService.getTotalNumberItemInCart(userId);
-            if (totalItemInCart >= 2 || totalItemInCart + quantity > 2) {
+            if (totalItemInCart >= 2 || totalItemInCart != 0 && totalItemInCart + quantity > 2) {
                 return ResponseEntity.badRequest()
                         .body(new ApiResponse<>(400, null,
                                 ErrorConstant.ERR_ITEM_004, ErrorConstant.ERR_ITEM_004_LABEL));

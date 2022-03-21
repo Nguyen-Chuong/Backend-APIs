@@ -79,22 +79,6 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<CartDTO> getRoomTypeByUserId(int userId) {
-        log.info("Request to get room type id by user id");
-        return cartRepository.getRoomTypeByUserId(userId)
-                .stream()
-                .map(item -> modelMapper.map(item, CartDTO.class))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    @Transactional
-    public void updateQuantityCart(int cartId) {
-        log.info("Request to update quantity cart");
-        cartRepository.updateQuantityCart(cartId);
-    }
-
-    @Override
     public void deleteCartItem(int cartId) {
         log.info("Request to delete item cart");
         cartRepository.deleteById(cartId);
