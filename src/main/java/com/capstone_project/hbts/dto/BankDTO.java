@@ -13,4 +13,6 @@ public class BankDTO {
 
     private String bankName;
 
+    private String logo;
+
 }

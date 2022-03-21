@@ -30,4 +30,7 @@ public class Bank {
     @Column(name = "bank_name")
     private String bankName;
 
+    @Column(name = "logo")
+    private String logo;
+
 }
