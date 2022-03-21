@@ -64,7 +64,8 @@ public interface BookingService {
     /**
      * add a new booking
      * @param bookingRequest
+     * @return bookingId just inserted
      */
-    void addNewBooking(BookingRequest bookingRequest);
+    Integer addNewBooking(BookingRequest bookingRequest);
 
 }

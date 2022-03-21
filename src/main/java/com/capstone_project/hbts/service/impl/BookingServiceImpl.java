@@ -170,7 +170,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     @Transactional
-    public void addNewBooking(BookingRequest bookingRequest) {
+    public Integer addNewBooking(BookingRequest bookingRequest) {
         log.info("Request to add a new booking");
         // set current time stamp
         bookingRequest.setBookingDate(new Timestamp(System.currentTimeMillis()));
@@ -216,6 +216,7 @@ public class BookingServiceImpl implements BookingService {
         }
         // add all to db using batch processing
         bookingDetailRepository.saveAll(listBookingDetailToAdd);
+        return bookingId;
     }
 
 }

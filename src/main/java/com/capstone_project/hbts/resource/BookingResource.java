@@ -303,9 +303,9 @@ public class BookingResource {
         int userId = Integer.parseInt(jwtTokenUtil.getUserIdFromToken(jwttoken.substring(7)));
         try {
             bookingRequest.setUserId(userId);
-            bookingService.addNewBooking(bookingRequest);
+            int bookingId = bookingService.addNewBooking(bookingRequest);
             return ResponseEntity.ok()
-                    .body(new ApiResponse<>(200, null,
+                    .body(new ApiResponse<>(200, bookingId,
                             null, null));
         } catch (Exception e) {
             e.printStackTrace();
