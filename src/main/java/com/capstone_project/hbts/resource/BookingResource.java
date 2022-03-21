@@ -60,9 +60,9 @@ public class BookingResource {
     public ResponseEntity<?> getUserBooking(@RequestParam String username) {
         log.info("REST request to get list user's booking by username");
         String usernameDecrypted;
-        try{
+        try {
             usernameDecrypted = dataDecryption.convertEncryptedDataToString(username);
-        } catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.badRequest()
                     .body(new ApiResponse<>(400, null,
                             ErrorConstant.ERR_DATA_001, ErrorConstant.ERR_DATA_001_LABEL));
@@ -83,8 +83,7 @@ public class BookingResource {
 
     /**
      * @param reviewStatus
-     * @param jwttoken
-     * return
+     * @param jwttoken     return
      */
     @GetMapping("/bookings-review/{reviewStatus}")
     public ResponseEntity<?> getUserBookingReview(@PathVariable int reviewStatus,
@@ -110,8 +109,7 @@ public class BookingResource {
     // here
 
     /**
-     * @param jwttoken
-     * return
+     * @param jwttoken return
      */
     @GetMapping("/bookings-completed")
     public ResponseEntity<?> getNumberBookingsCompleted(@RequestHeader("Authorization") String jwttoken) {
@@ -134,8 +132,7 @@ public class BookingResource {
 
     /**
      * @param status
-     * @param jwttoken
-     * return
+     * @param jwttoken return
      */
     @GetMapping("/bookings-by-status/{status}")
     public ResponseEntity<?> getUserBookingByStatus(@PathVariable int status,
@@ -159,8 +156,7 @@ public class BookingResource {
 
     /**
      * @param page
-     * @param pageSize
-     * return
+     * @param pageSize return
      */
     @GetMapping("/get-all-booking")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
@@ -186,8 +182,7 @@ public class BookingResource {
     }
 
     /**
-     * @param bookingId
-     * return
+     * @param bookingId return
      */
     @GetMapping("/booking")
     public ResponseEntity<?> getBookingById(@RequestParam String bookingId) {
@@ -290,12 +285,11 @@ public class BookingResource {
     public ResponseEntity<?> addNewBooking(@RequestBody BookingRequest bookingRequest,
                                            @RequestHeader("Authorization") String jwttoken) {
         log.info("REST request to add a new booking");
-        int numberRoomBooked = bookingRequest
+        int numberItemBooked = bookingRequest
                 .getBookingDetail()
-                .stream()
-                .reduce(0, (result, item) -> result + item.getQuantity(), Integer::sum);
-        // number room booking > 2, cannot accept
-        if(numberRoomBooked > 2){
+                .size();
+        // number item booking > 2, cannot accept
+        if (numberItemBooked > 2) {
             return ResponseEntity.badRequest()
                     .body(new ApiResponse<>(400, null,
                             ErrorConstant.ERR_BOOK_001, ErrorConstant.ERR_BOOK_001_LABEL));
