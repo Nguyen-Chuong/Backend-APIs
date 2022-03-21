@@ -47,7 +47,7 @@ public class HotelServiceImpl implements HotelService {
     public int getTotalRoom(Set<RoomType> roomTypes) {
         int totalRoom = 0;
         for (RoomType roomType : roomTypes) {
-            totalRoom = totalRoom + roomType.getAvailableRooms();
+            totalRoom = totalRoom + roomType.getQuantity();
         }
         return totalRoom;
     }
@@ -56,7 +56,7 @@ public class HotelServiceImpl implements HotelService {
     public int getTotalPeople(Set<RoomType> roomTypes) {
         int totalPeople = 0;
         for (RoomType roomType : roomTypes) {
-            totalPeople = totalPeople + roomType.getNumberOfPeople();
+            totalPeople = totalPeople + roomType.getNumberOfPeople() * roomType.getQuantity();
         }
         return totalPeople;
     }
