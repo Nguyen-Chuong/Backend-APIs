@@ -20,9 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,6 +42,11 @@ public class BookingServiceImpl implements BookingService {
     }
 
     public BigDecimal countTotalPaidForABooking(UserBooking userBooking){
+        // get subtract millis second between two date
+        long millisSecond = userBooking.getCheckOut().getTime() - userBooking.getCheckIn().getTime();
+        // get number day
+        int numberDayBooking = (int) millisSecond / (24 * 60 * 60 * 1000);
+
         // get list user booking detail
         Set<UserBookingDetail> userBookingDetails = userBooking.getListUserBookingDetail();
 
@@ -51,9 +55,12 @@ public class BookingServiceImpl implements BookingService {
         for(UserBookingDetail item : userBookingDetails){
             totalPaid = totalPaid
                     .add(item.getPaid() // price for each room type
-                            .multiply(BigDecimal.valueOf(item.getQuantity()))); // quantity
+                            .multiply(BigDecimal.valueOf(item.getQuantity())) // quantity
+                            .multiply(BigDecimal.valueOf(numberDayBooking))); // number day booking
         }
-        return totalPaid;
+        // get tax
+        double tax = (double) userBooking.getHotel().getTaxPercentage() / 100;
+        return totalPaid.multiply(BigDecimal.valueOf(1 + tax));
     }
 
     @Override
