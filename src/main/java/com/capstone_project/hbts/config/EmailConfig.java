@@ -16,7 +16,7 @@ public class EmailConfig {
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
 
-        mailSender.setUsername("travesily.no.rely@gmail.com");
+        mailSender.setUsername("travesily.no.reply@gmail.com");
         mailSender.setPassword("Trung12345@");
 
         Properties props = mailSender.getJavaMailProperties();

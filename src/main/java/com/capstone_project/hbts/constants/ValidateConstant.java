@@ -29,7 +29,7 @@ public class ValidateConstant {
 
     public static final String VNP_ORDER_TYPE = "170000";
 
-    public static final String VNP_RETURN_URL = "https://travesily.herokuapp.com/transaction-info"; // component
+    public static final String VNP_RETURN_URL = "https://travesily.herokuapp.com/book/transaction-info"; // component
 
     public static final String VNP_API_URL = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
 
