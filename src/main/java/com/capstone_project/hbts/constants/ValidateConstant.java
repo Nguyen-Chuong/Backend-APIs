@@ -5,9 +5,12 @@ public class ValidateConstant {
     public static final String PAGE = "0";
 
     public static final String PER_PAGE = "10";
-    // constants config otp
-    public static final String OTP_MESSAGE = "Verification code:";
-    // constants email
+
+    public static final String OTP_MESSAGE = "Hi, \n\nIf you did not make this request, please ignore this email. " +
+            "\nEnter the OTP code below to verify your email \n\nVerification code: ";
+
+    public static final String EMAIL_FOOTER = "\n\nThanks \nRegards, \n\nThis email was sent by Travesily Service Center";
+
     public static final String EMAIL_SUBJECT = "[Verify] Please verify your email";
 
     public static final String DATE_FORMAT = "yyyy-MM-dd";

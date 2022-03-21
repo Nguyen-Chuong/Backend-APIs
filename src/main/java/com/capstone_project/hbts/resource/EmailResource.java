@@ -51,7 +51,8 @@ public class EmailResource {
         }
         try {
             int otp = otpService.generateOtp(emailDecrypted);
-            emailService.send(emailDecrypted, ValidateConstant.EMAIL_SUBJECT, ValidateConstant.OTP_MESSAGE + otp);
+            emailService.send(emailDecrypted, ValidateConstant.EMAIL_SUBJECT,
+                    ValidateConstant.OTP_MESSAGE + otp + ValidateConstant.EMAIL_FOOTER);
             return ResponseEntity.ok()
                     .body(new ApiResponse<>(200, otp,
                             null, null));
