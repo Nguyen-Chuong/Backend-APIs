@@ -65,7 +65,7 @@ public class CartResource {
                                     null, null));
                 }
             }
-            // check if user picked some items in db and over number allowed
+            // check if user picked over number item allowed
             int totalItemInCart = cartService.getTotalNumberItemInCart(userId);
             if (totalItemInCart >= 2 || totalItemInCart != 0 && totalItemInCart + quantity > 2) {
                 return ResponseEntity.badRequest()

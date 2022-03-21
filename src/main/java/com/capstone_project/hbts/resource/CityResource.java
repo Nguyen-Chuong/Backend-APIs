@@ -27,6 +27,7 @@ public class CityResource {
 
     /**
      * @param
+     * @apiNote to get all city
      */
     @GetMapping("/get-city")
     public ResponseEntity<?> getAllCity(){

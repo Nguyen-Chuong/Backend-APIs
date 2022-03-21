@@ -25,6 +25,12 @@ public class PaymentResource {
         this.paymentService = paymentService;
     }
 
+    /**
+     * @param paymentDTO
+     * @apiNote the first time booking, user have to choose payment method immediately
+     * Since the second times, user can choose cod, so they can pay the money at hotel
+     * return
+     */
     @PostMapping("/create-payment")
     public ResponseEntity<?> createPayment(@RequestBody PaymentDTO paymentDTO) {
         log.info("REST request to create payment");

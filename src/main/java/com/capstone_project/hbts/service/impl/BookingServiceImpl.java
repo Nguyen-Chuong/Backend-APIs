@@ -219,4 +219,11 @@ public class BookingServiceImpl implements BookingService {
         return bookingId;
     }
 
+    @Override
+    @Transactional
+    public void completeBooking(int bookingId) {
+        log.info("Request to complete booking");
+        bookingRepository.completeBooking(bookingId);
+    }
+
 }

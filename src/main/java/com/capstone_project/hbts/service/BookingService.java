@@ -68,4 +68,10 @@ public interface BookingService {
      */
     Integer addNewBooking(BookingRequest bookingRequest);
 
+    /**
+     * complete a booking: if pay: call this api after that, if cod:
+     * @param bookingId
+     */
+    void completeBooking(int bookingId);
+
 }

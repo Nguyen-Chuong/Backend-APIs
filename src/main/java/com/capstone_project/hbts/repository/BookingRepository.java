@@ -73,4 +73,8 @@ public interface BookingRepository extends JpaRepository<UserBooking, Integer> {
             nativeQuery = true)
     Integer getBookingIdJustInsert();
 
+    @Modifying
+    @Query(value = "UPDATE heroku_4fe5c149618a3f9.user_booking SET status = 2 WHERE id = :bookingId", nativeQuery = true)
+    void completeBooking(@Param("bookingId") int bookingId);
+
 }

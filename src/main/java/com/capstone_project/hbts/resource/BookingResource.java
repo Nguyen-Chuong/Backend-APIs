@@ -315,4 +315,33 @@ public class BookingResource {
         }
     }
 
+    /**
+     * @param bookingId
+     * @apiNote for user to complete booking, called when user complete transaction
+     * return
+     */
+    @PatchMapping("/complete-booking")
+    public ResponseEntity<?> completeBooking(@RequestParam String bookingId) {
+        log.info("REST request to complete booking");
+        int id;
+        try {
+            id = dataDecryption.convertEncryptedDataToInt(bookingId);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(400, null,
+                            ErrorConstant.ERR_DATA_001, ErrorConstant.ERR_DATA_001_LABEL));
+        }
+        try {
+            bookingService.completeBooking(id);
+            return ResponseEntity.ok()
+                    .body(new ApiResponse<>(200, null,
+                            null, null));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(400, null,
+                            ErrorConstant.ERR_000, ErrorConstant.ERR_000_LABEL));
+        }
+    }
+
 }
