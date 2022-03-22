@@ -161,4 +161,10 @@ public class ErrorConstant {
     public static final String ERR_REVIEW_001 = "ERR_REVIEW_001";
     public static final String ERR_REVIEW_001_LABEL = "You have already review about booking";
 
+    /**
+     * Bạn đã thực hiện giao dịch này
+     */
+    public static final String ERR_TRAN_001 = "ERR_TRAN_001";
+    public static final String ERR_TRAN_001_LABEL = "You have already made this transaction";
+
 }

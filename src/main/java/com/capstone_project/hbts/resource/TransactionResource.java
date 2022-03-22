@@ -59,13 +59,19 @@ public class TransactionResource {
         int userId = Integer.parseInt(jwtTokenUtil.getUserIdFromToken(jwttoken.substring(7)));
 
         try {
-            TransactionDTO transactionDTO = transactionService.getTransactionInfo(vnp_Amount, vnp_BankCode,
-                    vnp_BankTranNo, vnp_CardType, vnp_OrderInfo, vnp_PayDate, vnp_ResponseCode,
-                    vnp_TransactionNo, vnp_TxnRef, userId);
+            if (transactionService.isTransactionExisted(vnp_TransactionNo)) {
+                return ResponseEntity.badRequest()
+                        .body(new ApiResponse<>(400, null,
+                                ErrorConstant.ERR_TRAN_001, ErrorConstant.ERR_TRAN_001_LABEL));
+            } else {
+                TransactionDTO transactionDTO = transactionService.getTransactionInfo(vnp_Amount, vnp_BankCode,
+                        vnp_BankTranNo, vnp_CardType, vnp_OrderInfo, vnp_PayDate, vnp_ResponseCode,
+                        vnp_TransactionNo, vnp_TxnRef, userId);
 
-            return ResponseEntity.ok()
-                    .body(new ApiResponse<>(200, transactionDTO,
-                            null, null));
+                return ResponseEntity.ok()
+                        .body(new ApiResponse<>(200, transactionDTO,
+                                null, null));
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest()

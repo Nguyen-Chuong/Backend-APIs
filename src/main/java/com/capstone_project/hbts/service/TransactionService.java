@@ -23,4 +23,10 @@ public interface TransactionService {
                                       String orderInfo, String payDate, String responseCode, String transactionNo,
                                       long idService, int userId);
 
+    /**
+     * to check if transaction no existed
+     * @param transactionNo
+     */
+    boolean isTransactionExisted(String transactionNo);
+
 }

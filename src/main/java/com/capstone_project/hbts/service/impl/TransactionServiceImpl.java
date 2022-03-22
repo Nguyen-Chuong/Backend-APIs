@@ -50,4 +50,10 @@ public class TransactionServiceImpl implements TransactionService {
         return modelMapper.map(transactionRecord, TransactionDTO.class);
     }
 
+    @Override
+    public boolean isTransactionExisted(String transactionNo) {
+        log.info("Request to check if transaction existed");
+        return transactionRepository.getIdByTransactionNo(transactionNo) != null;
+    }
+
 }
