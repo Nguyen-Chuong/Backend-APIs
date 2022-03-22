@@ -83,7 +83,8 @@ public class BookingResource {
 
     /**
      * @param reviewStatus
-     * @param jwttoken     return
+     * @param jwttoken
+     * return
      */
     @GetMapping("/bookings-review/{reviewStatus}")
     public ResponseEntity<?> getUserBookingReview(@PathVariable int reviewStatus,
@@ -105,11 +106,9 @@ public class BookingResource {
         }
     }
 
-    // modify booking later when user cancelled or do smth
-    // here
-
     /**
-     * @param jwttoken return
+     * @param jwttoken
+     * return
      */
     @GetMapping("/bookings-completed")
     public ResponseEntity<?> getNumberBookingsCompleted(@RequestHeader("Authorization") String jwttoken) {
@@ -132,7 +131,8 @@ public class BookingResource {
 
     /**
      * @param status
-     * @param jwttoken return
+     * @param jwttoken
+     * return
      */
     @GetMapping("/bookings-by-status/{status}")
     public ResponseEntity<?> getUserBookingByStatus(@PathVariable int status,
@@ -156,7 +156,8 @@ public class BookingResource {
 
     /**
      * @param page
-     * @param pageSize return
+     * @param pageSize
+     * return
      */
     @GetMapping("/get-all-booking")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
@@ -182,7 +183,8 @@ public class BookingResource {
     }
 
     /**
-     * @param bookingId return
+     * @param bookingId
+     * return
      */
     @GetMapping("/booking")
     public ResponseEntity<?> getBookingById(@RequestParam String bookingId) {

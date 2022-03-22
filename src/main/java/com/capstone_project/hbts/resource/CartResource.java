@@ -37,6 +37,10 @@ public class CartResource {
      * @param jwttoken
      * @param roomTypeId
      * @param quantity
+     * @param hotelId
+     * @param dateIn
+     * @param dateOut
+     * @param bookedQuantity
      * @apiNote for user to add item to cart when they are booking
      * return
      */

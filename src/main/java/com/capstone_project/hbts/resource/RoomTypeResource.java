@@ -46,6 +46,8 @@ public class RoomTypeResource {
 
     /**
      * @param hotelId
+     * @param dateIn
+     * @param dateOut
      * @apiNote public for guest can view
      * return
      */
@@ -268,6 +270,8 @@ public class RoomTypeResource {
 
     /**
      * @param roomTypeId
+     * @param dateIn
+     * @param dateOut
      * @apiNote public for guest can view
      * return
      */

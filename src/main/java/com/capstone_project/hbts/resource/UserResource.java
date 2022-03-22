@@ -48,7 +48,6 @@ public class UserResource {
     // add a new admin account / assign by type
     // admin and manager account cannot be registered
     @PostMapping("/register/user")
-//    @PreAuthorize("hasAuthority('ADMIN')") // get via table authority
     public ResponseEntity<?> registerUser(@RequestBody UserRequest userRequest){
         log.info("REST request to register a new user : {}", userRequest);
 

@@ -302,6 +302,7 @@ public class HotelResource {
 
     /**
      * @param jwttoken
+     * @param hotelRequest
      * @apiNote for provider to add their hotel, they have to complete adding
      * at least one room type to add a new request to post hotel
      * @return

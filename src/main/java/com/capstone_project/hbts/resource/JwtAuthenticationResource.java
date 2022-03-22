@@ -13,6 +13,7 @@ import com.capstone_project.hbts.service.JwtService;
 import com.capstone_project.hbts.service.ProviderService;
 import com.capstone_project.hbts.service.UserService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -45,8 +46,9 @@ public class JwtAuthenticationResource {
     private final JwtService jwtService;
 
     public JwtAuthenticationResource(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil,
-                                     UserDetailsService userDetailsService, UserService userService,
-                                     ProviderService providerService, JwtService jwtService) {
+                                     @Qualifier("customUserDetailsService") UserDetailsService userDetailsService,
+                                     UserService userService, ProviderService providerService,
+                                     JwtService jwtService) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenUtil = jwtTokenUtil;
         this.userDetailsService = userDetailsService;

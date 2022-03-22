@@ -51,6 +51,7 @@ public class RequestResource {
 
     /**
      * @param jwttoken
+     * @param postHotelRequest
      * @apiNote for provider to add their request to post hotel after completing
      * enough hotel information
      * @return
@@ -158,6 +159,8 @@ public class RequestResource {
 
     /**
      * @param status
+     * @param page
+     * @param pageSize
      * @apiNote for admin/manager to view list provider's request
      * @return
      */
