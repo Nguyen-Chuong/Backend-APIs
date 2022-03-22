@@ -266,4 +266,37 @@ public class RoomTypeResource {
         }
     }
 
+    /**
+     * @param roomTypeId
+     * @apiNote public for guest can view
+     * return
+     */
+    @GetMapping("/room-detail")
+    public ResponseEntity<?> getRoomDetailAndAvailableQuantity(@RequestParam String roomTypeId,
+                                                               @RequestParam @DateTimeFormat
+                                                                       (pattern = "yyyy-MM-dd") Date dateIn,
+                                                               @RequestParam @DateTimeFormat
+                                                                       (pattern = "yyyy-MM-dd") Date dateOut) {
+        log.info("REST request to get detail room type by room type id and available quantity");
+        int id;
+        try {
+            id = dataDecryption.convertEncryptedDataToInt(roomTypeId);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(400, null,
+                            ErrorConstant.ERR_DATA_001, ErrorConstant.ERR_DATA_001_LABEL));
+        }
+        try {
+            RoomDetailDTO roomDetailDTO = roomTypeService.viewRoomDetailWithAvailableQuantity(id, dateIn, dateOut);
+            return ResponseEntity.ok()
+                    .body(new ApiResponse<>(200, roomDetailDTO,
+                            null, null));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(400, null,
+                            ErrorConstant.ERR_000, ErrorConstant.ERR_000_LABEL));
+        }
+    }
+
 }

@@ -66,4 +66,10 @@ public interface RoomTypeService {
      */
     List<RoomTypeDTO> loadRoomTypeByHotelId(int hotelId);
 
+    /**
+     * View detail of a room type with available room base on date in date out
+     * @param roomTypeId
+     */
+    RoomDetailDTO viewRoomDetailWithAvailableQuantity(int roomTypeId, Date dateIn, Date dateOut);
+
 }

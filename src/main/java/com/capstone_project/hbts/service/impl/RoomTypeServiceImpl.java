@@ -301,4 +301,28 @@ public class RoomTypeServiceImpl implements RoomTypeService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public RoomDetailDTO viewRoomDetailWithAvailableQuantity(int roomTypeId, Date dateIn, Date dateOut) {
+        log.info("Request to view detail room type with available room base on date in date out");
+        // get room type by id
+        RoomType roomType = roomTypeRepository.getRoomTypeById(roomTypeId);
+        // get list user booking in this room type
+        List<UserBooking> userBookingList = roomType.getListUserBookingDetail()
+                .stream()
+                .map(UserBookingDetail::getUserBooking)
+                .collect(Collectors.toList());
+
+        RoomDetailDTO roomDetailDTO = viewRoomDetail(roomTypeId);
+
+        int numberRoomLeft = numberOfRoomLeft(roomType, userBookingList, dateIn, dateOut);
+        if (numberRoomLeft <= 0) {
+            // set available room = 0
+            roomDetailDTO.setAvailableRooms(0);
+        } else {
+            // set available room left
+            roomDetailDTO.setAvailableRooms(numberRoomLeft);
+        }
+        return roomDetailDTO;
+    }
+
 }
