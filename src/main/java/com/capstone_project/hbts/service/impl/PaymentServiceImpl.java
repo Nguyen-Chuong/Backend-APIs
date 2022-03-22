@@ -53,7 +53,7 @@ public class PaymentServiceImpl implements PaymentService {
         vnp_Params.put("vnp_Command", ValidateConstant.VNP_COMMAND);
         vnp_Params.put("vnp_TmnCode", ValidateConstant.VNP_TMN_CODE);
         vnp_Params.put("vnp_Amount", String.valueOf(paymentDTO.getAmount()));
-        vnp_Params.put("vnp_BankCode", paymentDTO.getBankCode());
+        vnp_Params.put("vnp_BankCode", null);
         // get current time zone to put created date
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
