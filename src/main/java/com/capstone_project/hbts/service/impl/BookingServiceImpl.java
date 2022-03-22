@@ -237,4 +237,11 @@ public class BookingServiceImpl implements BookingService {
         bookingRepository.completeBooking(bookingId);
     }
 
+    @Override
+    @Transactional
+    public void updateBookingType(int bookingId, int type) {
+        log.info("Request to change type booking");
+        bookingRepository.updateBookingType(bookingId, type);
+    }
+
 }

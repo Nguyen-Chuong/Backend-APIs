@@ -69,9 +69,15 @@ public interface BookingService {
     Integer addNewBooking(BookingRequest bookingRequest);
 
     /**
-     * complete a booking: if pay: call this api after that, if cod:
+     * complete a booking: if pay: call this api after that, if cod: hotel confirm
      * @param bookingId
      */
     void completeBooking(int bookingId);
+
+    /**
+     * to update type of booking: 1 - cod, 2 - ATM
+     * @param bookingId
+     */
+    void updateBookingType(int bookingId, int type);
 
 }

@@ -340,4 +340,34 @@ public class BookingResource {
         }
     }
 
+    /**
+     * @param bookingId
+     * @param type
+     * @apiNote for changing type booking, 1 - cod, 2 - payment
+     * return
+     */
+    @PatchMapping("/update-booking-type")
+    public ResponseEntity<?> updateBookingType(@RequestParam String bookingId, @RequestParam int type) {
+        log.info("REST request to update booking type");
+        int id;
+        try {
+            id = dataDecryption.convertEncryptedDataToInt(bookingId);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(400, null,
+                            ErrorConstant.ERR_DATA_001, ErrorConstant.ERR_DATA_001_LABEL));
+        }
+        try {
+            bookingService.updateBookingType(id, type);
+            return ResponseEntity.ok()
+                    .body(new ApiResponse<>(200, null,
+                            null, null));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(400, null,
+                            ErrorConstant.ERR_000, ErrorConstant.ERR_000_LABEL));
+        }
+    }
+
 }
