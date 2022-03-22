@@ -9,8 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Integer> {
 
-    @Query(value = "select id from heroku_4fe5c149618a3f9.transaction where transaction_no = :transactionNo",
-            nativeQuery = true)
+    @Query(value = "select t.id from Transaction t where t.transactionNo = :transactionNo")
     Integer getIdByTransactionNo(@Param("transactionNo") String transactionNo);
 
 }

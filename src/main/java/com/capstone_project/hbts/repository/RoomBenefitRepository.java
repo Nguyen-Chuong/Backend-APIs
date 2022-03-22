@@ -13,8 +13,7 @@ public interface RoomBenefitRepository extends JpaRepository<RoomBenefit, Intege
 
     List<RoomBenefit> getAllByRoomTypeId(int roomTypeId);
 
-    @Query(value = "SELECT benefit_id from heroku_4fe5c149618a3f9.room_type_benefit WHERE room_type_id = :roomTypeId",
-            nativeQuery = true)
+    @Query(value = "SELECT r.benefit.id from RoomBenefit r WHERE r.roomType.id = :roomTypeId")
     List<Integer> getListBenefitIds(@Param("roomTypeId") int roomTypeId);
 
 }

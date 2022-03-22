@@ -19,11 +19,10 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
     @Query(value = "insert into heroku_4fe5c149618a3f9.request(request_date, status, hotel_id, provider_id) " +
             "values (:requestDate, :status, :hotelId, :providerId)",
             nativeQuery = true)
-    void addNewRequest(
-            @Param("requestDate") Timestamp requestDate,
-            @Param("status") int status,
-            @Param("hotelId") int hotelId,
-            @Param("providerId") int providerId);
+    void addNewRequest(@Param("requestDate") Timestamp requestDate,
+                       @Param("status") int status,
+                       @Param("hotelId") int hotelId,
+                       @Param("providerId") int providerId);
 
     @Modifying
     @Query(value = "UPDATE heroku_4fe5c149618a3f9.request set status = 2 where id = :requestId",
@@ -39,20 +38,17 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
             nativeQuery = true)
     void denyRequest(@Param("requestId") int requestId);
 
-    @Query(value = "select * from heroku_4fe5c149618a3f9.request where status = :status ORDER BY request_date DESC",
-            nativeQuery = true)
+    @Query(value = "select r from Request r where r.status = :status ORDER BY r.requestDate DESC")
     Page<Request> getAllRequestByStatus(@Param("status") int status, Pageable pageable);
 
     Page<Request> findAllByOrderByRequestDateDesc(Pageable pageable);
 
-    @Query(value = "select status from heroku_4fe5c149618a3f9.request where hotel_id = :hotelId",
-            nativeQuery = true)
+    @Query(value = "select r.status from Request r where r.hotel.id = :hotelId")
     List<Integer> getRequestStatusByHotelId(@Param("hotelId") int hotelId);
 
     List<Request> getAllByProviderIdOrderByRequestDateDesc(int providerId);
 
-    @Query(value = "SELECT status FROM heroku_4fe5c149618a3f9.request WHERE id = :requestId",
-            nativeQuery = true)
+    @Query(value = "SELECT r.status FROM Request r WHERE r.id = :requestId")
     Integer viewRequestStatus(@Param("requestId") int requestId);
 
     @Modifying

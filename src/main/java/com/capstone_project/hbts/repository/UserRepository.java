@@ -22,56 +22,48 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
     @Query(value = "UPDATE heroku_4fe5c149618a3f9.users SET password = :newPass " +
             "WHERE heroku_4fe5c149618a3f9.users.username = :username",
             nativeQuery = true)
-    void changePass(
-            @Param("username") String username,
-            @Param("newPass") String newPass);
+    void changePass(@Param("username") String username,
+                    @Param("newPass") String newPass);
 
-    @Query(value = "SELECT password from heroku_4fe5c149618a3f9.users " +
-            "WHERE heroku_4fe5c149618a3f9.users.username = :username",
-            nativeQuery = true)
+    @Query(value = "SELECT u.password from Users u WHERE u.username = :username")
     String getOldPassword(@Param("username") String username);
 
     @Modifying
     @Query(value = "UPDATE heroku_4fe5c149618a3f9.users SET firstname = :firstName, lastname = :lastName, phone = :phone, " +
             "address = :address, avatar = :avatar, spend = :spend WHERE heroku_4fe5c149618a3f9.users.id = :id",
             nativeQuery = true)
-    void updateUserProfile(
-            @Param("firstName") String firstName,
-            @Param("lastName") String lastName,
-            @Param("phone") String phone,
-            @Param("address") String address,
-            @Param("avatar") String avatar,
-            @Param("spend") BigDecimal spend,
-            @Param("id") Integer id);
+    void updateUserProfile(@Param("firstName") String firstName,
+                           @Param("lastName") String lastName,
+                           @Param("phone") String phone,
+                           @Param("address") String address,
+                           @Param("avatar") String avatar,
+                           @Param("spend") BigDecimal spend,
+                           @Param("id") Integer id);
 
-    @Query(value = "select username from heroku_4fe5c149618a3f9.users where username = :username",
-            nativeQuery = true)
+    @Query(value = "select u.username from Users u where u.username = :username")
     String getUsername(@Param("username") String username);
 
-    @Query(value = "select email from heroku_4fe5c149618a3f9.users where email = :email",
-            nativeQuery = true)
+    @Query(value = "select u.email from Users u where u.email = :email")
     String getEmail(@Param("email") String email);
 
     @Modifying
     @Query(value = "UPDATE heroku_4fe5c149618a3f9.users SET id_vip = :idVip " +
             "WHERE heroku_4fe5c149618a3f9.users.id = :userId",
             nativeQuery = true)
-    void updateVipStatus(
-            @Param("idVip") int idVip,
-            @Param("userId") int userId);
+    void updateVipStatus(@Param("idVip") int idVip,
+                         @Param("userId") int userId);
 
     @Modifying
     @Query(value = "UPDATE heroku_4fe5c149618a3f9.users SET password = :newPass " +
             "WHERE heroku_4fe5c149618a3f9.users.email = :email",
             nativeQuery = true)
-    void changeForgotPassword(
-            @Param("email") String email,
-            @Param("newPass") String newPass);
+    void changeForgotPassword(@Param("email") String email,
+                              @Param("newPass") String newPass);
 
-    @Query(value = "SELECT * from heroku_4fe5c149618a3f9.users", nativeQuery = true)
+    @Query(value = "SELECT u from Users u ")
     Page<Users> findAllUser(Pageable pageable);
 
-    @Query(value = "SELECT * from heroku_4fe5c149618a3f9.users WHERE type = 1", nativeQuery = true)
+    @Query(value = "SELECT u from Users u WHERE u.type = 1")
     List<Users> findAllManager();
 
     @Modifying

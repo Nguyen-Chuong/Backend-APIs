@@ -9,8 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ImageRepository extends JpaRepository<Image, Integer> {
 
-    @Query(value = "SELECT count(id) FROM heroku_4fe5c149618a3f9.image WHERE room_type_id = :roomTypeId",
-            nativeQuery = true)
+    @Query(value = "SELECT count(i.id) FROM Image i WHERE i.roomType.id = :roomTypeId")
     Integer getTotalNumberOfRoomImage(@Param("roomTypeId") int roomTypeId);
 
     @Query(value = "SELECT * FROM heroku_4fe5c149618a3f9.image WHERE id = :id limit 1",

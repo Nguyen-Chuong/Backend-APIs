@@ -16,38 +16,32 @@ public interface ProviderRepository extends JpaRepository<Provider, Integer> {
 
     Provider getProviderByEmail(String email);
 
-    @Query(value = "select username from heroku_4fe5c149618a3f9.provider where username = :username",
-            nativeQuery = true)
+    @Query(value = "select p.username from Provider p where p.username = :username")
     String getUsername(@Param("username") String username);
 
-    @Query(value = "select email from heroku_4fe5c149618a3f9.provider where email = :email",
-            nativeQuery = true)
+    @Query(value = "select p.email from Provider p where p.email = :email")
     String getEmail(@Param("email") String email);
 
     @Modifying
     @Query(value = "UPDATE heroku_4fe5c149618a3f9.provider SET provider_name = :providerName, phone = :phone, " +
             "address = :address WHERE heroku_4fe5c149618a3f9.provider.id = :id",
             nativeQuery = true)
-    void updateProviderProfile(
-            @Param("providerName") String providerName,
-            @Param("phone") String phone,
-            @Param("address") String address,
-            @Param("id") Integer id);
+    void updateProviderProfile(@Param("providerName") String providerName,
+                               @Param("phone") String phone,
+                               @Param("address") String address,
+                               @Param("id") Integer id);
 
     @Modifying
     @Query(value = "UPDATE heroku_4fe5c149618a3f9.provider SET password = :newPass " +
             "WHERE heroku_4fe5c149618a3f9.provider.username = :username",
             nativeQuery = true)
-    void changePass(
-            @Param("username") String username,
-            @Param("newPass") String newPass);
+    void changePass(@Param("username") String username,
+                    @Param("newPass") String newPass);
 
-    @Query(value = "SELECT password from heroku_4fe5c149618a3f9.provider " +
-            "WHERE heroku_4fe5c149618a3f9.provider.username = :username",
-            nativeQuery = true)
+    @Query(value = "SELECT p.password from Provider p WHERE p.username = :username")
     String getOldPassword(@Param("username") String username);
 
-    @Query(value = "SELECT * from heroku_4fe5c149618a3f9.provider", nativeQuery = true)
+    @Query(value = "SELECT p from Provider p ")
     Page<Provider> findAllProvider(Pageable pageable);
 
     @Modifying

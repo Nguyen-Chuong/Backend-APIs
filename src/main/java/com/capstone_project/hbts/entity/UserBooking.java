@@ -64,7 +64,7 @@ public class UserBooking {
     @JoinColumn(name = "hotelId")
     private Hotel hotel;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userBooking_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userBooking")
     private Set<Review> listReview;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userBooking")

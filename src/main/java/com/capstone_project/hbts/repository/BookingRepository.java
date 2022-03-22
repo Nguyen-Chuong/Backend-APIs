@@ -15,28 +15,26 @@ import java.util.List;
 @Repository
 public interface BookingRepository extends JpaRepository<UserBooking, Integer> {
 
-    @Query(value = "SELECT * from heroku_4fe5c149618a3f9.user_booking WHERE user_id = :userId", nativeQuery = true)
+    @Query(value = "SELECT u from UserBooking u WHERE u.users.id = :userId")
     List<UserBooking> findAllByUserId(@Param("userId") int userId);
 
-    @Query(value = "SELECT * from heroku_4fe5c149618a3f9.user_booking WHERE review_status = :reviewStatus " +
-            "and user_id = :userId", nativeQuery = true)
+    @Query(value = "SELECT u from UserBooking u WHERE u.reviewStatus = :reviewStatus and u.users.id = :userId")
     List<UserBooking> findBookingsReview(@Param("reviewStatus") int reviewStatus,
                                          @Param("userId") int userId);
 
-    @Query(value = "SELECT * from heroku_4fe5c149618a3f9.user_booking WHERE hotel_id = :hotelId", nativeQuery = true)
+    @Query(value = "SELECT u from UserBooking u WHERE u.hotel.id = :hotelId")
     List<UserBooking> findUserBookingByHotelId(@Param("hotelId") int hotelId);
 
-    @Query(value = "SELECT * from heroku_4fe5c149618a3f9.user_booking WHERE hotel_id = :hotelId and review_status = 1", nativeQuery = true)
+    @Query(value = "SELECT u from UserBooking u WHERE u.hotel.id = :hotelId and u.reviewStatus = 1")
     List<UserBooking> findUserBookingReviewedByHotelId(@Param("hotelId") int hotelId);
 
-    // status user booking: cancelled, completed, when check vip status, only get number of booking that
-    // have been completed, conditionally status = 1 for completed, may change later
-    @Query(value = "SELECT count(id) from heroku_4fe5c149618a3f9.user_booking WHERE user_id = :userId and status = 1",
+    // when check vip status, only get number of booking that
+    // have been completed, conditionally status = 2 for completed
+    @Query(value = "SELECT count(id) from heroku_4fe5c149618a3f9.user_booking WHERE user_id = :userId and status = 2",
             nativeQuery = true)
     int numberBookingCompleted(@Param("userId") int userId);
 
-    @Query(value = "SELECT * from heroku_4fe5c149618a3f9.user_booking WHERE status = :status and user_id = :userId",
-            nativeQuery = true)
+    @Query(value = "SELECT u from UserBooking u WHERE u.status = :status and u.users.id = :userId")
     List<UserBooking> findBookingsByStatus(@Param("status") int status,
                                            @Param("userId") int userId);
 
@@ -57,16 +55,15 @@ public interface BookingRepository extends JpaRepository<UserBooking, Integer> {
             "values (:bookedQuantity, :bookingDate, :checkIn, :checkOut, " +
             ":reviewStatus, :status, :hotelId, :userId, :otherRequirement)",
             nativeQuery = true)
-    void addNewBooking(
-            @Param("bookedQuantity") int bookedQuantity,
-            @Param("bookingDate") Timestamp bookingDate,
-            @Param("checkIn") Timestamp checkIn,
-            @Param("checkOut") Timestamp checkOut,
-            @Param("reviewStatus") int reviewStatus,
-            @Param("status") int status,
-            @Param("hotelId") int hotelId,
-            @Param("userId") int userId,
-            @Param("otherRequirement") String otherRequirement);
+    void addNewBooking(@Param("bookedQuantity") int bookedQuantity,
+                       @Param("bookingDate") Timestamp bookingDate,
+                       @Param("checkIn") Timestamp checkIn,
+                       @Param("checkOut") Timestamp checkOut,
+                       @Param("reviewStatus") int reviewStatus,
+                       @Param("status") int status,
+                       @Param("hotelId") int hotelId,
+                       @Param("userId") int userId,
+                       @Param("otherRequirement") String otherRequirement);
 
     @Query(value = "select last_insert_id(id) from heroku_4fe5c149618a3f9.user_booking order" +
             " by last_insert_id(id) desc limit 1;",

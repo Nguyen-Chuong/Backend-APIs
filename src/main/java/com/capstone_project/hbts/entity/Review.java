@@ -53,7 +53,7 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name = "userBooking_Id")
-    private UserBooking userBooking_id;
+    private UserBooking userBooking;
 
 }
 

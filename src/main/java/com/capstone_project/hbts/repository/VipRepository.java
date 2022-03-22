@@ -15,10 +15,9 @@ public interface VipRepository extends JpaRepository<Vip, Integer> {
             "range_start = :rangeStart, range_end = :rangeEnd " +
             " WHERE heroku_4fe5c149618a3f9.vip.id = :id",
             nativeQuery = true)
-    void updateVipClass(
-            @Param("discount") int discount,
-            @Param("rangeStart") int rangeStart,
-            @Param("rangeEnd") int rangeEnd,
-            @Param("id") Integer id);
+    void updateVipClass(@Param("discount") int discount,
+                        @Param("rangeStart") int rangeStart,
+                        @Param("rangeEnd") int rangeEnd,
+                        @Param("id") Integer id);
 
 }

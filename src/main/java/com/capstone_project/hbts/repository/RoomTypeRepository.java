@@ -13,8 +13,7 @@ import java.util.List;
 @Repository
 public interface RoomTypeRepository extends JpaRepository<RoomType, Integer> {
 
-    @Query(value = "SELECT * FROM heroku_4fe5c149618a3f9.room_type where hotel_id = :hotelId and status = 1",
-            nativeQuery = true)
+    @Query(value = "SELECT r FROM RoomType r where r.hotel.id = :hotelId and r.status = 1")
     List<RoomType> findRoomTypeByHotelId(@Param("hotelId") int hotelId);
 
     @Query(value = "SELECT * FROM heroku_4fe5c149618a3f9.room_type where id = :id limit 1", nativeQuery = true)
@@ -26,15 +25,14 @@ public interface RoomTypeRepository extends JpaRepository<RoomType, Integer> {
             "values (:availableRooms, :dealExpire, :dealPercentage, :name, :numberOfPeople, " +
             ":price, :quantity, :hotelId);",
             nativeQuery = true)
-    void addNewRoomType(
-            @Param("availableRooms") int availableRooms,
-            @Param("dealExpire") Timestamp dealExpire,
-            @Param("dealPercentage") int dealPercentage,
-            @Param("name") String name,
-            @Param("numberOfPeople") int numberOfPeople,
-            @Param("price") long price,
-            @Param("quantity") int quantity,
-            @Param("hotelId") int hotelId);
+    void addNewRoomType(@Param("availableRooms") int availableRooms,
+                        @Param("dealExpire") Timestamp dealExpire,
+                        @Param("dealPercentage") int dealPercentage,
+                        @Param("name") String name,
+                        @Param("numberOfPeople") int numberOfPeople,
+                        @Param("price") long price,
+                        @Param("quantity") int quantity,
+                        @Param("hotelId") int hotelId);
 
     @Query(value = "select last_insert_id(id) from heroku_4fe5c149618a3f9.room_type order by " +
             "last_insert_id(id) desc limit 1;",

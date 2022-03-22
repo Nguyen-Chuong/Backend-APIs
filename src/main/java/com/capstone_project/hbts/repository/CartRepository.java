@@ -16,13 +16,13 @@ public interface CartRepository extends JpaRepository<Cart, Integer> {
     @Query(value = "delete from heroku_4fe5c149618a3f9.cart where user_id = :userId", nativeQuery = true)
     void clearCart(@Param("userId") int userId);
 
-    @Query(value = "select * from heroku_4fe5c149618a3f9.cart where user_id = :userId", nativeQuery = true)
+    @Query(value = "select c from Cart c where c.users.id = :userId")
     List<Cart> getAllCartItem(@Param("userId") int userId);
 
-    @Query(value = "select count(id) from heroku_4fe5c149618a3f9.cart where user_id = :userId", nativeQuery = true)
+    @Query(value = "select count(c.id) from Cart c where c.users.id = :userId")
     Integer getTotalNumberItemInCart(@Param("userId") int userId);
 
-    @Query(value = "select hotel_id from heroku_4fe5c149618a3f9.cart where user_id = :userId", nativeQuery = true)
+    @Query(value = "select c.hotelId from Cart c where c.users.id = :userId")
     Integer getHotelIdByUserId(@Param("userId") int userId);
 
 }
