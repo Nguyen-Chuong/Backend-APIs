@@ -289,6 +289,8 @@ public class HotelServiceImpl implements HotelService {
         hotel.setEmail(hotelDTO.getEmail());
         hotel.setName(hotelDTO.getName());
         hotel.setPhone(hotelDTO.getPhone());
+        hotel.setStar(hotelDTO.getStar());
+        hotel.setTaxPercentage(hotelDTO.getTaxPercentage());
         // save hotel again
         hotelRepository.save(hotel);
     }

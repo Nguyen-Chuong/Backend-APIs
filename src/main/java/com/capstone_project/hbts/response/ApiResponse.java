@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class ApiResponse<T> {
 
@@ -16,11 +15,5 @@ public class ApiResponse<T> {
     private String error_code;
 
     private String error_message;
-
-    public ApiResponse(int status, String error_code, String error_message) {
-        this.status = status;
-        this.error_code = error_code;
-        this.error_message = error_message;
-    }
 
 }

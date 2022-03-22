@@ -109,10 +109,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void updateUserProfile(UserDTO userDTO) {
         log.info("Request to update user profile");
-        userRepository.updateUserProfile(userDTO.getFirstname(), userDTO.getLastname(),
-                userDTO.getPhone(), userDTO.getAddress(),
-                userDTO.getAvatar(), userDTO.getSpend(),
-                userDTO.getId());
+        userRepository.updateUserProfile(userDTO.getFirstname(),
+                userDTO.getLastname(), userDTO.getPhone(),
+                userDTO.getAddress(), userDTO.getAvatar(),
+                userDTO.getSpend(), userDTO.getId());
     }
 
     @Override
