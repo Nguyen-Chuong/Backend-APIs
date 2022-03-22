@@ -51,9 +51,9 @@ public interface BookingRepository extends JpaRepository<UserBooking, Integer> {
 
     @Modifying
     @Query(value = "insert into heroku_4fe5c149618a3f9.user_booking(booked_quantity, booking_date, check_in, " +
-            "check_out, review_status, status, hotel_id, user_id, other_requirement) " +
+            "check_out, review_status, status, hotel_id, user_id, other_requirement, type) " +
             "values (:bookedQuantity, :bookingDate, :checkIn, :checkOut, " +
-            ":reviewStatus, :status, :hotelId, :userId, :otherRequirement)",
+            ":reviewStatus, :status, :hotelId, :userId, :otherRequirement, :type)",
             nativeQuery = true)
     void addNewBooking(@Param("bookedQuantity") int bookedQuantity,
                        @Param("bookingDate") Timestamp bookingDate,
@@ -63,7 +63,8 @@ public interface BookingRepository extends JpaRepository<UserBooking, Integer> {
                        @Param("status") int status,
                        @Param("hotelId") int hotelId,
                        @Param("userId") int userId,
-                       @Param("otherRequirement") String otherRequirement);
+                       @Param("otherRequirement") String otherRequirement,
+                       @Param("type") int type);
 
     @Query(value = "select last_insert_id(id) from heroku_4fe5c149618a3f9.user_booking order" +
             " by last_insert_id(id) desc limit 1;",

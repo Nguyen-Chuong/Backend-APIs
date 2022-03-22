@@ -30,4 +30,6 @@ public class BookingRequest {
 
     private String otherRequirement;
 
+    private int type;
+
 }

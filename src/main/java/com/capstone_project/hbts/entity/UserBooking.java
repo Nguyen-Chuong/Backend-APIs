@@ -53,7 +53,7 @@ public class UserBooking {
     private String otherRequirement;
 
     @Column(name = "type")
-    private int type; // 1 - cod , 2 - payment
+    private int type; // 0 - default, 1 - cod , 2 - payment
 
     @ManyToOne
     @JsonIgnore

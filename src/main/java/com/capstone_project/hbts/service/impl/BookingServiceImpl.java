@@ -185,8 +185,10 @@ public class BookingServiceImpl implements BookingService {
         // set review status is 0; after review reset 1
         bookingRequest.setReviewStatus(0);
         // set booking status is 1-upcoming, user can cancel booking -> set to 3
-        // completed a booking -> set to 2 - may call when they paid money or over checkin date
+        // completed a booking -> set to 2 - call when they paid money or hotel confirm
         bookingRequest.setStatus(1);
+        // set type auto 0, after payment -> 2, cod -> 1
+        bookingRequest.setType(0);
         // save to db
         bookingRepository.addNewBooking(bookingRequest.getBookedQuantity(),
                 bookingRequest.getBookingDate(),
@@ -196,7 +198,8 @@ public class BookingServiceImpl implements BookingService {
                 bookingRequest.getStatus(),
                 bookingRequest.getHotelId(),
                 bookingRequest.getUserId(),
-                bookingRequest.getOtherRequirement());
+                bookingRequest.getOtherRequirement(),
+                bookingRequest.getType());
         // get booking that just insert to db
         Integer bookingId = bookingRepository.getBookingIdJustInsert();
         // new list user booking detail for adding
