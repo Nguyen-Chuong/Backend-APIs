@@ -31,4 +31,6 @@ public class UserBookingDTO {
 
     private String otherRequirement;
 
+    private int type;
+
 }

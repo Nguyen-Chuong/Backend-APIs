@@ -52,6 +52,9 @@ public class UserBooking {
     @Column(name = "other_requirement")
     private String otherRequirement;
 
+    @Column(name = "type")
+    private int type; // 1 - cod , 2 - payment
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "userId")

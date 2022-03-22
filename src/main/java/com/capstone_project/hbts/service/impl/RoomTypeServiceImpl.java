@@ -95,23 +95,23 @@ public class RoomTypeServiceImpl implements RoomTypeService {
     }
 
     // check if a room is sold out or not
-    public int numberOfRoomLeft(RoomType roomType, List<UserBooking> listBookingInThisRoom, Date dateIn, Date dateOut){
+    public int numberOfRoomLeft(RoomType roomType, List<UserBooking> listBookingInThisRoom, Date dateIn, Date dateOut) {
         // get total quantity room available
         int numberOfRoomsTotal = roomType.getQuantity();
         // check if some user cancel booking in this day, plus total quantity 1
-        for(UserBooking userBooking : listBookingInThisRoom){
+        for (UserBooking userBooking : listBookingInThisRoom) {
             // cancelled
-            if(userBooking.getStatus() == 3){
+            if (userBooking.getStatus() == 3) {
                 numberOfRoomsTotal = numberOfRoomsTotal + 1;
             }
         }
-        for(UserBooking userBooking : listBookingInThisRoom){
+        for (UserBooking userBooking : listBookingInThisRoom) {
             // get date user booking checkin
             Date userBookingCheckIn = new Date(userBooking.getCheckIn().getTime());
             // get date user booking check out
             Date userBookingCheckOut = new Date(userBooking.getCheckOut().getTime());
             // cases that date in, date out is not available
-            if(dateIn.before(userBookingCheckIn) && dateOut.after(userBookingCheckIn)
+            if (dateIn.before(userBookingCheckIn) && dateOut.after(userBookingCheckIn)
                     || dateIn.before(userBookingCheckOut) && dateOut.after(userBookingCheckOut)
                     || dateIn.after(userBookingCheckIn) && dateOut.before(userBookingCheckOut)
                     || dateIn.before(userBookingCheckIn) && dateOut.after(userBookingCheckOut)
@@ -163,19 +163,20 @@ public class RoomTypeServiceImpl implements RoomTypeService {
         }
 
         // for loop through map and set available room = 0 for these rooms that sold out
-        for(var entry : mapRoomAndBooking.entrySet()){
+        for (var entry : mapRoomAndBooking.entrySet()) {
             // check if a room is sold out or not
             int numberRoomLeft = numberOfRoomLeft(entry.getKey(), entry.getValue(), dateIn, dateOut);
-            if(numberRoomLeft <= 0){
+            if (numberRoomLeft <= 0) {
                 // set available room = 0
                 entry.getKey().setAvailableRooms(0);
-            }else {
+            } else {
                 // set available room left
                 entry.getKey().setAvailableRooms(numberRoomLeft);
             }
         }
 
-        return mapRoomAndBooking.keySet().stream()
+        return mapRoomAndBooking.keySet()
+                .stream()
                 .map(item -> modelMapper.map(item, RoomTypeDTO.class))
                 .collect(Collectors.toList());
     }
