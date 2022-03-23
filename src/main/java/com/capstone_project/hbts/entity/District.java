@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -24,7 +25,9 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "district")
-public class District {
+public class District implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(generator = "generator")

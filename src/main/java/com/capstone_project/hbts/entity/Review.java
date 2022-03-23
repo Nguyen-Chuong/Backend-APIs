@@ -1,5 +1,6 @@
 package com.capstone_project.hbts.entity;
 
+import com.capstone_project.hbts.audit.Auditable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @AllArgsConstructor
@@ -21,7 +23,9 @@ import java.sql.Timestamp;
 @Setter
 @Entity
 @Table(name = "Review")
-public class Review {
+public class Review extends Auditable<String> implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

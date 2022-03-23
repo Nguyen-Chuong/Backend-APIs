@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @AllArgsConstructor
@@ -21,7 +22,9 @@ import java.math.BigDecimal;
 @Setter
 @Entity
 @Table(name = "UserBookingDetail")
-public class UserBookingDetail {
+public class UserBookingDetail implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(generator = "generator")

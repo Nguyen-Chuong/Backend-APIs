@@ -1,5 +1,6 @@
 package com.capstone_project.hbts.entity;
 
+import com.capstone_project.hbts.audit.Auditable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @ToString
 @AllArgsConstructor
@@ -22,7 +24,9 @@ import javax.persistence.Table;
 @Getter
 @Entity
 @Table(name = "Transaction")
-public class Transaction {
+public class Transaction extends Auditable<String> implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

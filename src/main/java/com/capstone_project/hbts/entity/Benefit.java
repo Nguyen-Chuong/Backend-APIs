@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -24,7 +25,9 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "benefit")
-public class Benefit {
+public class Benefit implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(generator = "generator")

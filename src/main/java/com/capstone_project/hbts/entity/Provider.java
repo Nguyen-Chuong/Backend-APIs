@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.validation.constraints.Email;
+import java.io.Serializable;
 import java.util.Set;
 
 @ToString
@@ -26,7 +27,9 @@ import java.util.Set;
 @Getter
 @Entity
 @Table(name = "Provider")
-public class Provider {
+public class Provider implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

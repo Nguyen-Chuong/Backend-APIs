@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.sql.Date;
 
 @AllArgsConstructor
@@ -21,7 +22,9 @@ import java.sql.Date;
 @Setter
 @Entity
 @Table(name = "Cart")
-public class Cart {
+public class Cart implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(generator = "generator")

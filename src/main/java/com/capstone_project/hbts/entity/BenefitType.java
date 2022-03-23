@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -21,7 +22,9 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "benefit_type")
-public class BenefitType {
+public class BenefitType implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
