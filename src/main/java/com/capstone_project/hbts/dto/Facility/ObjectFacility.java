@@ -1,12 +1,13 @@
 package com.capstone_project.hbts.dto.Facility;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 public class ObjectFacility {
 

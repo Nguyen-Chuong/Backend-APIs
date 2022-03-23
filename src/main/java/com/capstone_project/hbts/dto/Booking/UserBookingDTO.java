@@ -1,13 +1,15 @@
 package com.capstone_project.hbts.dto.Booking;
 
 import com.capstone_project.hbts.dto.Hotel.HotelDTO;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class UserBookingDTO {
 

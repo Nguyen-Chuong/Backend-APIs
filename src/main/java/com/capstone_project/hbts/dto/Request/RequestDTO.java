@@ -1,11 +1,13 @@
 package com.capstone_project.hbts.dto.Request;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.sql.Timestamp;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class RequestDTO {
 

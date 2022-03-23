@@ -2,10 +2,12 @@ package com.capstone_project.hbts.dto.Hotel;
 
 import com.capstone_project.hbts.dto.Actor.ProviderDTO;
 import com.capstone_project.hbts.dto.Location.DistrictDTO;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class HotelDetailDTO {
 

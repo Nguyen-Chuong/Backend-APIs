@@ -1,13 +1,15 @@
 package com.capstone_project.hbts.dto.Room;
 
 import com.capstone_project.hbts.dto.ImageDTO;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.sql.Timestamp;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class RoomTypeDTO {
 

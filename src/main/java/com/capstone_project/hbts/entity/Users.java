@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +22,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Set;
 
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter

@@ -4,15 +4,15 @@ import com.capstone_project.hbts.dto.Benefit.ObjectBenefit;
 import com.capstone_project.hbts.dto.Facility.ObjectFacility;
 import com.capstone_project.hbts.dto.ImageDTO;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Set;
 
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
 @AllArgsConstructor
 public class RoomDetailDTO {
 

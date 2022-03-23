@@ -1,7 +1,10 @@
 package com.capstone_project.hbts.entity;
 
 import com.capstone_project.hbts.audit.Auditable;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +20,6 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Set;
 
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

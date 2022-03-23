@@ -1,9 +1,11 @@
 package com.capstone_project.hbts.dto.Location;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class DistrictDTO {
 

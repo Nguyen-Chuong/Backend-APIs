@@ -1,10 +1,12 @@
 package com.capstone_project.hbts.dto.Room;
 
 import com.capstone_project.hbts.dto.Facility.FacilityDTO;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class RoomFacilityDTO {
 
