@@ -229,7 +229,7 @@ public class UserResource {
      * @apiNote for user who forgot their password can refresh new password via email
      * return
      */
-    @PatchMapping("/authenticate/forgot-password")
+    @PatchMapping("/authenticate/user/forgot-password")
     public ResponseEntity<?> changePassword(@RequestParam String email,
                                             @RequestParam String newPass){
         log.info("REST request to change user's password cuz they forgot them :) !");

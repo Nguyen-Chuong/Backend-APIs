@@ -69,4 +69,11 @@ public interface ProviderService {
      */
     void banProvider(int providerId);
 
+    /**
+     * provider change forgot password
+     * @param email
+     * @param newPass
+     */
+    void changeForgotPassword(String email, String newPass);
+
 }

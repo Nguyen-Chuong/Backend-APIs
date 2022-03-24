@@ -2,6 +2,7 @@ package com.capstone_project.hbts.resource;
 
 import com.capstone_project.hbts.constants.ErrorConstant;
 import com.capstone_project.hbts.constants.ValidateConstant;
+import com.capstone_project.hbts.decryption.DataDecryption;
 import com.capstone_project.hbts.dto.Actor.ProviderDTO;
 import com.capstone_project.hbts.request.ProviderRequest;
 import com.capstone_project.hbts.response.ApiResponse;
@@ -35,9 +36,13 @@ public class ProviderResource {
 
     private final JwtTokenUtil jwtTokenUtil;
 
-    public ProviderResource(ProviderService providerService, JwtTokenUtil jwtTokenUtil) {
+    private final DataDecryption dataDecryption;
+
+    public ProviderResource(ProviderService providerService, JwtTokenUtil jwtTokenUtil,
+                            DataDecryption dataDecryption) {
         this.providerService = providerService;
         this.jwtTokenUtil = jwtTokenUtil;
+        this.dataDecryption = dataDecryption;
     }
 
     /**
@@ -219,6 +224,40 @@ public class ProviderResource {
                     .body(new ApiResponse<>(200, dataPagingResponse,
                             null, null));
         } catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(400, null,
+                            ErrorConstant.ERR_000, ErrorConstant.ERR_000_LABEL));
+        }
+    }
+
+    /**
+     * @param email
+     * @param newPass
+     * @apiNote for user who forgot their password can refresh new password via email
+     * return
+     */
+    @PatchMapping("/authenticate/provider/forgot-password")
+    public ResponseEntity<?> changePassword(@RequestParam String email,
+                                            @RequestParam String newPass){
+        log.info("REST request to change provider's password cuz they forgot them :) !");
+        String emailDecrypted;
+        try {
+            emailDecrypted = dataDecryption.convertEncryptedDataToString(email);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(400, null,
+                            ErrorConstant.ERR_DATA_001, ErrorConstant.ERR_DATA_001_LABEL));
+        }
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        String newPasswordEncoded = bCryptPasswordEncoder.encode(newPass);
+
+        try {
+            providerService.changeForgotPassword(emailDecrypted, newPasswordEncoded);
+            return ResponseEntity.ok()
+                    .body(new ApiResponse<>(200, null,
+                            null, null));
+        }catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.badRequest()
                     .body(new ApiResponse<>(400, null,

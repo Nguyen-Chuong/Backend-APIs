@@ -121,4 +121,11 @@ public class ProviderServiceImpl implements ProviderService {
         providerRepository.banProviderById(providerId);
     }
 
+    @Override
+    @Transactional
+    public void changeForgotPassword(String email, String newPass) {
+        log.info("Request to change provider's password that forgot");
+        providerRepository.changeProviderForgotPassword(email, newPass);
+    }
+
 }

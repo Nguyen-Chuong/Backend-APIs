@@ -45,4 +45,9 @@ public interface ProviderRepository extends JpaRepository<Provider, Integer> {
     @Query(value = "UPDATE Provider p set p.status = 0 WHERE p.id = :providerId")
     void banProviderById(@Param("providerId") int providerId);
 
+    @Modifying
+    @Query(value = "UPDATE Provider p SET p.password = :newPass WHERE p.email = :email")
+    void changeProviderForgotPassword(@Param("email") String email,
+                                      @Param("newPass") String newPass);
+
 }
