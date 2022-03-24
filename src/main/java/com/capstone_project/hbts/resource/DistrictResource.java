@@ -2,6 +2,7 @@ package com.capstone_project.hbts.resource;
 
 import com.capstone_project.hbts.constant.ErrorConstant;
 import com.capstone_project.hbts.decryption.DataDecryption;
+import com.capstone_project.hbts.dto.Location.DistrictDTO;
 import com.capstone_project.hbts.dto.Location.DistrictSearchDTO;
 import com.capstone_project.hbts.dto.Location.ResultSearch;
 import com.capstone_project.hbts.response.ApiResponse;
@@ -92,6 +93,35 @@ public class DistrictResource {
             List<DistrictSearchDTO> districtSearchDTOList = districtService.getAllDistrictInCity(id);
             return ResponseEntity.ok()
                     .body(new ApiResponse<>(200, districtSearchDTOList,
+                            null, null));
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(400, null,
+                            ErrorConstant.ERR_000, ErrorConstant.ERR_000_LABEL));
+        }
+    }
+
+    /**
+     * @param topLocation
+     * return
+     */
+    @GetMapping("/public/hot-location")
+    public ResponseEntity<?> getTopHotLocation(@RequestParam String topLocation){
+        log.info("REST request to get top hot location");
+
+        int top;
+        try {
+            top = dataDecryption.convertEncryptedDataToInt(topLocation);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(400, null,
+                            ErrorConstant.ERR_DATA_001, ErrorConstant.ERR_DATA_001_LABEL));
+        }
+        try{
+            List<DistrictDTO> districtDTOList = districtService.getTopHotLocation(top);
+            return ResponseEntity.ok()
+                    .body(new ApiResponse<>(200, districtDTOList,
                             null, null));
         }catch (Exception e){
             e.printStackTrace();

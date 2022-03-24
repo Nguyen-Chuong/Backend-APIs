@@ -1,5 +1,6 @@
 package com.capstone_project.hbts.service;
 
+import com.capstone_project.hbts.dto.Location.DistrictDTO;
 import com.capstone_project.hbts.dto.Location.DistrictSearchDTO;
 import com.capstone_project.hbts.dto.Location.ResultSearch;
 
@@ -24,5 +25,11 @@ public interface DistrictService {
      * @param cityId
      */
     List<DistrictSearchDTO> getAllDistrictInCity(int cityId);
+
+    /**
+     * get top hot location
+     * @param limit
+     */
+    List<DistrictDTO> getTopHotLocation(int limit);
 
 }

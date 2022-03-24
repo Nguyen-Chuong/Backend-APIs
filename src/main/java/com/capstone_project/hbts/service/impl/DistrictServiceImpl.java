@@ -1,6 +1,7 @@
 package com.capstone_project.hbts.service.impl;
 
 import com.capstone_project.hbts.dto.Location.CityDistrict;
+import com.capstone_project.hbts.dto.Location.DistrictDTO;
 import com.capstone_project.hbts.dto.Location.DistrictSearchDTO;
 import com.capstone_project.hbts.dto.Location.ResultSearch;
 import com.capstone_project.hbts.repository.DistrictRepository;
@@ -57,6 +58,18 @@ public class DistrictServiceImpl implements DistrictService {
         return districtRepository.getAllByCityIdOrderByNameDistrictAsc(cityId)
                 .stream()
                 .map(item -> modelMapper.map(item, DistrictSearchDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<DistrictDTO> getTopHotLocation(int limit) {
+        log.info("Request to get top hot location");
+        // get list top hot district id
+        List<Integer> districtIds = districtRepository.getTopHotLocation(limit);
+        // get district from list ids
+        return districtRepository.findAllById(districtIds)
+                .stream()
+                .map(item -> modelMapper.map(item, DistrictDTO.class))
                 .collect(Collectors.toList());
     }
 
