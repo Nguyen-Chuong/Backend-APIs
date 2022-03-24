@@ -6,13 +6,11 @@ import com.capstone_project.hbts.decryption.DataDecryption;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.service.EmailService;
 import com.capstone_project.hbts.service.OTPService;
+import com.fasterxml.jackson.databind.node.TextNode;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
@@ -176,6 +174,39 @@ public class EmailResource {
         try {
             emailService.sendHTMLMail(emailDecrypted, ValidateConstant.EMAIL_SUBJECT_CONFIRM + id,
                     ValidateConstant.getConfirmBookingContent());
+            return ResponseEntity.ok()
+                    .body(new ApiResponse<>(200, null,
+                            null, null));
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(400, null,
+                            ErrorConstant.ERR_000, ErrorConstant.ERR_000_LABEL));
+        }
+    }
+
+    /**
+     * @param email
+     * return
+     * @apiNote for admin/ manager to mail user with content response feedback
+     * call api when admin click to send response
+     */
+    @PostMapping("/mail/send-response")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
+    public ResponseEntity<?> sendMailResponseFeedback(@RequestParam String email,
+                                                      @RequestBody TextNode message){
+        log.info("REST request to send mail response for user's feedback");
+        String emailDecrypted;
+        try {
+            emailDecrypted = dataDecryption.convertEncryptedDataToString(email);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(400, null,
+                            ErrorConstant.ERR_DATA_001, ErrorConstant.ERR_DATA_001_LABEL));
+        }
+        try {
+            emailService.sendHTMLMail(emailDecrypted, ValidateConstant.EMAIL_SUBJECT_RESPONSE,
+                    ValidateConstant.getResponseFeedbackContent(message.asText()));
             return ResponseEntity.ok()
                     .body(new ApiResponse<>(200, null,
                             null, null));

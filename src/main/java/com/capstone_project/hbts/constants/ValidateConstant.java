@@ -77,6 +77,17 @@ public class ValidateConstant {
                 "</tr>";
     }
 
+    // mail response user feedback
+    public static final String EMAIL_SUBJECT_RESPONSE = "Response from Travesily Customer Service Center";
+
+    public static String getResponseFeedbackContent(String message){
+        return "<h3>Hi Nguyễn Thúc Nguyên Chương</h3></br>" +
+                "<h3>Here is new our response for your feedback: </h3></br>" +
+                message +
+                "<h3>Thank you for contacting Travesily. We hope you have received the help you need.</h3></br>" +
+                "<h3>Thank you for using our service</h3></br>";
+    }
+
     // constants payment
     public static final String VNP_VERSION= "2.1.0";
 
