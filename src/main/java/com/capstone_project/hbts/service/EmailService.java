@@ -20,4 +20,12 @@ public interface EmailService {
      */
     List<Email> getContent(String subject);
 
+    /**
+     * send email
+     * @param to
+     * @param subject
+     * @param content
+     */
+    void sendHTMLMail(String to, String subject, String content);
+
 }

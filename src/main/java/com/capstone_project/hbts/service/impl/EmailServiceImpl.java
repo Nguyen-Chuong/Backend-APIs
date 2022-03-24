@@ -6,8 +6,11 @@ import com.capstone_project.hbts.service.EmailService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import java.util.List;
 
 @Service
@@ -38,6 +41,22 @@ public class EmailServiceImpl implements EmailService {
     public List<Email> getContent(String subject) { // change return type to DTO
         log.info("Request to get all email content by subject");
         return emailRepository.findAllBySubject(subject);
+    }
+
+    @Override
+    public void sendHTMLMail(String to, String subject, String content) {
+        log.info("Request to get send html email");
+        MimeMessage mimeMessage = sender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, "utf-8");
+        try {
+            mimeMessageHelper.setText(content, true);
+            mimeMessageHelper.setTo(to);
+            mimeMessageHelper.setSubject(subject);
+            mimeMessageHelper.setFrom("travesily.no.reply@gmail.com");
+            sender.send(mimeMessage);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
     }
 
 }

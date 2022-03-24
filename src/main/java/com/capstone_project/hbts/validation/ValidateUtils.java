@@ -1,4 +1,4 @@
-package com.capstone_project.hbts.validate;
+package com.capstone_project.hbts.validation;
 
 import java.util.Date;
 

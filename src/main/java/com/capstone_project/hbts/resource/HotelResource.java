@@ -10,7 +10,7 @@ import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.response.DataPagingResponse;
 import com.capstone_project.hbts.security.jwt.JwtTokenUtil;
 import com.capstone_project.hbts.service.HotelService;
-import com.capstone_project.hbts.validate.ValidateUtils;
+import com.capstone_project.hbts.validation.ValidateUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

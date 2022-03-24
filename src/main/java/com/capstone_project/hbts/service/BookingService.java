@@ -69,7 +69,9 @@ public interface BookingService {
     Integer addNewBooking(BookingRequest bookingRequest);
 
     /**
-     * complete a booking: if pay: call this api after that, if cod: hotel confirm
+     * @apiNote complete a booking: if pay: call this api after that
+     * cancel -> status 3 -> request refund (only before > 1 day)
+     * if cod: hotel confirm -> completed, cancel -> free
      * @param bookingId
      */
     void completeBooking(int bookingId);
@@ -77,6 +79,7 @@ public interface BookingService {
     /**
      * to update type of booking: 1 - cod, 2 - ATM
      * @param bookingId
+     * @param type
      */
     void updateBookingType(int bookingId, int type);
 
