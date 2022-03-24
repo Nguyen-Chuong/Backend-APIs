@@ -21,7 +21,7 @@ public interface EmailService {
     List<Email> getContent(String subject);
 
     /**
-     * send email
+     * send html email
      * @param to
      * @param subject
      * @param content

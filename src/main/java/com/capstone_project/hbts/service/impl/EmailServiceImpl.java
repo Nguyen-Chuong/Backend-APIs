@@ -45,7 +45,7 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public void sendHTMLMail(String to, String subject, String content) {
-        log.info("Request to get send html email");
+        log.info("Request to send html email");
         MimeMessage mimeMessage = sender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, "utf-8");
         try {

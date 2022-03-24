@@ -52,7 +52,7 @@ public class EmailResource {
         try {
             int otp = otpService.generateOtp(emailDecrypted);
             emailService.send(emailDecrypted, ValidateConstant.EMAIL_SUBJECT_OTP,
-                    ValidateConstant.OTP_MESSAGE + otp + ValidateConstant.EMAIL_FOOTER_OTP);
+                    ValidateConstant.getOtpVerifyContent(otp));
             return ResponseEntity.ok()
                     .body(new ApiResponse<>(200, otp,
                             null, null));
@@ -142,7 +142,40 @@ public class EmailResource {
         }
         try {
             emailService.sendHTMLMail(emailDecrypted, ValidateConstant.EMAIL_SUBJECT_CANCEL + id,
-                    ValidateConstant.cancelBookingContent());
+                    ValidateConstant.getCancelBookingContent());
+            return ResponseEntity.ok()
+                    .body(new ApiResponse<>(200, null,
+                            null, null));
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(400, null,
+                            ErrorConstant.ERR_000, ErrorConstant.ERR_000_LABEL));
+        }
+    }
+
+    /**
+     * @param email
+     * return
+     * @apiNote server to mail user with content confirm booking
+     */
+    @PostMapping("/mail/confirm-booking")
+    public ResponseEntity<?> sendMailConfirmBooking(@RequestParam String email,
+                                                    @RequestParam String bookingId){
+        log.info("REST request to confirm booking for user");
+        String emailDecrypted;
+        int id;
+        try {
+            emailDecrypted = dataDecryption.convertEncryptedDataToString(email);
+            id = dataDecryption.convertEncryptedDataToInt(bookingId);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(400, null,
+                            ErrorConstant.ERR_DATA_001, ErrorConstant.ERR_DATA_001_LABEL));
+        }
+        try {
+            emailService.sendHTMLMail(emailDecrypted, ValidateConstant.EMAIL_SUBJECT_CONFIRM + id,
+                    ValidateConstant.getConfirmBookingContent());
             return ResponseEntity.ok()
                     .body(new ApiResponse<>(200, null,
                             null, null));
