@@ -43,7 +43,7 @@ public class Vip implements Serializable {
     @Column(name = "discount")
     private int discount;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "idVip")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "vip")
     @JsonIgnore
     private Set<Users> listUsers;
 

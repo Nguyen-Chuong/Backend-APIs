@@ -24,17 +24,14 @@ public interface ProviderRepository extends JpaRepository<Provider, Integer> {
 
     @Modifying
     @Query(value = "UPDATE heroku_4fe5c149618a3f9.provider SET provider_name = :providerName, phone = :phone, " +
-            "address = :address WHERE heroku_4fe5c149618a3f9.provider.id = :id",
-            nativeQuery = true)
+            "address = :address WHERE heroku_4fe5c149618a3f9.provider.id = :id", nativeQuery = true)
     void updateProviderProfile(@Param("providerName") String providerName,
                                @Param("phone") String phone,
                                @Param("address") String address,
                                @Param("id") Integer id);
 
     @Modifying
-    @Query(value = "UPDATE heroku_4fe5c149618a3f9.provider SET password = :newPass " +
-            "WHERE heroku_4fe5c149618a3f9.provider.username = :username",
-            nativeQuery = true)
+    @Query(value = "UPDATE Provider p SET p.password = :newPass WHERE p.username = :username")
     void changePass(@Param("username") String username,
                     @Param("newPass") String newPass);
 
@@ -45,8 +42,7 @@ public interface ProviderRepository extends JpaRepository<Provider, Integer> {
     Page<Provider> findAllProvider(Pageable pageable);
 
     @Modifying
-    @Query(value = "UPDATE heroku_4fe5c149618a3f9.provider set status = 0 WHERE id = :providerId",
-            nativeQuery = true)
+    @Query(value = "UPDATE Provider p set p.status = 0 WHERE p.id = :providerId")
     void banProviderById(@Param("providerId") int providerId);
 
 }

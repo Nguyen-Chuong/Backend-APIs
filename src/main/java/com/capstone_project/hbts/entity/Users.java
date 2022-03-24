@@ -76,7 +76,7 @@ public class Users implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "id_vip")
-    private Vip idVip;
+    private Vip vip;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
     private Set<UserBooking> listUserBooking;

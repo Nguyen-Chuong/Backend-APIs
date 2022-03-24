@@ -30,8 +30,7 @@ public interface BookingRepository extends JpaRepository<UserBooking, Integer> {
 
     // when check vip status, only get number of booking that
     // have been completed, conditionally status = 2 for completed
-    @Query(value = "SELECT count(id) from heroku_4fe5c149618a3f9.user_booking WHERE user_id = :userId and status = 2",
-            nativeQuery = true)
+    @Query(value = "SELECT count(u.id) from UserBooking u WHERE u.users.id = :userId and u.status = 2")
     int numberBookingCompleted(@Param("userId") int userId);
 
     @Query(value = "SELECT u from UserBooking u WHERE u.status = :status and u.users.id = :userId")
@@ -67,8 +66,7 @@ public interface BookingRepository extends JpaRepository<UserBooking, Integer> {
                        @Param("type") int type);
 
     @Query(value = "select last_insert_id(id) from heroku_4fe5c149618a3f9.user_booking order" +
-            " by last_insert_id(id) desc limit 1;",
-            nativeQuery = true)
+            " by last_insert_id(id) desc limit 1;", nativeQuery = true)
     Integer getBookingIdJustInsert();
 
     @Modifying

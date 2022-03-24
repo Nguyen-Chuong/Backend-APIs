@@ -17,8 +17,7 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
 
     @Modifying
     @Query(value = "insert into heroku_4fe5c149618a3f9.feedback(type, sender_id, message, modify_date, is_completed) " +
-            "values (:type, :senderId, :message, :modifyDate, :isCompleted);",
-            nativeQuery = true)
+            "values (:type, :senderId, :message, :modifyDate, :isCompleted);", nativeQuery = true)
     void sendFeedback(@Param("type") int type,
                       @Param("senderId") int senderId,
                       @Param("message") String message,
@@ -36,8 +35,7 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
 
     @Modifying
     @Query(value = "UPDATE heroku_4fe5c149618a3f9.feedback set receiver_id = :adminId, is_completed = 1 " +
-            "WHERE id = :feedbackId",
-            nativeQuery = true)
+            "WHERE id = :feedbackId", nativeQuery = true)
     void updateFeedbackReceiver(@Param("feedbackId") int feedbackId,
                                 @Param("adminId") int adminId);
 

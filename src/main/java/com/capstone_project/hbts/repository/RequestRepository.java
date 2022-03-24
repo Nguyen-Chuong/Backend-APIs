@@ -17,16 +17,14 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
 
     @Modifying
     @Query(value = "insert into heroku_4fe5c149618a3f9.request(request_date, status, hotel_id, provider_id) " +
-            "values (:requestDate, :status, :hotelId, :providerId)",
-            nativeQuery = true)
+            "values (:requestDate, :status, :hotelId, :providerId)", nativeQuery = true)
     void addNewRequest(@Param("requestDate") Timestamp requestDate,
                        @Param("status") int status,
                        @Param("hotelId") int hotelId,
                        @Param("providerId") int providerId);
 
     @Modifying
-    @Query(value = "UPDATE heroku_4fe5c149618a3f9.request set status = 2 where id = :requestId",
-            nativeQuery = true)
+    @Query(value = "UPDATE Request r set r.status = 2 where r.id = :requestId")
     void acceptRequest(@Param("requestId") int requestId);
 
     @Query(value = "select * from heroku_4fe5c149618a3f9.request where id = :requestId limit 1",
@@ -34,12 +32,12 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
     Request getRequestById(@Param("requestId") int requestId);
 
     @Modifying
-    @Query(value = "UPDATE heroku_4fe5c149618a3f9.request set status = 3 where id = :requestId",
-            nativeQuery = true)
+    @Query(value = "UPDATE Request r set r.status = 3 where r.id = :requestId")
     void denyRequest(@Param("requestId") int requestId);
 
     @Query(value = "select r from Request r where r.status = :status ORDER BY r.requestDate DESC")
-    Page<Request> getAllRequestByStatus(@Param("status") int status, Pageable pageable);
+    Page<Request> getAllRequestByStatus(@Param("status") int status,
+                                        Pageable pageable);
 
     Page<Request> findAllByOrderByRequestDateDesc(Pageable pageable);
 
@@ -52,8 +50,7 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
     Integer viewRequestStatus(@Param("requestId") int requestId);
 
     @Modifying
-    @Query(value = "UPDATE heroku_4fe5c149618a3f9.request set status = 4 where id = :requestId",
-            nativeQuery = true)
+    @Query(value = "UPDATE Request r set r.status = 4 where r.id = :requestId")
     void cancelRequest(@Param("requestId") int requestId);
 
 }

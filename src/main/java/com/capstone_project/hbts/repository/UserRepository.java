@@ -19,9 +19,7 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
     Users getUsersByEmail(String email);
 
     @Modifying
-    @Query(value = "UPDATE heroku_4fe5c149618a3f9.users SET password = :newPass " +
-            "WHERE heroku_4fe5c149618a3f9.users.username = :username",
-            nativeQuery = true)
+    @Query(value = "UPDATE Users u SET u.password = :newPass WHERE u.username = :username")
     void changePass(@Param("username") String username,
                     @Param("newPass") String newPass);
 
@@ -47,16 +45,12 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
     String getEmail(@Param("email") String email);
 
     @Modifying
-    @Query(value = "UPDATE heroku_4fe5c149618a3f9.users SET id_vip = :idVip " +
-            "WHERE heroku_4fe5c149618a3f9.users.id = :userId",
-            nativeQuery = true)
+    @Query(value = "UPDATE Users u SET u.vip.id = :idVip WHERE u.id = :userId")
     void updateVipStatus(@Param("idVip") int idVip,
                          @Param("userId") int userId);
 
     @Modifying
-    @Query(value = "UPDATE heroku_4fe5c149618a3f9.users SET password = :newPass " +
-            "WHERE heroku_4fe5c149618a3f9.users.email = :email",
-            nativeQuery = true)
+    @Query(value = "UPDATE Users u SET u.password = :newPass WHERE u.email = :email")
     void changeForgotPassword(@Param("email") String email,
                               @Param("newPass") String newPass);
 
@@ -67,8 +61,7 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
     List<Users> findAllManager();
 
     @Modifying
-    @Query(value = "UPDATE heroku_4fe5c149618a3f9.users SET type = 0 WHERE heroku_4fe5c149618a3f9.users.id = :userId",
-            nativeQuery = true)
+    @Query(value = "UPDATE Users u SET u.type = 0 WHERE u.id = :userId")
     void deleteManager(@Param("userId") int userId);
 
     @Query(value = "select id from heroku_4fe5c149618a3f9.users where username = :username limit 1",
@@ -76,8 +69,7 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
     int getUserId(@Param("username") String username);
 
     @Modifying
-    @Query(value = "UPDATE heroku_4fe5c149618a3f9.users SET status = 0 WHERE heroku_4fe5c149618a3f9.users.id = :userId",
-            nativeQuery = true)
+    @Query(value = "UPDATE Users u SET u.status = 0 WHERE u.id = :userId")
     void deleteAccount(@Param("userId") int userId);
 
 }

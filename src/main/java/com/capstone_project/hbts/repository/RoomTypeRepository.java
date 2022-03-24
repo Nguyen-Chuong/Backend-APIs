@@ -23,8 +23,7 @@ public interface RoomTypeRepository extends JpaRepository<RoomType, Integer> {
     @Query(value = "insert into heroku_4fe5c149618a3f9.room_type(available_rooms, deal_expire, deal_percentage, " +
             "name, number_of_people, price, quantity, hotel_id) " +
             "values (:availableRooms, :dealExpire, :dealPercentage, :name, :numberOfPeople, " +
-            ":price, :quantity, :hotelId);",
-            nativeQuery = true)
+            ":price, :quantity, :hotelId);", nativeQuery = true)
     void addNewRoomType(@Param("availableRooms") int availableRooms,
                         @Param("dealExpire") Timestamp dealExpire,
                         @Param("dealPercentage") int dealPercentage,
@@ -35,18 +34,15 @@ public interface RoomTypeRepository extends JpaRepository<RoomType, Integer> {
                         @Param("hotelId") int hotelId);
 
     @Query(value = "select last_insert_id(id) from heroku_4fe5c149618a3f9.room_type order by " +
-            "last_insert_id(id) desc limit 1;",
-            nativeQuery = true)
+            "last_insert_id(id) desc limit 1;", nativeQuery = true)
     Integer getRoomTypeIdJustInsert();
 
     @Modifying
-    @Query(value = "UPDATE heroku_4fe5c149618a3f9.room_type set status = 0 WHERE id = :roomTypeId",
-            nativeQuery = true)
+    @Query(value = "UPDATE RoomType r set r.status = 0 WHERE r.id = :roomTypeId")
     void disableRoomTypeById(@Param("roomTypeId") int roomTypeId);
 
     @Modifying
-    @Query(value = "UPDATE heroku_4fe5c149618a3f9.room_type set status = 1 WHERE id = :roomTypeId",
-            nativeQuery = true)
+    @Query(value = "UPDATE RoomType r set r.status = 1 WHERE r.id = :roomTypeId")
     void enableRoomTypeById(@Param("roomTypeId") int roomTypeId);
 
     @Modifying
