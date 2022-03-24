@@ -80,4 +80,8 @@ public interface BookingRepository extends JpaRepository<UserBooking, Integer> {
     void updateBookingType(@Param("bookingId") int bookingId,
                            @Param("type") int type);
 
+    @Query(value = "select hotel_id from heroku_4fe5c149618a3f9.user_booking group by " +
+            "hotel_id order by count(id) desc limit :limit", nativeQuery = true)
+    List<Integer> getTopHotHotelId(@Param("limit") int limit);
+
 }

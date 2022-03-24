@@ -352,4 +352,34 @@ public class HotelResource {
         }
     }
 
+    /**
+     * @param topHotel
+     * @apiNote get top hot hotel
+     * @return
+     */
+    @GetMapping("/public/top-hotel")
+    public ResponseEntity<?> viewTopHotelHot(@RequestParam String topHotel){
+        log.info("REST request to get top hot hotel");
+        int top;
+        try {
+            top = dataDecryption.convertEncryptedDataToInt(topHotel);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(400, null,
+                            ErrorConstant.ERR_DATA_001, ErrorConstant.ERR_DATA_001_LABEL));
+        }
+        try{
+            List<HotelDTO> hotelDTOList = hotelService.getTopHotHotel(top);
+
+            return ResponseEntity.ok()
+                    .body(new ApiResponse<>(200, hotelDTOList,
+                            null, null));
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(400, null,
+                            ErrorConstant.ERR_000, ErrorConstant.ERR_000_LABEL));
+        }
+    }
+
 }

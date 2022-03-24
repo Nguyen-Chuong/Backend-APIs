@@ -123,4 +123,11 @@ public interface HotelService {
      */
     RatingDTO getRatingByHotel(int hotelId);
 
+    /**
+     * get top hot hotel
+     * @param top
+     * @return
+     */
+    List<HotelDTO> getTopHotHotel(int top);
+
 }

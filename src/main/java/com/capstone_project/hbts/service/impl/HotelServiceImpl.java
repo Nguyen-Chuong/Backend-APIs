@@ -345,4 +345,30 @@ public class HotelServiceImpl implements HotelService {
         }
     }
 
+    @Override
+    public List<HotelDTO> getTopHotHotel(int top) {
+        log.info("Request to get top hot hotel");
+        // get list hotel id top
+        List<Integer> hotelIds = bookingRepository.getTopHotHotelId(top);
+        // get list hotel
+        List<Hotel> hotelList = hotelRepository.findAllById(hotelIds);
+        // transfer to DTO
+        List<HotelDTO> hotelDTOList = hotelList.stream()
+                .map(item -> modelMapper.map(item, HotelDTO.class))
+                .collect(Collectors.toList());
+        // set property lowest price and deal percentage
+        for (int i = 0; i < hotelDTOList.size(); i++) {
+            // set price
+            hotelDTOList.get(i).setPrice(getLowestPriceInHotel
+                    (hotelList.get(i).getListRoomType()).getPrice());
+            // set %deal
+            hotelDTOList.get(i).setSalePercent(getLowestPriceInHotel
+                    (hotelList.get(i).getListRoomType()).getDealPercentage());
+            // set deal expired
+            hotelDTOList.get(i).setDealExpired(getLowestPriceInHotel
+                    (hotelList.get(i).getListRoomType()).getDealExpire());
+        }
+        return hotelDTOList;
+    }
+
 }
