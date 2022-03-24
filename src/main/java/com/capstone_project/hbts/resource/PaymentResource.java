@@ -1,6 +1,6 @@
 package com.capstone_project.hbts.resource;
 
-import com.capstone_project.hbts.constants.ErrorConstant;
+import com.capstone_project.hbts.constant.ErrorConstant;
 import com.capstone_project.hbts.dto.Payment.PaymentDTO;
 import com.capstone_project.hbts.dto.Payment.PaymentResultDTO;
 import com.capstone_project.hbts.response.ApiResponse;

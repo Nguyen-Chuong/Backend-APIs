@@ -1,6 +1,6 @@
 package com.capstone_project.hbts.service.impl;
 
-import com.capstone_project.hbts.constants.ValidateConstant;
+import com.capstone_project.hbts.constant.ValidateConstant;
 import com.capstone_project.hbts.decryption.DataDecryption;
 import com.capstone_project.hbts.dto.Payment.PaymentDTO;
 import com.capstone_project.hbts.dto.Payment.PaymentResultDTO;

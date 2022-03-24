@@ -1,7 +1,7 @@
 package com.capstone_project.hbts.resource;
 
-import com.capstone_project.hbts.constants.ErrorConstant;
-import com.capstone_project.hbts.constants.ValidateConstant;
+import com.capstone_project.hbts.constant.ErrorConstant;
+import com.capstone_project.hbts.constant.ValidateConstant;
 import com.capstone_project.hbts.decryption.DataDecryption;
 import com.capstone_project.hbts.dto.Actor.ProviderDTO;
 import com.capstone_project.hbts.request.ProviderRequest;

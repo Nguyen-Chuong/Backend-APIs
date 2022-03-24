@@ -1,4 +1,4 @@
-package com.capstone_project.hbts.constants;
+package com.capstone_project.hbts.constant;
 
 public class ValidateConstant {
 
