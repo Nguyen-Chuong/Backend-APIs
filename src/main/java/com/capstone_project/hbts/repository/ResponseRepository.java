@@ -1,9 +1,9 @@
 package com.capstone_project.hbts.repository;
 
 import com.capstone_project.hbts.entity.Response;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
-public interface ResponseRepository extends JpaRepository<Response, Integer> {
+public interface ResponseRepository extends CrudRepository<Response, Integer> {
 
     @Modifying
     @Query(value = "insert into heroku_4fe5c149618a3f9.response(admin_id, message, modify_date, user_id, feedback_id) " +
