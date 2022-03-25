@@ -3,6 +3,7 @@ package com.capstone_project.hbts.service.impl;
 import com.capstone_project.hbts.entity.Facility;
 import com.capstone_project.hbts.entity.FacilityType;
 import com.capstone_project.hbts.repository.FacilityRepository;
+import com.capstone_project.hbts.request.FacilityAddRequest;
 import com.capstone_project.hbts.request.FacilityRequest;
 import com.capstone_project.hbts.service.FacilityService;
 import lombok.extern.log4j.Log4j2;
@@ -22,10 +23,10 @@ public class FacilityServiceImpl implements FacilityService {
     }
 
     @Override
-    public void addFacility(int facilityTypeId, List<FacilityRequest> listFacility) {
+    public void addFacility(int facilityTypeId, FacilityAddRequest facilityAddRequest) {
         log.info("Request to add a list facility for admin");
         List<Facility> facilityList = new ArrayList<>();
-        for(FacilityRequest facilityRequest : listFacility){
+        for(FacilityRequest facilityRequest : facilityAddRequest.getListFacility()){
             Facility facility = new Facility();
             facility.setName(facilityRequest.getName());
             facility.setIcon(facilityRequest.getIcon());

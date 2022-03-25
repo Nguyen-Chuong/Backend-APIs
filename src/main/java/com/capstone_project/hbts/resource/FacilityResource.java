@@ -3,7 +3,7 @@ package com.capstone_project.hbts.resource;
 import com.capstone_project.hbts.constant.ErrorConstant;
 import com.capstone_project.hbts.decryption.DataDecryption;
 import com.capstone_project.hbts.dto.Facility.FacilityResult;
-import com.capstone_project.hbts.request.FacilityRequest;
+import com.capstone_project.hbts.request.FacilityAddRequest;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.service.FacilityService;
 import com.capstone_project.hbts.service.FacilityTypeService;
@@ -69,13 +69,13 @@ public class FacilityResource {
 
     /**
      * @param facilityTypeId
-     * @param facilityList
+     * @param facilityAddRequest
      * return
      * @apiNote add list facility for admin
      */
     @PostMapping("/add-facility")
     public ResponseEntity<?> addListFacility(@RequestParam String facilityTypeId,
-                                             @RequestBody List<FacilityRequest> facilityList) {
+                                             @RequestBody FacilityAddRequest facilityAddRequest) {
         log.info("REST request to add list facility");
         int id;
         try {
@@ -86,7 +86,7 @@ public class FacilityResource {
                             ErrorConstant.ERR_DATA_001, ErrorConstant.ERR_DATA_001_LABEL));
         }
         try {
-            facilityService.addFacility(id, facilityList);
+            facilityService.addFacility(id, facilityAddRequest);
             return ResponseEntity.ok()
                     .body(new ApiResponse<>(200, null,
                             null, null));
