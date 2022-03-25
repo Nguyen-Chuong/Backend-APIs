@@ -34,6 +34,6 @@ public class UserRequest {
 
     private int type; // not required
 
-    private VipDTO idVip; // not required
+    private VipDTO vip; // not required
 
 }

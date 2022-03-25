@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
         // set vip status auto 1 for new user
         VipDTO vipDTO = new VipDTO();
         vipDTO.setId(1);
-        userRequest.setIdVip(vipDTO);
+        userRequest.setVip(vipDTO);
 
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         Users newUser = modelMapper.map(userRequest, Users.class);
