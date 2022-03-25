@@ -1,7 +1,7 @@
 package com.capstone_project.hbts.service;
 
 import com.capstone_project.hbts.dto.Benefit.ObjectBenefit;
-import com.capstone_project.hbts.request.BenefitRequest;
+import com.capstone_project.hbts.request.BenefitAddRequest;
 
 import java.util.List;
 
@@ -15,10 +15,10 @@ public interface BenefitService {
 
     /**
      * add list benefit
-     * @param listBenefit
+     * @param benefitAddRequest
      * @param benefitTypeId
      */
-    void addBenefit(int benefitTypeId, List<BenefitRequest> listBenefit);
+    void addBenefit(int benefitTypeId, BenefitAddRequest benefitAddRequest);
 
     /**
      * add a benefit for provider that doesn't have in db

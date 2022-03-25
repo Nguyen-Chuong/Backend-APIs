@@ -9,6 +9,7 @@ import com.capstone_project.hbts.entity.BenefitType;
 import com.capstone_project.hbts.entity.RoomType;
 import com.capstone_project.hbts.repository.BenefitRepository;
 import com.capstone_project.hbts.repository.HotelRepository;
+import com.capstone_project.hbts.request.BenefitAddRequest;
 import com.capstone_project.hbts.request.BenefitRequest;
 import com.capstone_project.hbts.service.BenefitService;
 import lombok.extern.log4j.Log4j2;
@@ -85,10 +86,10 @@ public class BenefitServiceImpl implements BenefitService {
     }
 
     @Override
-    public void addBenefit(int benefitTypeId, List<BenefitRequest> listBenefit) {
+    public void addBenefit(int benefitTypeId, BenefitAddRequest benefitAddRequest) {
         log.info("Request to add a list benefit for admin");
         List<Benefit> benefitList = new ArrayList<>();
-        for(BenefitRequest benefitRequest : listBenefit){
+        for(BenefitRequest benefitRequest : benefitAddRequest.getListBenefit()){
             Benefit benefit = new Benefit();
             benefit.setName(benefitRequest.getName());
             benefit.setIcon(benefitRequest.getIcon());

@@ -4,7 +4,7 @@ import com.capstone_project.hbts.constant.ErrorConstant;
 import com.capstone_project.hbts.decryption.DataDecryption;
 import com.capstone_project.hbts.dto.Benefit.BenefitResult;
 import com.capstone_project.hbts.dto.Benefit.ObjectBenefit;
-import com.capstone_project.hbts.request.BenefitRequest;
+import com.capstone_project.hbts.request.BenefitAddRequest;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.service.BenefitService;
 import com.capstone_project.hbts.service.BenefitTypeService;
@@ -98,13 +98,13 @@ public class BenefitResource {
 
     /**
      * @param benefitTypeId
-     * @param benefitList
+     * @param benefitAddRequest
      * return
      * @apiNote add list benefit for admin
      */
     @PostMapping("/add-benefit")
     public ResponseEntity<?> addListBenefit(@RequestParam String benefitTypeId,
-                                            @RequestBody List<BenefitRequest> benefitList) {
+                                            @RequestBody BenefitAddRequest benefitAddRequest) {
         log.info("REST request to add list benefit");
         int id;
         try {
@@ -115,7 +115,7 @@ public class BenefitResource {
                             ErrorConstant.ERR_DATA_001, ErrorConstant.ERR_DATA_001_LABEL));
         }
         try {
-            benefitService.addBenefit(id, benefitList);
+            benefitService.addBenefit(id, benefitAddRequest);
             return ResponseEntity.ok()
                     .body(new ApiResponse<>(200, null,
                             null, null));
