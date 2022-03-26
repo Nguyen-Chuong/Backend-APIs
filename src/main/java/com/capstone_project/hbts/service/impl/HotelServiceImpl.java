@@ -78,6 +78,56 @@ public class HotelServiceImpl implements HotelService {
         return new RoomType();
     }
 
+    // get rating by hotel
+    public RatingDTO getRatingByHotel(Hotel hotel) {
+        // if hotel has no booking
+        if(hotel.getListUserBooking() == null){
+            return new RatingDTO();
+        }
+        // new rating
+        RatingDTO ratingDTO = new RatingDTO();
+        // get list user booking reviewed
+        Set<UserBooking> userBookingListHasReview = hotel.getListUserBooking()
+                .stream()
+                .filter(item -> item.getReviewStatus() == 1)
+                .collect(Collectors.toSet());
+        // get total number booking rated
+        int number = userBookingListHasReview.size();
+        // if this hotel has no booking that reviewed
+        if (number == 0) {
+            return new RatingDTO();
+        } else {
+            // get total score
+            float totalService = 0;
+            float totalValueForMoney = 0;
+            float totalCleanliness = 0;
+            float totalLocation = 0;
+            float totalFacilities = 0;
+            for (UserBooking userBooking : userBookingListHasReview) {
+                Review review = userBooking.getListReview().iterator().next();
+                totalService = totalService + review.getService();
+                totalValueForMoney = totalValueForMoney + review.getValueForMoney();
+                totalCleanliness = totalCleanliness + review.getCleanliness();
+                totalLocation = totalLocation + review.getLocation();
+                totalFacilities = totalFacilities + review.getFacilities();
+            }
+            // get average score
+            float averageService = totalService / number;
+            float averageValueForMoney = totalValueForMoney / number;
+            float averageCleanliness = totalCleanliness / number;
+            float averageLocation = totalLocation / number;
+            float averageFacilities = totalFacilities / number;
+            // set props
+            ratingDTO.setTotalReview(number);
+            ratingDTO.setAverageService(averageService);
+            ratingDTO.setAverageValueForMoney(averageValueForMoney);
+            ratingDTO.setAverageCleanliness(averageCleanliness);
+            ratingDTO.setAverageLocation(averageLocation);
+            ratingDTO.setAverageFacilities(averageFacilities);
+            return ratingDTO;
+        }
+    }
+
     @Override
     public Page<HotelDTO> searchHotel(int districtId, Date dateIn, Date dateOut,
                                       int numberOfPeople, int numberOfRoom,
@@ -114,6 +164,9 @@ public class HotelServiceImpl implements HotelService {
             // set deal expired
             hotelDTOList.get(i).setDealExpired(getLowestPriceInHotel
                     (result.get(i).getListRoomType()).getDealExpire());
+            // set rating
+            RatingDTO ratingDTO = getRatingByHotel(result.get(i));
+            hotelDTOList.get(i).setRating(ratingDTO);
         }
         // hotel with no room have deal and price = 0
 
