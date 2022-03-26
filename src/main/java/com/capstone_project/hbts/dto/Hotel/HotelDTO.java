@@ -2,6 +2,7 @@ package com.capstone_project.hbts.dto.Hotel;
 
 import com.capstone_project.hbts.dto.Location.DistrictDTO;
 import com.capstone_project.hbts.dto.RatingDTO;
+import com.capstone_project.hbts.dto.Report.ReviewDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -42,5 +43,7 @@ public class HotelDTO {
     private Timestamp dealExpired;
 
     private RatingDTO rating;
+
+    private ReviewDTO review;
 
 }

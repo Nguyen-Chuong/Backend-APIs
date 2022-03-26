@@ -3,6 +3,7 @@ package com.capstone_project.hbts.service.impl;
 import com.capstone_project.hbts.dto.Hotel.HotelDTO;
 import com.capstone_project.hbts.dto.Hotel.HotelDetailDTO;
 import com.capstone_project.hbts.dto.RatingDTO;
+import com.capstone_project.hbts.dto.Report.ReviewDTO;
 import com.capstone_project.hbts.entity.Hotel;
 import com.capstone_project.hbts.entity.Review;
 import com.capstone_project.hbts.entity.RoomType;
@@ -128,6 +129,45 @@ public class HotelServiceImpl implements HotelService {
         }
     }
 
+    // count average score review
+    public float countTotalScoreReview(Review review){
+        float total = 0;
+        return total + review.getService() + review.getFacilities() +
+                review.getCleanliness() + review.getLocation() +
+                review.getValueForMoney();
+    }
+
+    // get top 1 review
+    public ReviewDTO getTop1ReviewAboutHotel(Set<UserBooking> userBookings){
+        // get set booking has review
+        Set<UserBooking> userBookingHasReview = userBookings
+                .stream()
+                .filter(item -> item.getReviewStatus() == 1)
+                .collect(Collectors.toSet());
+        // if has no booking has review, return empty
+        if(userBookingHasReview.size() == 0 ){
+            return new ReviewDTO();
+        }
+        // total review
+        List<Review> listReview = new ArrayList<>();
+        // total score
+        List<Float> totalReviewScoreOfBookings = new ArrayList<>();
+        for(UserBooking userBooking : userBookingHasReview){
+            Review review = userBooking.getListReview().iterator().next();
+            listReview.add(review);
+            totalReviewScoreOfBookings.add(countTotalScoreReview(review));
+        }
+        // get max total score
+        float maxValue = totalReviewScoreOfBookings.stream().max(Float::compare).get();
+        // return review that has max score
+        for(Review review : listReview){
+            if(countTotalScoreReview(review) == maxValue){
+                return modelMapper.map(review, ReviewDTO.class);
+            }
+        }
+        return new ReviewDTO();
+    }
+
     @Override
     public Page<HotelDTO> searchHotel(int districtId, Date dateIn, Date dateOut,
                                       int numberOfPeople, int numberOfRoom,
@@ -167,6 +207,9 @@ public class HotelServiceImpl implements HotelService {
             // set rating
             RatingDTO ratingDTO = getRatingByHotel(result.get(i));
             hotelDTOList.get(i).setRating(ratingDTO);
+            // set review
+            ReviewDTO reviewDTO = getTop1ReviewAboutHotel(result.get(i).getListUserBooking());
+            hotelDTOList.get(i).setReview(reviewDTO);
         }
         // hotel with no room have deal and price = 0
 
