@@ -15,6 +15,8 @@ public class DistrictDTO {
 
     private String avatar;
 
+    private long totalBooking;
+
     private CityDTO city;
 
 }

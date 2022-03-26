@@ -4,6 +4,8 @@ import com.capstone_project.hbts.dto.Location.CityDistrict;
 import com.capstone_project.hbts.dto.Location.DistrictDTO;
 import com.capstone_project.hbts.dto.Location.DistrictSearchDTO;
 import com.capstone_project.hbts.dto.Location.ResultSearch;
+import com.capstone_project.hbts.entity.District;
+import com.capstone_project.hbts.entity.Hotel;
 import com.capstone_project.hbts.repository.DistrictRepository;
 import com.capstone_project.hbts.service.DistrictService;
 import lombok.extern.log4j.Log4j2;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -61,16 +64,33 @@ public class DistrictServiceImpl implements DistrictService {
                 .collect(Collectors.toList());
     }
 
+    // count total booking of an district
+    public long countTotalBookingForEachDistrict(District district){
+        Set<Hotel> hotelSet = district.getListHotel();
+        long total = 0;
+        for(Hotel hotel : hotelSet){
+            total = total + hotel.getListUserBooking().size();
+        }
+        return total;
+    }
+
     @Override
     public List<DistrictDTO> getTopHotLocation(int limit) {
         log.info("Request to get top hot location");
         // get list top hot district id
         List<Integer> districtIds = districtRepository.getTopHotLocation(limit);
         // get district from list ids
-        return districtRepository.findAllById(districtIds)
+        List<District> districtList =  districtRepository.findAllById(districtIds);
+        // convert to dto
+        List<DistrictDTO> districtDTOList = districtList
                 .stream()
                 .map(item -> modelMapper.map(item, DistrictDTO.class))
                 .collect(Collectors.toList());
+        // set number booking property
+        for(int i = 0; i < districtDTOList.size(); i++){
+            districtDTOList.get(i).setTotalBooking(countTotalBookingForEachDistrict(districtList.get(i)));
+        }
+        return districtDTOList;
     }
 
 }
