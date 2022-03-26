@@ -38,6 +38,9 @@ public class District implements Serializable {
     @NotNull
     private String nameDistrict;
 
+    @Column(name = "avatar")
+    private String avatar;
+
     @ManyToOne
     @JoinColumn(name = "cityId")
     private City city;

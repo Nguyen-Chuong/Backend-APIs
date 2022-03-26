@@ -13,6 +13,8 @@ public class DistrictDTO {
 
     private String nameDistrict;
 
+    private String avatar;
+
     private CityDTO city;
 
 }
