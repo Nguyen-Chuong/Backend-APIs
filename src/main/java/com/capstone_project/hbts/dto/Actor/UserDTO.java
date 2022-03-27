@@ -34,6 +34,6 @@ public class UserDTO {
 
     private BigDecimal spend;
 
-    private VipDTO idVip;
+    private VipDTO vip;
 
 }
