@@ -43,6 +43,9 @@ public class BookingServiceImpl implements BookingService {
     }
 
     public BigDecimal countTotalPaidForABooking(UserBooking userBooking){
+        // get % discount VIP travesily
+        int discount = userBooking.getUsers().getVip().getDiscount();
+
         // get subtract millis second between two date
         long millisSecond = userBooking.getCheckOut().getTime() - userBooking.getCheckIn().getTime();
         // get number day
@@ -59,9 +62,11 @@ public class BookingServiceImpl implements BookingService {
                             .multiply(BigDecimal.valueOf(item.getQuantity())) // quantity
                             .multiply(BigDecimal.valueOf(numberDayBooking))); // number day booking
         }
+        // count total paid discounted by travesily VIP
+        BigDecimal totalPaidDiscountedVIP = totalPaid.multiply(BigDecimal.valueOf(1 - (double) discount/100));
         // get tax
         double tax = (double) userBooking.getHotel().getTaxPercentage() / 100;
-        return totalPaid.multiply(BigDecimal.valueOf(1 + tax));
+        return totalPaidDiscountedVIP.multiply(BigDecimal.valueOf(1 + tax));
     }
 
     @Override
