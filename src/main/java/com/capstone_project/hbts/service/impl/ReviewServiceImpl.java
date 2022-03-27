@@ -57,6 +57,13 @@ public class ReviewServiceImpl implements ReviewService {
                 .map(item -> modelMapper.map(item, ReviewDTO.class))
                 .collect(Collectors.toList());
 
+        for(int i = 0; i < reviewDTOList.size(); i++){
+            // set user name for review
+            reviewDTOList.get(i).setUsername(listReview.get(i).getUserBooking().getUsers().getUsername().substring(2));
+            // set avatar for user review
+            reviewDTOList.get(i).setAvatar(listReview.get(i).getUserBooking().getUsers().getAvatar());
+        }
+
         return new CustomPageImpl<>(reviewDTOList);
     }
 

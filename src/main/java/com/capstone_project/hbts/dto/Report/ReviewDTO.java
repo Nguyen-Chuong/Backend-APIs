@@ -13,6 +13,10 @@ public class ReviewDTO {
 
     private Integer id;
 
+    private String username;
+
+    private String avatar;
+
     private float service;
 
     private float valueForMoney;

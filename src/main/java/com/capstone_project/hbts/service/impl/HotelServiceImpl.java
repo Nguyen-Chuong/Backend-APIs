@@ -162,7 +162,12 @@ public class HotelServiceImpl implements HotelService {
         // return review that has max score
         for(Review review : listReview){
             if(countTotalScoreReview(review) == maxValue){
-                return modelMapper.map(review, ReviewDTO.class);
+                ReviewDTO reviewDTO = modelMapper.map(review, ReviewDTO.class);
+                // set username
+                reviewDTO.setUsername(review.getUserBooking().getUsers().getUsername().substring(2));
+                // set avatar
+                reviewDTO.setAvatar(review.getUserBooking().getUsers().getAvatar());
+                return reviewDTO;
             }
         }
         return new ReviewDTO();
