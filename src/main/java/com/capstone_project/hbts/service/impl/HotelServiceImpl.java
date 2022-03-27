@@ -343,6 +343,12 @@ public class HotelServiceImpl implements HotelService {
         hotelDTO.setSalePercent(getLowestPriceInHotel(hotel.getListRoomType()).getDealPercentage());
         // set deal expired
         hotelDTO.setDealExpired(getLowestPriceInHotel(hotel.getListRoomType()).getDealExpire());
+        // set rating
+        RatingDTO ratingDTO = getRatingByHotel(hotel);
+        hotelDTO.setRating(ratingDTO);
+        // set review
+        ReviewDTO reviewDTO = getTop1ReviewAboutHotel(hotel.getListUserBooking());
+        hotelDTO.setReview(reviewDTO);
         return hotelDTO;
     }
 
