@@ -1,9 +1,5 @@
 package com.capstone_project.hbts.service;
 
-import com.capstone_project.hbts.entity.Email;
-
-import java.util.List;
-
 public interface EmailService {
 
     /**
@@ -13,12 +9,6 @@ public interface EmailService {
      * @param content
      */
     void send(String to, String subject, String content);
-
-    /**
-     * get content email
-     * @param subject
-     */
-    List<Email> getContent(String subject);
 
     /**
      * send html email
