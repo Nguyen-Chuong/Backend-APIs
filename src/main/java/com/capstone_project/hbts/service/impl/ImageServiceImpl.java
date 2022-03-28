@@ -1,9 +1,9 @@
 package com.capstone_project.hbts.service.impl;
 
-import com.capstone_project.hbts.dto.ImageDTO;
 import com.capstone_project.hbts.entity.Image;
 import com.capstone_project.hbts.entity.RoomType;
 import com.capstone_project.hbts.repository.ImageRepository;
+import com.capstone_project.hbts.repository.RoomTypeRepository;
 import com.capstone_project.hbts.request.ImageRequest;
 import com.capstone_project.hbts.service.ImageService;
 import lombok.extern.log4j.Log4j2;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Log4j2
@@ -18,8 +19,11 @@ public class ImageServiceImpl implements ImageService {
 
     private final ImageRepository imageRepository;
 
-    public ImageServiceImpl(ImageRepository imageRepository) {
+    private final RoomTypeRepository roomTypeRepository;
+
+    public ImageServiceImpl(ImageRepository imageRepository, RoomTypeRepository roomTypeRepository) {
         this.imageRepository = imageRepository;
+        this.roomTypeRepository = roomTypeRepository;
     }
 
     @Override
@@ -51,26 +55,13 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public void updateImage(ImageDTO imageDTO) {
-        log.info("Request to update an image of a room type");
-        Image image = imageRepository.getImageById(imageDTO.getId());
-        // set new url
-        image.setSrc(imageDTO.getSrc());
-        imageRepository.save(image);
-    }
-
-    @Override
-    public void deleteListImage(List<Integer> imageIds) {
+    public void deleteListImage(int roomTypeId) {
         log.info("Request to delete a list image of a room type");
-        List<Image> listImageDelete = new ArrayList<>();
-        for(Integer integer : imageIds){
-            // set id for image need to delete
-            Image image = new Image();
-            image.setId(integer);
-            listImageDelete.add(image);
-        }
+        RoomType roomType = roomTypeRepository.getRoomTypeById(roomTypeId);
+        // get list image in this room
+        Set<Image> imageSet = roomType.getListImage();
         // delete all
-        imageRepository.deleteAll(listImageDelete);
+        imageRepository.deleteAll(imageSet);
     }
 
 }
