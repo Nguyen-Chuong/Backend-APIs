@@ -3,10 +3,10 @@ package com.capstone_project.hbts.resource;
 import com.capstone_project.hbts.constant.ErrorConstant;
 import com.capstone_project.hbts.constant.ValidateConstant;
 import com.capstone_project.hbts.decryption.DataDecryption;
+import com.capstone_project.hbts.request.FeedbackRequest;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.service.EmailService;
 import com.capstone_project.hbts.service.OTPService;
-import com.fasterxml.jackson.databind.node.TextNode;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -199,7 +199,7 @@ public class EmailResource {
     @PostMapping("/mail/send-response")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
     public ResponseEntity<?> sendMailResponseFeedback(@RequestParam String email,
-                                                      @RequestBody TextNode message){
+                                                      @RequestBody FeedbackRequest feedbackRequest){
         log.info("REST request to send mail response for user's feedback");
         String emailDecrypted;
         try {
@@ -211,7 +211,7 @@ public class EmailResource {
         }
         try {
             emailService.sendHTMLMail(emailDecrypted, ValidateConstant.EMAIL_SUBJECT_RESPONSE,
-                    ValidateConstant.getResponseFeedbackContent(message.asText()));
+                    ValidateConstant.getResponseFeedbackContent(feedbackRequest.getMessage()));
             return ResponseEntity.ok()
                     .body(new ApiResponse<>(200, null,
                             null, null));

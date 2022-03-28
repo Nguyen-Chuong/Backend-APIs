@@ -5,6 +5,7 @@ import com.capstone_project.hbts.decryption.DataDecryption;
 import com.capstone_project.hbts.dto.Benefit.BenefitResult;
 import com.capstone_project.hbts.dto.Benefit.ObjectBenefit;
 import com.capstone_project.hbts.request.BenefitAddRequest;
+import com.capstone_project.hbts.request.BenefitRequest;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.service.BenefitService;
 import com.capstone_project.hbts.service.BenefitTypeService;
@@ -128,16 +129,16 @@ public class BenefitResource {
     }
 
     /**
-     * @param benefitName
+     * @param benefitRequest
      * return
      * @apiNote add benefit for provider that doesn't have in db
      */
     @PostMapping("/add-other-benefit")
-    public ResponseEntity<?> addBenefitOtherType(@RequestBody TextNode benefitName) {
+    public ResponseEntity<?> addBenefitOtherType(@RequestBody BenefitRequest benefitRequest) {
         log.info("REST request to add a benefit for provider in other type");
 
         try {
-            benefitService.addBenefitOtherType(benefitName.asText());
+            benefitService.addBenefitOtherType(benefitRequest.getName());
             return ResponseEntity.ok()
                     .body(new ApiResponse<>(200, null,
                             null, null));

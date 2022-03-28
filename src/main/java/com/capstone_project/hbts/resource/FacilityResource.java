@@ -4,6 +4,7 @@ import com.capstone_project.hbts.constant.ErrorConstant;
 import com.capstone_project.hbts.decryption.DataDecryption;
 import com.capstone_project.hbts.dto.Facility.FacilityResult;
 import com.capstone_project.hbts.request.FacilityAddRequest;
+import com.capstone_project.hbts.request.FacilityRequest;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.service.FacilityService;
 import com.capstone_project.hbts.service.FacilityTypeService;
@@ -99,16 +100,16 @@ public class FacilityResource {
     }
 
     /**
-     * @param facilityName
+     * @param facilityRequest
      * return
      * @apiNote add facility for provider that doesn't have in db
      */
     @PostMapping("/add-other-facility")
-    public ResponseEntity<?> addFacilityOtherType(@RequestBody TextNode facilityName) {
+    public ResponseEntity<?> addFacilityOtherType(@RequestBody FacilityRequest facilityRequest) {
         log.info("REST request to add a facility for provider in other type");
 
         try {
-            facilityService.addFacilityOtherType(facilityName.asText());
+            facilityService.addFacilityOtherType(facilityRequest.getName());
             return ResponseEntity.ok()
                     .body(new ApiResponse<>(200, null,
                             null, null));
