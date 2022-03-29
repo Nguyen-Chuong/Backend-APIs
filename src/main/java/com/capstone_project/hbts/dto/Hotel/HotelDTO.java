@@ -45,4 +45,6 @@ public class HotelDTO {
 
     private ReviewDTO review;
 
+    private int totalHotel;
+
 }

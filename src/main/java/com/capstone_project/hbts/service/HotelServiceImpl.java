@@ -154,6 +154,20 @@ public class HotelServiceImpl {
         return new ReviewDTO();
     }
 
+    public int getSizeNoPaging(int districtId, int numberOfPeople, int numberOfRoom){
+        // get total hotel can have
+        List<Hotel> listHotelNoPaging = hotelRepository.getTotalHotelWithoutPaging(districtId);
+        // remove some hotel if it is not eligible
+        for (int i = listHotelNoPaging.size() - 1; i >= 0; i--) {
+            if (getTotalRoom(listHotelNoPaging.get(i).getListRoomType()) < numberOfRoom
+                    || getTotalPeople(listHotelNoPaging.get(i).getListRoomType()) < numberOfPeople) {
+                listHotelNoPaging.remove(listHotelNoPaging.get(i));
+            }
+        }
+        // get size no paging
+        return listHotelNoPaging.size();
+    }
+
     public Page<HotelDTO> searchHotel(int districtId, Date dateIn, Date dateOut, int numberOfPeople, int numberOfRoom, Pageable pageable) {
         // get all hotel in this district
         Page<Hotel> hotelPage = hotelRepository.searchHotelByDistrict(districtId, pageable);

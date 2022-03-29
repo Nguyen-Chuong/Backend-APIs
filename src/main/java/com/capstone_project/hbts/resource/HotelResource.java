@@ -49,10 +49,11 @@ public class HotelResource {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_USER_009_LABEL));
         }
         try {
+            int totalSizeNoPaging = hotelService.getSizeNoPaging(districtId, numberOfPeople, numberOfRoom);
             Page<HotelDTO> hotelDTOPage = hotelService.searchHotel(districtId, dateIn, dateOut, numberOfPeople, numberOfRoom,
                     PageRequest.of(page, pageSize));
             DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(hotelDTOPage.getContent(),
-                    hotelDTOPage.getTotalElements(), page, hotelDTOPage.getSize());
+                    totalSizeNoPaging, page, hotelDTOPage.getSize());
             return ResponseEntity.ok().body(new ApiResponse<>(200, dataPagingResponse, null));
         } catch (Exception e) {
             e.printStackTrace();
