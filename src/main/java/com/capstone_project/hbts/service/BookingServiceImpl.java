@@ -117,13 +117,18 @@ public class BookingServiceImpl {
         return userBookingDTO;
     }
 
-    public Page<UserBookingDTO> getBookingsByHotelId(int hotelId, Pageable pageable) {
-        Page<UserBooking> userBookingPage = bookingRepository.findAllByHotel_IdOrderByBookingDateDesc(hotelId, pageable);
-        List<UserBooking> list = userBookingPage.getContent();
-        List<UserBookingDTO> userBookingDTOList = list.stream().map(item -> modelMapper.map(item, UserBookingDTO.class))
+    public Page<UserBookingDTO> getBookingsByHotelId(int hotelId, int status,Pageable pageable) {
+        List<UserBookingDTO> userBookingDTOList;
+        List<UserBooking> resultList;
+        if(status == 0){
+            resultList = bookingRepository.findAllByHotel_IdOrderByBookingDateDesc(hotelId, pageable).getContent();
+        } else {
+            resultList = bookingRepository.findAllByHotel_IdAndStatusOrderByBookingDateDesc(hotelId, status, pageable).getContent();
+        }
+        userBookingDTOList = resultList.stream().map(item -> modelMapper.map(item, UserBookingDTO.class))
                 .collect(Collectors.toList());
-        for(int i = 0 ; i < list.size(); i++){
-            BigDecimal totalPaid = countTotalPaidForABooking(list.get(i));
+        for(int i = 0 ; i < resultList.size(); i++){
+            BigDecimal totalPaid = countTotalPaidForABooking(resultList.get(i));
             // set total paid for each user booking
             userBookingDTOList.get(i).setTotalPaid(totalPaid);
         }

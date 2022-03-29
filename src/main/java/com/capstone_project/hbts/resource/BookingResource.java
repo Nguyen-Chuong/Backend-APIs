@@ -141,7 +141,8 @@ public class BookingResource {
      * @apiNote for provider to view list booking in their hotel
      */
     @GetMapping("/bookings/hotel")
-    public ResponseEntity<?> getBookingByHotelId(@RequestParam String hotelId, @RequestParam(defaultValue = ValidateConstant.PAGE) int page,
+    public ResponseEntity<?> getBookingByHotelId(@RequestParam String hotelId, @RequestParam int status,
+                                                 @RequestParam(defaultValue = ValidateConstant.PAGE) int page,
                                                  @RequestParam(defaultValue = ValidateConstant.PER_PAGE) int pageSize) {
         log.info("REST request to get user's booking by hotel id");
         int id;
@@ -151,7 +152,7 @@ public class BookingResource {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001_LABEL));
         }
         try {
-            Page<UserBookingDTO> userBookingDTOPage = bookingService.getBookingsByHotelId(id, PageRequest.of(page, pageSize));
+            Page<UserBookingDTO> userBookingDTOPage = bookingService.getBookingsByHotelId(id, status, PageRequest.of(page, pageSize));
             DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(userBookingDTOPage.getContent(),
                     userBookingDTOPage.getTotalElements(), page, userBookingDTOPage.getSize());
             return ResponseEntity.ok().body(new ApiResponse<>(200, dataPagingResponse, null));

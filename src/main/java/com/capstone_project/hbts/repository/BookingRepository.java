@@ -37,6 +37,8 @@ public interface BookingRepository extends JpaRepository<UserBooking, Integer> {
 
     Page<UserBooking> findAllByHotel_IdOrderByBookingDateDesc(int hotelId, Pageable pageable);
 
+    Page<UserBooking> findAllByHotel_IdAndStatusOrderByBookingDateDesc(int hotelId, int status, Pageable pageable);
+
     @Modifying
     @Query(value = "UPDATE heroku_4fe5c149618a3f9.user_booking SET status = 3 WHERE id = :bookingId", nativeQuery = true)
     void cancelBooking(@Param("bookingId") int bookingId);
@@ -45,11 +47,13 @@ public interface BookingRepository extends JpaRepository<UserBooking, Integer> {
     UserBooking getBookingById(@Param("id") int id);
 
     @Modifying
-    @Query(value = "insert into heroku_4fe5c149618a3f9.user_booking(booked_quantity, booking_date, check_in, check_out, review_status, status, hotel_id, user_id, other_requirement, type) " +
-            "values (:bookedQuantity, :bookingDate, :checkIn, :checkOut, :reviewStatus, :status, :hotelId, :userId, :otherRequirement, :type)", nativeQuery = true)
-    void addNewBooking(@Param("bookedQuantity") int bookedQuantity, @Param("bookingDate") Timestamp bookingDate, @Param("checkIn") Timestamp checkIn,
-                       @Param("checkOut") Timestamp checkOut, @Param("reviewStatus") int reviewStatus, @Param("status") int status,
-                       @Param("hotelId") int hotelId, @Param("userId") int userId, @Param("otherRequirement") String otherRequirement, @Param("type") int type);
+    @Query(value = "insert into heroku_4fe5c149618a3f9.user_booking(booked_quantity, booking_date, check_in, check_out, " +
+            "review_status, status, hotel_id, user_id, other_requirement, type) values (:bookedQuantity, :bookingDate, " +
+            ":checkIn, :checkOut, :reviewStatus, :status, :hotelId, :userId, :otherRequirement, :type)", nativeQuery = true)
+    void addNewBooking(@Param("bookedQuantity") int bookedQuantity, @Param("bookingDate") Timestamp bookingDate,
+                       @Param("checkIn") Timestamp checkIn, @Param("checkOut") Timestamp checkOut, @Param("reviewStatus") int reviewStatus,
+                       @Param("status") int status, @Param("hotelId") int hotelId, @Param("userId") int userId,
+                       @Param("otherRequirement") String otherRequirement, @Param("type") int type);
 
     @Query(value = "select last_insert_id(id) from heroku_4fe5c149618a3f9.user_booking order by last_insert_id(id) desc limit 1;", nativeQuery = true)
     Integer getBookingIdJustInsert();
