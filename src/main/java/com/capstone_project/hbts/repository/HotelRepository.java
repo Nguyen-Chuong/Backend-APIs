@@ -25,8 +25,8 @@ public interface HotelRepository extends JpaRepository<Hotel, Integer> {
     Page<Hotel> findAllHotel(Pageable pageable);
 
     @Modifying
-    @Query(value = "UPDATE Hotel h set h.status = 4 WHERE h.id = :hotelId")
-    void banHotelById(@Param("hotelId") int hotelId);
+    @Query(value = "UPDATE Hotel h set h.status = :status WHERE h.id = :hotelId")
+    void updateHotelStatus(@Param("hotelId") int hotelId, @Param("status") int status);
 
     @Modifying
     @Query(value = "UPDATE Hotel h set h.status = 4 WHERE h.provider.id = :providerId")
@@ -35,23 +35,11 @@ public interface HotelRepository extends JpaRepository<Hotel, Integer> {
     List<Hotel> getAllByProviderId(int providerId);
 
     @Modifying
-    @Query(value = "UPDATE Hotel h set h.status = 2 WHERE h.id = :hotelId")
-    void disableHotel(@Param("hotelId") int hotelId);
-
-    @Modifying
-    @Query(value = "UPDATE Hotel h set h.status = 1 WHERE h.id = :hotelId")
-    void enableHotel(@Param("hotelId") int hotelId);
-
-    @Modifying
     @Query(value = "insert into heroku_4fe5c149618a3f9.hotel(address, avatar, description, email, name, phone, status, district_id, provider_id, star, tax_percentage) " +
             "values (:address, :avatar, :description, :email, :name, :phone, :status, :districtId, :providerId, :star, :taxPercentage)", nativeQuery = true)
     void addNewHotel(@Param("address") String address, @Param("avatar") String avatar, @Param("description") String description, @Param("email") String email,
                      @Param("name") String name, @Param("phone") String phone, @Param("status") int status, @Param("districtId") int districtId,
                      @Param("providerId") int providerId, @Param("star") int star, @Param("taxPercentage") int taxPercentage);
-
-    @Modifying
-    @Query(value = "UPDATE Hotel h set h.status = 5 WHERE h.id = :hotelId")
-    void denyHotelById(@Param("hotelId") int hotelId);
 
     @Query(value = "SELECT h.status FROM Hotel h WHERE h.id = :hotelId")
     Integer viewHotelStatus(@Param("hotelId") int hotelId);

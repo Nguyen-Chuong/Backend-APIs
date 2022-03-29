@@ -48,7 +48,7 @@ public class RequestServiceImpl {
         // get hotel id to accept, ready to on stage
         int hotelId = requestRepository.getRequestById(requestId).getHotel().getId();
         // update hotel status
-        hotelRepository.enableHotel(hotelId);
+        hotelRepository.updateHotelStatus(hotelId, 1);
     }
 
     @Transactional
@@ -58,7 +58,7 @@ public class RequestServiceImpl {
         // get hotel id to deny
         int hotelId = requestRepository.getRequestById(requestId).getHotel().getId();
         // delete this hotel
-        hotelRepository.denyHotelById(hotelId);
+        hotelRepository.updateHotelStatus(hotelId, 5);
     }
 
     public Page<RequestDTO> viewAllRequestByStatus(int status, Pageable pageable) {

@@ -216,7 +216,7 @@ public class HotelServiceImpl {
 
     @Transactional
     public void banHotelByHotelId(int hotelId) {
-        hotelRepository.banHotelById(hotelId);
+        hotelRepository.updateHotelStatus(hotelId, 4);
     }
 
     @Transactional
@@ -242,12 +242,12 @@ public class HotelServiceImpl {
 
     @Transactional
     public void disableHotel(int hotelId) {
-        hotelRepository.disableHotel(hotelId);
+        hotelRepository.updateHotelStatus(hotelId, 2);
     }
 
     @Transactional
     public void enableHotel(int hotelId) {
-        hotelRepository.enableHotel(hotelId);
+        hotelRepository.updateHotelStatus(hotelId, 1);
     }
 
     public HotelDTO getHotelById(int hotelId) {
