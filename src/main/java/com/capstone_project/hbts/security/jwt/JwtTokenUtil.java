@@ -8,8 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Function;
 
 @Component
@@ -57,22 +55,12 @@ public class JwtTokenUtil {
 
     // generate token for user
     public String generateToken(String userId, UserDetails userDetails) {
-        // in case server need to send more information to user, put it to Claims map
-//        Map<String, Object> claims = new HashMap<>();
         return doGenerateToken(userId, userDetails.getUsername());
     }
 
-    //1. Define  claims of the token, like Issuer, Expiration, Subject
-    //2. Sign the JWT using the HS256 algorithm and secret key.
     private String doGenerateToken(String userId, String subject) {
-        return Jwts.builder()
-                //.setClaims(claims) if have, param: Map<String, Object> claims
-                .setSubject(subject) // username
-                .setId(userId) // userId
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY_TIME * 1000))
-                .signWith(SignatureAlgorithm.HS256, secretKey)
-                .compact();
+        return Jwts.builder().setSubject(subject).setId(userId).setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY_TIME * 1000)).signWith(SignatureAlgorithm.HS256, secretKey).compact();
     }
 
     // validate token: check if username from jwt and username from db is equal

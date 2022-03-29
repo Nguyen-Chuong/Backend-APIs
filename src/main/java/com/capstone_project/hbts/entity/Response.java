@@ -1,34 +1,22 @@
 package com.capstone_project.hbts.entity;
 
 import com.capstone_project.hbts.audit.Auditable;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
-@Getter
+@Setter @Getter
 @Entity
 @Table(name = "Response")
 public class Response extends Auditable<String> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "message")
@@ -43,8 +31,7 @@ public class Response extends Auditable<String> implements Serializable {
     @Column(name = "admin_id")
     private int adminId;
 
-    @ManyToOne
-    @JoinColumn(name = "feedback_id")
+    @ManyToOne @JoinColumn(name = "feedback_id")
     private Feedback feedback;
 
 }

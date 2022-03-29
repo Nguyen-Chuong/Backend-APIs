@@ -1,36 +1,22 @@
 package com.capstone_project.hbts.entity;
 
 import com.capstone_project.hbts.audit.Auditable;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Getter @Setter
 @Entity
 @Table(name = "hotel")
 public class Hotel extends Auditable<String> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "name")
@@ -59,16 +45,13 @@ public class Hotel extends Auditable<String> implements Serializable {
 
     @Column(name = "status")
     private int status; // 1-active, 2-deactivated, 3-pending, 4-banned, 5-denied
-    // (if pending: approved -> 1-active, denied -> 5-denied)
-    // (if provider disable -> deactivated)
+    // (if pending: approved -> 1-active, denied -> 5-denied) (if provider disable -> deactivated)
     // if admin banned -> cannot re-active or request again, but if provider disable -> still can re-active
 
-    @ManyToOne
-    @JoinColumn(name = "district_id")
+    @ManyToOne @JoinColumn(name = "district_id")
     private District district;
 
-    @ManyToOne
-    @JoinColumn(name = "provider_id", nullable = false)
+    @ManyToOne @JoinColumn(name = "provider_id", nullable = false)
     private Provider provider;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "hotel")

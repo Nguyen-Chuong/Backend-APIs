@@ -7,8 +7,8 @@ import com.capstone_project.hbts.dto.Benefit.ObjectBenefit;
 import com.capstone_project.hbts.request.BenefitAddRequest;
 import com.capstone_project.hbts.request.BenefitRequest;
 import com.capstone_project.hbts.response.ApiResponse;
-import com.capstone_project.hbts.service.BenefitService;
-import com.capstone_project.hbts.service.BenefitTypeService;
+import com.capstone_project.hbts.service.BenefitServiceImpl;
+import com.capstone_project.hbts.service.BenefitTypeServiceImpl;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,20 +20,17 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class BenefitResource {
 
-    private final BenefitService benefitService;
+    private final BenefitServiceImpl benefitService;
 
     private final DataDecryption dataDecryption;
 
-    private final BenefitTypeService benefitTypeService;
+    private final BenefitTypeServiceImpl benefitTypeService;
 
-    public BenefitResource(BenefitService benefitService, DataDecryption dataDecryption, BenefitTypeService benefitTypeService) {
-        this.benefitService = benefitService;
-        this.dataDecryption = dataDecryption;
-        this.benefitTypeService = benefitTypeService;
+    public BenefitResource(BenefitServiceImpl benefitService, DataDecryption dataDecryption, BenefitTypeServiceImpl benefitTypeService) {
+        this.benefitService = benefitService;this.dataDecryption = dataDecryption;this.benefitTypeService = benefitTypeService;
     }
 
     /**
-     * @param hotelId
      * return
      */
     @GetMapping("/public/list-hotel-benefit")
@@ -43,20 +40,16 @@ public class BenefitResource {
         try {
             id = dataDecryption.convertEncryptedDataToInt(hotelId);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001, ErrorConstant.ERR_DATA_001_LABEL));
+            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001_LABEL));
         }
         try {
             List<ObjectBenefit> benefitObjectList = benefitService.getListBenefitByHotelId(id);
-            return ResponseEntity.ok().body(new ApiResponse<>(200, benefitObjectList,null, null));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000, ErrorConstant.ERR_000_LABEL));
+            return ResponseEntity.ok().body(new ApiResponse<>(200, benefitObjectList, null));
+        } catch (Exception e) { e.printStackTrace();
+            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
 
-    /**
-     * @param benefitTypeId
-     * return
-     */
     @GetMapping("/list-benefit")
     public ResponseEntity<?> getListBenefitByType(@RequestParam String benefitTypeId) {
         log.info("REST request to get list benefit by type");
@@ -64,43 +57,37 @@ public class BenefitResource {
         try {
             id = dataDecryption.convertEncryptedDataToInt(benefitTypeId);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001, ErrorConstant.ERR_DATA_001_LABEL));
+            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001_LABEL));
         }
         try {
             List<BenefitResult> benefitList = benefitTypeService.getAllBenefitByTypeId(id);
-            return ResponseEntity.ok().body(new ApiResponse<>(200, benefitList, null, null));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000, ErrorConstant.ERR_000_LABEL));
+            return ResponseEntity.ok().body(new ApiResponse<>(200, benefitList, null));
+        } catch (Exception e) { e.printStackTrace();
+            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
 
     /**
-     * @param benefitTypeId
-     * @param benefitAddRequest
-     * return
      * @apiNote add list benefit for admin
      */
     @PostMapping("/add-benefit")
-    public ResponseEntity<?> addListBenefit(@RequestParam String benefitTypeId,
-                                            @RequestBody BenefitAddRequest benefitAddRequest) {
+    public ResponseEntity<?> addListBenefit(@RequestParam String benefitTypeId, @RequestBody BenefitAddRequest benefitAddRequest) {
         log.info("REST request to add list benefit");
         int id;
         try {
             id = dataDecryption.convertEncryptedDataToInt(benefitTypeId);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001, ErrorConstant.ERR_DATA_001_LABEL));
+            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001_LABEL));
         }
         try {
             benefitService.addBenefit(id, benefitAddRequest);
-            return ResponseEntity.ok().body(new ApiResponse<>(200, null, null, null));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000, ErrorConstant.ERR_000_LABEL));
+            return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
+        } catch (Exception e) { e.printStackTrace();
+            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
 
     /**
-     * @param benefitRequest
-     * return
      * @apiNote add benefit for provider that doesn't have in db
      */
     @PostMapping("/add-other-benefit")
@@ -108,9 +95,10 @@ public class BenefitResource {
         log.info("REST request to add a benefit for provider in other type");
         try {
             benefitService.addBenefitOtherType(benefitRequest.getName());
-            return ResponseEntity.ok().body(new ApiResponse<>(200, null, null, null));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000, ErrorConstant.ERR_000_LABEL));
+            return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
+        } catch (Exception e) { e.printStackTrace();
+            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
+
 }

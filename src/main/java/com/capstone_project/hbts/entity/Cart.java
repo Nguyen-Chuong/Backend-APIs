@@ -1,33 +1,22 @@
 package com.capstone_project.hbts.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Getter @Setter
 @Entity
 @Table(name = "Cart")
 public class Cart implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(generator = "generator")
+    @Id @GeneratedValue(generator = "generator")
     @GenericGenerator(name = "generator", strategy = "increment")
     private Integer id;
 
@@ -49,8 +38,7 @@ public class Cart implements Serializable {
     @Column(name = "date_out")
     private Date dateOut;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @ManyToOne @JoinColumn(name = "user_id")
     private Users users;
 
 }

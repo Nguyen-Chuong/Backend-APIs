@@ -1,34 +1,22 @@
 package com.capstone_project.hbts.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Getter @Setter
 @Entity
 @Table(name = "Vip")
 public class Vip implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "name_vip")
@@ -43,8 +31,7 @@ public class Vip implements Serializable {
     @Column(name = "discount")
     private int discount;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "vip")
-    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "vip") @JsonIgnore
     private Set<Users> listUsers;
 
 }

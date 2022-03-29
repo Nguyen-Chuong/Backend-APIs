@@ -7,8 +7,7 @@ import lombok.Setter;
 import java.sql.Timestamp;
 import java.util.List;
 
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor
 public class BookingRequest {
 

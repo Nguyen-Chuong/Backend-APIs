@@ -8,8 +8,7 @@ import lombok.Setter;
 import java.sql.Timestamp;
 import java.util.Set;
 
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor
 public class RoomTypeDTO {
 

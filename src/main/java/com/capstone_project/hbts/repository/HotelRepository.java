@@ -7,17 +7,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface HotelRepository extends JpaRepository<Hotel, Integer> {
 
     // find all hotel active
     @Query(value = "select h from Hotel h where h.district.id = :districtId and h.status = 1 ")
-    Page<Hotel> searchHotelByDistrict(@Param("districtId") int districtId,
-                                      Pageable pageable);
+    Page<Hotel> searchHotelByDistrict(@Param("districtId") int districtId, Pageable pageable);
 
     Page<Hotel> findAllByStatus(int status, Pageable pageable);
 
@@ -46,22 +43,11 @@ public interface HotelRepository extends JpaRepository<Hotel, Integer> {
     void enableHotel(@Param("hotelId") int hotelId);
 
     @Modifying
-    @Query(value = "insert into heroku_4fe5c149618a3f9.hotel(address, avatar, description, email, " +
-            "name, phone, status, district_id, provider_id, star, tax_percentage) " +
-            "values (:address, :avatar, :description, :email, :name, " +
-            ":phone, :status, :districtId, :providerId, :star, :taxPercentage)",
-            nativeQuery = true)
-    void addNewHotel(@Param("address") String address,
-                     @Param("avatar") String avatar,
-                     @Param("description") String description,
-                     @Param("email") String email,
-                     @Param("name") String name,
-                     @Param("phone") String phone,
-                     @Param("status") int status,
-                     @Param("districtId") int districtId,
-                     @Param("providerId") int providerId,
-                     @Param("star") int star,
-                     @Param("taxPercentage") int taxPercentage);
+    @Query(value = "insert into heroku_4fe5c149618a3f9.hotel(address, avatar, description, email, name, phone, status, district_id, provider_id, star, tax_percentage) " +
+            "values (:address, :avatar, :description, :email, :name, :phone, :status, :districtId, :providerId, :star, :taxPercentage)", nativeQuery = true)
+    void addNewHotel(@Param("address") String address, @Param("avatar") String avatar, @Param("description") String description, @Param("email") String email,
+                     @Param("name") String name, @Param("phone") String phone, @Param("status") int status, @Param("districtId") int districtId,
+                     @Param("providerId") int providerId, @Param("star") int star, @Param("taxPercentage") int taxPercentage);
 
     @Modifying
     @Query(value = "UPDATE Hotel h set h.status = 5 WHERE h.id = :hotelId")
@@ -70,8 +56,7 @@ public interface HotelRepository extends JpaRepository<Hotel, Integer> {
     @Query(value = "SELECT h.status FROM Hotel h WHERE h.id = :hotelId")
     Integer viewHotelStatus(@Param("hotelId") int hotelId);
 
-    @Query(value = "select last_insert_id(id) from heroku_4fe5c149618a3f9.hotel order by " +
-            "last_insert_id(id) desc limit 1;", nativeQuery = true)
+    @Query(value = "select last_insert_id(id) from heroku_4fe5c149618a3f9.hotel order by last_insert_id(id) desc limit 1;", nativeQuery = true)
     Integer getHotelIdJustInsert();
 
 }

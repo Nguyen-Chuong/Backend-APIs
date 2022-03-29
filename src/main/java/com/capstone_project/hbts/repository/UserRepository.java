@@ -7,11 +7,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
+
 import java.math.BigDecimal;
 import java.util.List;
 
-@Repository
 public interface UserRepository extends JpaRepository<Users, Integer> {
 
     Users getUsersByUsername(String username);
@@ -20,23 +19,16 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
 
     @Modifying
     @Query(value = "UPDATE Users u SET u.password = :newPass WHERE u.username = :username")
-    void changePass(@Param("username") String username,
-                    @Param("newPass") String newPass);
+    void changePass(@Param("username") String username, @Param("newPass") String newPass);
 
     @Query(value = "SELECT u.password from Users u WHERE u.username = :username")
     String getOldPassword(@Param("username") String username);
 
     @Modifying
     @Query(value = "UPDATE heroku_4fe5c149618a3f9.users SET firstname = :firstName, lastname = :lastName, phone = :phone, " +
-            "address = :address, avatar = :avatar, spend = :spend WHERE heroku_4fe5c149618a3f9.users.id = :id",
-            nativeQuery = true)
-    void updateUserProfile(@Param("firstName") String firstName,
-                           @Param("lastName") String lastName,
-                           @Param("phone") String phone,
-                           @Param("address") String address,
-                           @Param("avatar") String avatar,
-                           @Param("spend") BigDecimal spend,
-                           @Param("id") Integer id);
+            "address = :address, avatar = :avatar, spend = :spend WHERE heroku_4fe5c149618a3f9.users.id = :id", nativeQuery = true)
+    void updateUserProfile(@Param("firstName") String firstName, @Param("lastName") String lastName, @Param("phone") String phone,
+                           @Param("address") String address, @Param("avatar") String avatar, @Param("spend") BigDecimal spend, @Param("id") Integer id);
 
     @Query(value = "select u.username from Users u where u.username = :username")
     String getUsername(@Param("username") String username);
@@ -46,13 +38,11 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
 
     @Modifying
     @Query(value = "UPDATE Users u SET u.vip.id = :idVip WHERE u.id = :userId")
-    void updateVipStatus(@Param("idVip") int idVip,
-                         @Param("userId") int userId);
+    void updateVipStatus(@Param("idVip") int idVip, @Param("userId") int userId);
 
     @Modifying
     @Query(value = "UPDATE Users u SET u.password = :newPass WHERE u.email = :email")
-    void changeForgotPassword(@Param("email") String email,
-                              @Param("newPass") String newPass);
+    void changeForgotPassword(@Param("email") String email, @Param("newPass") String newPass);
 
     @Query(value = "SELECT u from Users u ")
     Page<Users> findAllUser(Pageable pageable);
@@ -64,8 +54,7 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
     @Query(value = "UPDATE Users u SET u.type = 0 WHERE u.id = :userId")
     void deleteManager(@Param("userId") int userId);
 
-    @Query(value = "select id from heroku_4fe5c149618a3f9.users where username = :username limit 1",
-            nativeQuery = true)
+    @Query(value = "select id from heroku_4fe5c149618a3f9.users where username = :username limit 1", nativeQuery = true)
     int getUserId(@Param("username") String username);
 
     @Modifying

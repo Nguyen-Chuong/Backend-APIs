@@ -7,35 +7,22 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-@Repository
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
 
     @Query(value = "select r from Review r where r.userBooking.id in :userBookingIds")
-    Page<Review> loadReviewByBookingId(@Param("userBookingIds") ArrayList<Integer> userBookingIds,
-                                       Pageable pageable);
+    Page<Review> loadReviewByBookingId(@Param("userBookingIds") ArrayList<Integer> userBookingIds, Pageable pageable);
 
     @Modifying
-    @Query(value = "insert into heroku_4fe5c149618a3f9.review(cleanliness, facilities, location, " +
-            "service, value_money, review_title, review_detail, user_booking_id, review_date) " +
-            "values (:cleanliness, :facilities, :location, :service, :valueMoney, " +
-            ":reviewTitle, :reviewDetail, :userBookingId, :reviewDate);", nativeQuery = true)
-    void addNewReview(@Param("cleanliness") float cleanliness,
-                      @Param("facilities") float facilities,
-                      @Param("location") float location,
-                      @Param("service") float service,
-                      @Param("valueMoney") float valueMoney,
-                      @Param("reviewTitle") String reviewTitle,
-                      @Param("reviewDetail") String reviewDetail,
-                      @Param("userBookingId") int userBookingId,
-                      @Param("reviewDate") Timestamp reviewDate);
+    @Query(value = "insert into heroku_4fe5c149618a3f9.review(cleanliness, facilities, location, service, value_money, review_title, review_detail, user_booking_id, review_date) " +
+            "values (:cleanliness, :facilities, :location, :service, :valueMoney, :reviewTitle, :reviewDetail, :userBookingId, :reviewDate);", nativeQuery = true)
+    void addNewReview(@Param("cleanliness") float cleanliness, @Param("facilities") float facilities, @Param("location") float location, @Param("service") float service, @Param("valueMoney") float valueMoney,
+                      @Param("reviewTitle") String reviewTitle, @Param("reviewDetail") String reviewDetail, @Param("userBookingId") int userBookingId, @Param("reviewDate") Timestamp reviewDate);
 
-    @Query(value = "select * from heroku_4fe5c149618a3f9.review where user_booking_id = :userBookingId limit 1",
-            nativeQuery = true)
+    @Query(value = "select * from heroku_4fe5c149618a3f9.review where user_booking_id = :userBookingId limit 1", nativeQuery = true)
     Review loadOneReviewByUserBookingId(@Param("userBookingId") int userBookingId);
 
 }

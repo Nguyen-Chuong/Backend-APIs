@@ -6,8 +6,7 @@ import lombok.Setter;
 
 import java.sql.Date;
 
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor
 public class CartDTO {
 

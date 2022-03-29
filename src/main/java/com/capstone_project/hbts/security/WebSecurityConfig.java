@@ -2,7 +2,7 @@ package com.capstone_project.hbts.security;
 
 import com.capstone_project.hbts.security.jwt.JwtAuthenticationEntryPoint;
 import com.capstone_project.hbts.security.jwt.JwtTokenBeforeFilter;
-import com.capstone_project.hbts.service.impl.CustomUserDetailsService;
+import com.capstone_project.hbts.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,9 +23,7 @@ import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(
-        prePostEnabled = true, securedEnabled = true
-)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -35,14 +33,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomUserDetailsService customUserDetailsService;
 
     public WebSecurityConfig(JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint, JwtTokenBeforeFilter jwtTokenBeforeFilter, CustomUserDetailsService customUserDetailsService) {
-        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
-        this.jwtTokenBeforeFilter = jwtTokenBeforeFilter;
-        this.customUserDetailsService = customUserDetailsService;
+        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;this.jwtTokenBeforeFilter = jwtTokenBeforeFilter;this.customUserDetailsService = customUserDetailsService;
     }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
-        // Round password is 12
         return new BCryptPasswordEncoder(12);
     }
 
@@ -55,8 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // csrf attack
-        http.cors()
-                .and().csrf().disable()
+        http.cors().and().csrf().disable()
                 // dont authenticate this request
                 .authorizeRequests()
                 // can authorize here by urls .hasRole("NAME") or pre-authorize in resource
@@ -67,8 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // all other requests need to be authenticated
                 .anyRequest().authenticated()
                 .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                // use stateless session; session won't be used to
-                // store user's state.
+                // use stateless session; session won't be used to store user's state.
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         // add filter (request need validated jwt to pass over the security)
@@ -90,10 +83,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         configuration.setAllowedOrigins(Collections.singletonList("*"));
         configuration.setAllowedMethods(Collections.singletonList("*"));
         configuration.setAllowedHeaders(Collections.singletonList("*"));
-
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
-
         return source;
     }
 

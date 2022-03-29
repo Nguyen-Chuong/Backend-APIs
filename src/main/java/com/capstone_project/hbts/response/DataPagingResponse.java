@@ -6,8 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Data
-@AllArgsConstructor
+@Data @AllArgsConstructor
 public class DataPagingResponse<T> {
 
     private List<T> items;

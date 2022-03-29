@@ -5,12 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 import java.util.List;
 
-@Repository
 public interface RoomTypeRepository extends JpaRepository<RoomType, Integer> {
 
     @Query(value = "SELECT r FROM RoomType r where r.hotel.id = :hotelId and r.status = 1")
@@ -20,21 +18,12 @@ public interface RoomTypeRepository extends JpaRepository<RoomType, Integer> {
     RoomType getRoomTypeById(@Param("id") int id);
 
     @Modifying
-    @Query(value = "insert into heroku_4fe5c149618a3f9.room_type(available_rooms, deal_expire, deal_percentage, " +
-            "name, number_of_people, price, quantity, hotel_id) " +
-            "values (:availableRooms, :dealExpire, :dealPercentage, :name, :numberOfPeople, " +
-            ":price, :quantity, :hotelId);", nativeQuery = true)
-    void addNewRoomType(@Param("availableRooms") int availableRooms,
-                        @Param("dealExpire") Timestamp dealExpire,
-                        @Param("dealPercentage") int dealPercentage,
-                        @Param("name") String name,
-                        @Param("numberOfPeople") int numberOfPeople,
-                        @Param("price") long price,
-                        @Param("quantity") int quantity,
-                        @Param("hotelId") int hotelId);
+    @Query(value = "insert into heroku_4fe5c149618a3f9.room_type(available_rooms, deal_expire, deal_percentage, name, number_of_people, price, quantity, hotel_id) " +
+            "values (:availableRooms, :dealExpire, :dealPercentage, :name, :numberOfPeople, :price, :quantity, :hotelId);", nativeQuery = true)
+    void addNewRoomType(@Param("availableRooms") int availableRooms, @Param("dealExpire") Timestamp dealExpire, @Param("dealPercentage") int dealPercentage, @Param("name") String name,
+                        @Param("numberOfPeople") int numberOfPeople, @Param("price") long price, @Param("quantity") int quantity, @Param("hotelId") int hotelId);
 
-    @Query(value = "select last_insert_id(id) from heroku_4fe5c149618a3f9.room_type order by " +
-            "last_insert_id(id) desc limit 1;", nativeQuery = true)
+    @Query(value = "select last_insert_id(id) from heroku_4fe5c149618a3f9.room_type order by last_insert_id(id) desc limit 1;", nativeQuery = true)
     Integer getRoomTypeIdJustInsert();
 
     @Modifying
@@ -46,14 +35,8 @@ public interface RoomTypeRepository extends JpaRepository<RoomType, Integer> {
     void enableRoomTypeById(@Param("roomTypeId") int roomTypeId);
 
     @Modifying
-    @Query(value = "create event if not exists event_update_deal_percentage \n" +
-            "on schedule \n" +
-            "every 1 day\n" +
-            "starts current_timestamp \n" +
-            "ends current_timestamp + interval 3 month\n" +
-            "do\n" +
-            "UPDATE heroku_4fe5c149618a3f9.room_type SET deal_percentage = 0 WHERE deal_expire < now();",
-            nativeQuery = true)
+    @Query(value = "create event if not exists event_update_deal_percentage on schedule every 1 day starts current_timestamp \n" +
+            "ends current_timestamp + interval 3 month do UPDATE heroku_4fe5c149618a3f9.room_type SET deal_percentage = 0 WHERE deal_expire < now() ", nativeQuery = true)
     void createSQLEventUpdateDealViaDateExpired();
 
 }

@@ -5,8 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
 public class BenefitTypeDTO {

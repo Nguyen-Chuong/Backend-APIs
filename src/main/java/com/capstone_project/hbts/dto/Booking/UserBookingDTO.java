@@ -8,8 +8,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor
 public class UserBookingDTO {
 

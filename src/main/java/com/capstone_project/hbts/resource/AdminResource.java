@@ -6,10 +6,10 @@ import com.capstone_project.hbts.dto.Actor.UserDTO;
 import com.capstone_project.hbts.request.ManagerRequest;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.response.DataPagingResponse;
-import com.capstone_project.hbts.service.AdminService;
-import com.capstone_project.hbts.service.HotelService;
-import com.capstone_project.hbts.service.ProviderService;
-import com.capstone_project.hbts.service.UserService;
+import com.capstone_project.hbts.service.AdminServiceImpl;
+import com.capstone_project.hbts.service.HotelServiceImpl;
+import com.capstone_project.hbts.service.ProviderServiceImpl;
+import com.capstone_project.hbts.service.UserServiceImpl;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,24 +24,20 @@ import java.util.List;
 @RequestMapping("api/v1")
 public class AdminResource {
 
-    private final AdminService adminService;
+    private final AdminServiceImpl adminService;
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
-    private final ProviderService providerService;
+    private final ProviderServiceImpl providerService;
 
-    private final HotelService hotelService;
+    private final HotelServiceImpl hotelService;
 
-    public AdminResource(AdminService adminService, UserService userService, ProviderService providerService, HotelService hotelService) {
-        this.adminService = adminService;
-        this.userService = userService;
-        this.providerService = providerService;
-        this.hotelService = hotelService;
+    public AdminResource(AdminServiceImpl adminService, UserServiceImpl userService, ProviderServiceImpl providerService, HotelServiceImpl hotelService) {
+        this.adminService = adminService;this.userService = userService;
+        this.providerService = providerService;this.hotelService = hotelService;
     }
 
     /**
-     * @param managerRequest
-     * return
      * @apiNote only for admin
      */
     @PostMapping("/add-manager")
@@ -49,23 +45,20 @@ public class AdminResource {
     public ResponseEntity<?> addManager(@RequestBody ManagerRequest managerRequest){
         log.info("REST request to add a new manager : {}", managerRequest);
         if(userService.isEmailExist(managerRequest.getEmail())){
-            return ResponseEntity.badRequest().body(new ApiResponse<>(400,null, ErrorConstant.ERR_USER_004, ErrorConstant.ERR_USER_004_LABEL));
+            return ResponseEntity.badRequest().body(new ApiResponse<>(400,null, ErrorConstant.ERR_USER_004_LABEL));
         }
         if(userService.isUsernameExist("u-" + managerRequest.getUsername())){
-            return ResponseEntity.badRequest().body(new ApiResponse<>(400,null, ErrorConstant.ERR_USER_005, ErrorConstant.ERR_USER_005_LABEL));
+            return ResponseEntity.badRequest().body(new ApiResponse<>(400,null, ErrorConstant.ERR_USER_005_LABEL));
         }
         try {
             adminService.addNewManager(managerRequest);
-            return ResponseEntity.ok().body(new ApiResponse<>(200, null,null, null));
-        } catch (Exception e){
-            return ResponseEntity.badRequest().body(new ApiResponse<>(400,null, ErrorConstant.ERR_000, ErrorConstant.ERR_000_LABEL));
+            return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
+        } catch (Exception e){ e.printStackTrace();
+            return ResponseEntity.badRequest().body(new ApiResponse<>(400,null, ErrorConstant.ERR_000_LABEL));
         }
     }
 
     /**
-     * @param page
-     * @param pageSize
-     * return
      * @apiNote for admin/ manager
      */
     @GetMapping("/get-all-user")
@@ -75,14 +68,13 @@ public class AdminResource {
         try {
             Page<UserDTO> userDTOPage = adminService.getAllUser(PageRequest.of(page, pageSize));
             DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(userDTOPage.getContent(), userDTOPage.getTotalElements(), page, userDTOPage.getSize());
-            return ResponseEntity.ok().body(new ApiResponse<>(200, dataPagingResponse, null, null));
-        } catch (Exception e){
-            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000, ErrorConstant.ERR_000_LABEL));
+            return ResponseEntity.ok().body(new ApiResponse<>(200, dataPagingResponse, null));
+        } catch (Exception e){ e.printStackTrace();
+            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
 
     /**
-     * return
      * @apiNote only for admin
      */
     @GetMapping("/get-all-manager")
@@ -91,15 +83,13 @@ public class AdminResource {
         log.info("REST request to get all manager for admin");
         try {
             List<UserDTO> userDTOList = adminService.getListManager();
-            return ResponseEntity.ok().body(new ApiResponse<>(200, userDTOList,null, null));
-        } catch (Exception e){
-            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000, ErrorConstant.ERR_000_LABEL));
+            return ResponseEntity.ok().body(new ApiResponse<>(200, userDTOList, null));
+        } catch (Exception e){ e.printStackTrace();
+            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
 
     /**
-     * @param userId
-     * return
      * @apiNote only for admin
      */
     @PatchMapping("/delete-manager/{userId}")
@@ -108,15 +98,13 @@ public class AdminResource {
         log.info("REST request to delete manager for admin");
         try {
             adminService.deleteManager(userId);
-            return ResponseEntity.ok().body(new ApiResponse<>(200, null, null, null));
-        } catch (Exception e){
-            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000, ErrorConstant.ERR_000_LABEL));
+            return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
+        } catch (Exception e){ e.printStackTrace();
+            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
 
     /**
-     * @param providerId
-     * return
      * @apiNote only for admin can access this api
      */
     @PatchMapping("/ban-provider/{providerId}")
@@ -128,9 +116,9 @@ public class AdminResource {
             providerService.banProvider(providerId);
             // ban their hotels
             hotelService.banHotelByProviderId(providerId);
-            return ResponseEntity.ok().body(new ApiResponse<>(200, null, null, null));
-        } catch (Exception e){
-            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000, ErrorConstant.ERR_000_LABEL));
+            return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
+        } catch (Exception e){ e.printStackTrace();
+            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
 

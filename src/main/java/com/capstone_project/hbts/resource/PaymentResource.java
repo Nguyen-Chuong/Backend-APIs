@@ -4,48 +4,37 @@ import com.capstone_project.hbts.constant.ErrorConstant;
 import com.capstone_project.hbts.dto.Payment.PaymentDTO;
 import com.capstone_project.hbts.dto.Payment.PaymentResultDTO;
 import com.capstone_project.hbts.response.ApiResponse;
-import com.capstone_project.hbts.service.PaymentService;
+import com.capstone_project.hbts.service.PaymentServiceImpl;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin
 @Log4j2
 @RequestMapping("api/v1")
 public class PaymentResource {
 
-    private final PaymentService paymentService;
+    private final PaymentServiceImpl paymentService;
 
-    public PaymentResource(PaymentService paymentService) {
+    public PaymentResource(PaymentServiceImpl paymentService) {
         this.paymentService = paymentService;
     }
 
     /**
-     * @param paymentDTO
      * @apiNote the first time booking, user have to choose payment method immediately
      * Since the second times, user can choose cod, so they can pay the money at hotel
-     * return
      */
     @PostMapping("/create-payment")
     public ResponseEntity<?> createPayment(@RequestBody PaymentDTO paymentDTO) {
         log.info("REST request to create payment");
-
         try {
             PaymentResultDTO paymentResultDTO = paymentService.createPayment(paymentDTO);
-
-            return ResponseEntity.ok()
-                    .body(new ApiResponse<>(200, paymentResultDTO,
-                            null, null));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest()
-                    .body(new ApiResponse<>(400, null,
-                            ErrorConstant.ERR_000, ErrorConstant.ERR_000_LABEL));
+            return ResponseEntity.ok().body(new ApiResponse<>(200, paymentResultDTO, null));
+        } catch (Exception e) { e.printStackTrace();
+            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
 

@@ -11,8 +11,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Set;
 
-@Getter
-@Setter
+@Getter @Setter
 @AllArgsConstructor
 public class RoomDetailDTO {
 
