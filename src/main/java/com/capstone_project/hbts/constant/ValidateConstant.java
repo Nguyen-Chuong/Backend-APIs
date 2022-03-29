@@ -18,7 +18,7 @@ public class ValidateConstant {
     public static final String EMAIL_SUBJECT_CANCEL = "Booking Canceled Travesily Booking ID ";
 
     public static String getCancelBookingContent(){
-        return "<h3>Hi Nguyễn Thúc Nguyên Chương</h3></br><h3>We have confirmed the cancellation of your reservation</h3></br>" +
+        return "<h3>Hi, </h3></br><h3>We have confirmed the cancellation of your reservation</h3></br>" +
                 "<h3>Thank you for booking with Travesily!</h3></br>";
     }
 
@@ -26,7 +26,7 @@ public class ValidateConstant {
     public static final String EMAIL_SUBJECT_CONFIRM = "Confirmation for reservation number Booking ID ";
 
     public static String getConfirmBookingContent(){
-        return "<h3>Hi Nguyễn Thúc Nguyên Chương</h3></br><h3>Your booking is now confirmed !</h3></br>" +
+        return "<h3>Hi, </h3></br><h3>Your booking is now confirmed !</h3></br>" +
                 "<h3>Thank you for booking with Travesily!</h3></br>";
     }
 
