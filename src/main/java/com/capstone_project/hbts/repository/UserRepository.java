@@ -28,7 +28,8 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
     @Query(value = "UPDATE heroku_4fe5c149618a3f9.users SET firstname = :firstName, lastname = :lastName, phone = :phone, " +
             "address = :address, avatar = :avatar, spend = :spend WHERE heroku_4fe5c149618a3f9.users.id = :id", nativeQuery = true)
     void updateUserProfile(@Param("firstName") String firstName, @Param("lastName") String lastName, @Param("phone") String phone,
-                           @Param("address") String address, @Param("avatar") String avatar, @Param("spend") BigDecimal spend, @Param("id") Integer id);
+                           @Param("address") String address, @Param("avatar") String avatar, @Param("spend") BigDecimal spend,
+                           @Param("id") Integer id);
 
     @Query(value = "select u.username from Users u where u.username = :username")
     String getUsername(@Param("username") String username);

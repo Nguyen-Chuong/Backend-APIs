@@ -21,8 +21,10 @@ public interface ProviderRepository extends JpaRepository<Provider, Integer> {
     String getEmail(@Param("email") String email);
 
     @Modifying
-    @Query(value = "UPDATE heroku_4fe5c149618a3f9.provider SET provider_name = :providerName, phone = :phone, address = :address WHERE heroku_4fe5c149618a3f9.provider.id = :id", nativeQuery = true)
-    void updateProviderProfile(@Param("providerName") String providerName, @Param("phone") String phone, @Param("address") String address, @Param("id") Integer id);
+    @Query(value = "UPDATE heroku_4fe5c149618a3f9.provider SET provider_name = :providerName, phone = :phone, address = :address" +
+            " WHERE heroku_4fe5c149618a3f9.provider.id = :id", nativeQuery = true)
+    void updateProviderProfile(@Param("providerName") String providerName, @Param("phone") String phone,
+                               @Param("address") String address, @Param("id") Integer id);
 
     @Modifying
     @Query(value = "UPDATE Provider p SET p.password = :newPass WHERE p.username = :username")

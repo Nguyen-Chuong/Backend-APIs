@@ -32,8 +32,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CustomUserDetailsService customUserDetailsService;
 
-    public WebSecurityConfig(JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint, JwtTokenBeforeFilter jwtTokenBeforeFilter, CustomUserDetailsService customUserDetailsService) {
-        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;this.jwtTokenBeforeFilter = jwtTokenBeforeFilter;this.customUserDetailsService = customUserDetailsService;
+    public WebSecurityConfig(JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint, JwtTokenBeforeFilter jwtTokenBeforeFilter,
+                             CustomUserDetailsService customUserDetailsService) {
+        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
+        this.jwtTokenBeforeFilter = jwtTokenBeforeFilter;
+        this.customUserDetailsService = customUserDetailsService;
     }
 
     @Bean

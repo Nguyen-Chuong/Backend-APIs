@@ -14,8 +14,10 @@ import java.util.List;
 public interface RequestRepository extends JpaRepository<Request, Integer> {
 
     @Modifying
-    @Query(value = "insert into heroku_4fe5c149618a3f9.request(request_date, status, hotel_id, provider_id) values (:requestDate, :status, :hotelId, :providerId)", nativeQuery = true)
-    void addNewRequest(@Param("requestDate") Timestamp requestDate, @Param("status") int status, @Param("hotelId") int hotelId, @Param("providerId") int providerId);
+    @Query(value = "insert into heroku_4fe5c149618a3f9.request(request_date, status, hotel_id, provider_id) values " +
+            "(:requestDate, :status, :hotelId, :providerId)", nativeQuery = true)
+    void addNewRequest(@Param("requestDate") Timestamp requestDate, @Param("status") int status, @Param("hotelId") int hotelId,
+                       @Param("providerId") int providerId);
 
     @Modifying
     @Query(value = "UPDATE Request r set r.status = 2 where r.id = :requestId")

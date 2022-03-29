@@ -60,7 +60,8 @@ public class JwtTokenUtil {
 
     private String doGenerateToken(String userId, String subject) {
         return Jwts.builder().setSubject(subject).setId(userId).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY_TIME * 1000)).signWith(SignatureAlgorithm.HS256, secretKey).compact();
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY_TIME * 1000))
+                .signWith(SignatureAlgorithm.HS256, secretKey).compact();
     }
 
     // validate token: check if username from jwt and username from db is equal

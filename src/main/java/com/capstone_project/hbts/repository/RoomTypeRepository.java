@@ -18,10 +18,13 @@ public interface RoomTypeRepository extends JpaRepository<RoomType, Integer> {
     RoomType getRoomTypeById(@Param("id") int id);
 
     @Modifying
-    @Query(value = "insert into heroku_4fe5c149618a3f9.room_type(available_rooms, deal_expire, deal_percentage, name, number_of_people, price, quantity, hotel_id) " +
-            "values (:availableRooms, :dealExpire, :dealPercentage, :name, :numberOfPeople, :price, :quantity, :hotelId);", nativeQuery = true)
-    void addNewRoomType(@Param("availableRooms") int availableRooms, @Param("dealExpire") Timestamp dealExpire, @Param("dealPercentage") int dealPercentage, @Param("name") String name,
-                        @Param("numberOfPeople") int numberOfPeople, @Param("price") long price, @Param("quantity") int quantity, @Param("hotelId") int hotelId);
+    @Query(value = "insert into heroku_4fe5c149618a3f9.room_type(available_rooms, deal_expire, deal_percentage, name, " +
+            "number_of_people, price, quantity, hotel_id) values (:availableRooms, :dealExpire, :dealPercentage, :name, " +
+            ":numberOfPeople, :price, :quantity, :hotelId);", nativeQuery = true)
+    void addNewRoomType(@Param("availableRooms") int availableRooms, @Param("dealExpire") Timestamp dealExpire,
+                        @Param("dealPercentage") int dealPercentage, @Param("name") String name,
+                        @Param("numberOfPeople") int numberOfPeople, @Param("price") long price, @Param("quantity") int quantity,
+                        @Param("hotelId") int hotelId);
 
     @Query(value = "select last_insert_id(id) from heroku_4fe5c149618a3f9.room_type order by last_insert_id(id) desc limit 1;", nativeQuery = true)
     Integer getRoomTypeIdJustInsert();
@@ -36,7 +39,8 @@ public interface RoomTypeRepository extends JpaRepository<RoomType, Integer> {
 
     @Modifying
     @Query(value = "create event if not exists event_update_deal_percentage on schedule every 1 day starts current_timestamp \n" +
-            "ends current_timestamp + interval 3 month do UPDATE heroku_4fe5c149618a3f9.room_type SET deal_percentage = 0 WHERE deal_expire < now() ", nativeQuery = true)
+            "ends current_timestamp + interval 3 month do UPDATE heroku_4fe5c149618a3f9.room_type SET deal_percentage = 0 " +
+            "WHERE deal_expire < now() ", nativeQuery = true)
     void createSQLEventUpdateDealViaDateExpired();
 
 }

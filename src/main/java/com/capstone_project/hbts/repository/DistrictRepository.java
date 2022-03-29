@@ -17,9 +17,9 @@ public interface DistrictRepository extends JpaRepository<District, Integer> {
 
     List<District> getAllByCityIdOrderByNameDistrictAsc(int cityId);
 
-    @Query(value = "select district_id from (select count(user_booking.id) as booking_number, user_booking.hotel_id, hotel.district_id from heroku_4fe5c149618a3f9.user_booking " +
-            "join heroku_4fe5c149618a3f9.hotel on user_booking.hotel_id = hotel.id group by user_booking.hotel_id) raw_data group by district_id " +
-            "order by sum(booking_number) desc limit :limit", nativeQuery = true)
+    @Query(value = "select district_id from (select count(user_booking.id) as booking_number, user_booking.hotel_id, hotel.district_id " +
+            "from heroku_4fe5c149618a3f9.user_booking join heroku_4fe5c149618a3f9.hotel on user_booking.hotel_id = hotel.id " +
+            "group by user_booking.hotel_id) raw_data group by district_id order by sum(booking_number) desc limit :limit ", nativeQuery = true)
     List<Integer> getTopHotLocation(@Param("limit") int limit);
 
 }

@@ -22,8 +22,7 @@ public interface BookingRepository extends JpaRepository<UserBooking, Integer> {
     @Query(value = "SELECT u from UserBooking u WHERE u.hotel.id = :hotelId")
     List<UserBooking> findUserBookingByHotelId(@Param("hotelId") int hotelId);
 
-    // when check vip status, only get number of booking that
-    // have been completed, conditionally status = 2 for completed
+    // when check vip status, only get number of booking that have been completed
     @Query(value = "SELECT count(u.id) from UserBooking u WHERE u.users.id = :userId and u.status = 2")
     int numberBookingCompleted(@Param("userId") int userId);
 
