@@ -192,30 +192,19 @@ public class HotelServiceImpl {
         List<Hotel> resultList;
         if (status == 0) {
             resultList = hotelRepository.findAllHotel(pageable).getContent();
-            // convert to DTO list
-            hotelDTOList = resultList.stream().map(item -> modelMapper.map(item, HotelDTO.class)).collect(Collectors.toList());
-            // set property lowest price and deal percentage
-            for (int i = 0; i < hotelDTOList.size(); i++) {
-                // set price
-                hotelDTOList.get(i).setPrice(getLowestPriceInHotel(resultList.get(i).getListRoomType()).getPrice());
-                // set %deal
-                hotelDTOList.get(i).setSalePercent(getLowestPriceInHotel(resultList.get(i).getListRoomType()).getDealPercentage());
-                // set deal expired
-                hotelDTOList.get(i).setDealExpired(getLowestPriceInHotel(resultList.get(i).getListRoomType()).getDealExpire());
-            }
         } else {
             resultList = hotelRepository.findAllByStatus(status, pageable).getContent();
-            // convert to DTO list
-            hotelDTOList = resultList.stream().map(item -> modelMapper.map(item, HotelDTO.class)).collect(Collectors.toList());
-            // set property lowest price and deal percentage
-            for (int i = 0; i < hotelDTOList.size(); i++) {
-                // set price
-                hotelDTOList.get(i).setPrice(getLowestPriceInHotel(resultList.get(i).getListRoomType()).getPrice());
-                // set %deal
-                hotelDTOList.get(i).setSalePercent(getLowestPriceInHotel(resultList.get(i).getListRoomType()).getDealPercentage());
-                // set deal expired
-                hotelDTOList.get(i).setDealExpired(getLowestPriceInHotel(resultList.get(i).getListRoomType()).getDealExpire());
-            }
+        }
+        // convert to DTO list
+        hotelDTOList = resultList.stream().map(item -> modelMapper.map(item, HotelDTO.class)).collect(Collectors.toList());
+        // set property lowest price and deal percentage
+        for (int i = 0; i < hotelDTOList.size(); i++) {
+            // set price
+            hotelDTOList.get(i).setPrice(getLowestPriceInHotel(resultList.get(i).getListRoomType()).getPrice());
+            // set %deal
+            hotelDTOList.get(i).setSalePercent(getLowestPriceInHotel(resultList.get(i).getListRoomType()).getDealPercentage());
+            // set deal expired
+            hotelDTOList.get(i).setDealExpired(getLowestPriceInHotel(resultList.get(i).getListRoomType()).getDealExpire());
         }
         // hotel with no room have deal and price = 0
         return new CustomPageImpl<>(hotelDTOList);
