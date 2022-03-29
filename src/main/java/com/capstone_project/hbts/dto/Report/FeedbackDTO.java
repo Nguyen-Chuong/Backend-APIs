@@ -24,4 +24,6 @@ public class FeedbackDTO {
 
     private int isProcessed;
 
+    private String email;
+
 }
