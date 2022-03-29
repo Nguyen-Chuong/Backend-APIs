@@ -308,38 +308,9 @@ public class HotelServiceImpl {
     }
 
     public RatingDTO getRatingByHotel(int hotelId) {
-        RatingDTO ratingDTO = new RatingDTO();
-        // get all booking
-        List<UserBooking> listBookingInHotel = bookingRepository.findUserBookingReviewedByHotelId(hotelId);
-        // get total number booking rated
-        int number = listBookingInHotel.size();
-        // if this hotel has no booking that reviewed
-        if (number == 0) {
-            return new RatingDTO();
-        } else {
-            // get total score
-            float totalService = 0, totalValueForMoney = 0,totalCleanliness = 0,totalLocation = 0,totalFacilities = 0;
-            for (UserBooking userBooking : listBookingInHotel) {
-                Review review = userBooking.getListReview().iterator().next();
-                totalService = totalService + review.getService();
-                totalValueForMoney = totalValueForMoney + review.getValueForMoney();
-                totalCleanliness = totalCleanliness + review.getCleanliness();
-                totalLocation = totalLocation + review.getLocation();
-                totalFacilities = totalFacilities + review.getFacilities();
-            }
-            // get average score
-            float averageService = totalService / number;float averageValueForMoney = totalValueForMoney / number;
-            float averageCleanliness = totalCleanliness / number;float averageLocation = totalLocation / number;
-            float averageFacilities = totalFacilities / number;
-            // set props
-            ratingDTO.setTotalReview(number);
-            ratingDTO.setAverageService(averageService);
-            ratingDTO.setAverageValueForMoney(averageValueForMoney);
-            ratingDTO.setAverageCleanliness(averageCleanliness);
-            ratingDTO.setAverageLocation(averageLocation);
-            ratingDTO.setAverageFacilities(averageFacilities);
-            return ratingDTO;
-        }
+        // get hotel
+        Hotel hotel = hotelRepository.getHotelById(hotelId);
+        return getRatingByHotel(hotel);
     }
 
     public List<HotelDTO> getTopHotHotel(int top) {
