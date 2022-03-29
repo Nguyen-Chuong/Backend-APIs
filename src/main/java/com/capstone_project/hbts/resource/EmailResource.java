@@ -33,7 +33,7 @@ public class EmailResource {
      * @apiNote server
      */
     @PostMapping("/authenticate/generateOtp")
-    public ResponseEntity<?> generateOtp(@RequestParam String email){
+    public ResponseEntity<?> generateOtp(@RequestParam String email) {
         log.info("REST request to generate otp and send email to user");
         String emailDecrypted;
         try {
@@ -45,7 +45,8 @@ public class EmailResource {
             int otp = otpService.generateOtp(emailDecrypted);
             emailService.send(emailDecrypted, ValidateConstant.EMAIL_SUBJECT_OTP, ValidateConstant.getOtpVerifyContent(otp));
             return ResponseEntity.ok().body(new ApiResponse<>(200, otp, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -54,7 +55,7 @@ public class EmailResource {
      * @apiNote server
      */
     @PostMapping("/authenticate/verifyOtp")
-    public ResponseEntity<?> verifyOtp(@RequestParam String email, @RequestParam String otpEncrypted){
+    public ResponseEntity<?> verifyOtp(@RequestParam String email, @RequestParam String otpEncrypted) {
         log.info("REST request to verify otp that user sent");
         String emailDecrypted;
         try {
@@ -71,28 +72,29 @@ public class EmailResource {
         try {
             // verify otp and otpCache
             int serverOtp = otpService.getOtp(emailDecrypted);
-            if(otp <= 0){
+            if (otp <= 0) {
                 return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_OTP_001_LABEL));
             }
-            if(serverOtp <= 0){
+            if (serverOtp <= 0) {
                 return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_OTP_002_LABEL));
             }
-            if(otp == serverOtp){
+            if (otp == serverOtp) {
                 otpService.clearOtp(emailDecrypted);
                 return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-            }else {
+            } else {
                 return ResponseEntity.ok().body(new ApiResponse<>(400, null, ErrorConstant.ERR_OTP_003_LABEL));
             }
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
 
     /**
-     * @apiNote server to mail user with content cancel booking
+     * @apiNote server to mail user with content cancel booking or confirm booking
      */
-    @PostMapping("/mail/cancel-booking")
-    public ResponseEntity<?> sendMailCancelBooking(@RequestParam String email, @RequestParam String bookingId){
+    @PostMapping("/mail/process-booking/{status}")
+    public ResponseEntity<?> sendMailCancelBooking(@RequestParam String email, @RequestParam String bookingId, @PathVariable int status) {
         log.info("REST request to cancel booking for user");
         String emailDecrypted;
         int id;
@@ -103,31 +105,19 @@ public class EmailResource {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001_LABEL));
         }
         try {
-            emailService.sendHTMLMail(emailDecrypted, ValidateConstant.EMAIL_SUBJECT_CANCEL + id, ValidateConstant.getCancelBookingContent());
-            return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        }catch (Exception e){ e.printStackTrace();
-            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
-        }
-    }
-
-    /**
-     * @apiNote server to mail user with content confirm booking
-     */
-    @PostMapping("/mail/confirm-booking")
-    public ResponseEntity<?> sendMailConfirmBooking(@RequestParam String email, @RequestParam String bookingId){
-        log.info("REST request to confirm booking for user");
-        String emailDecrypted;
-        int id;
-        try {
-            emailDecrypted = dataDecryption.convertEncryptedDataToString(email);
-            id = dataDecryption.convertEncryptedDataToInt(bookingId);
+            if (status == 1) {
+                emailService.sendHTMLMail(emailDecrypted, ValidateConstant.EMAIL_SUBJECT_CANCEL + id,
+                        ValidateConstant.getCancelBookingContent());
+                return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
+            } else if (status == 2) {
+                emailService.sendHTMLMail(emailDecrypted, ValidateConstant.EMAIL_SUBJECT_CONFIRM + id,
+                        ValidateConstant.getConfirmBookingContent());
+                return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
+            } else {
+                return ResponseEntity.ok().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
+            }
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001_LABEL));
-        }
-        try {
-            emailService.sendHTMLMail(emailDecrypted, ValidateConstant.EMAIL_SUBJECT_CONFIRM + id, ValidateConstant.getConfirmBookingContent());
-            return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        }catch (Exception e){ e.printStackTrace();
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -137,7 +127,7 @@ public class EmailResource {
      */
     @PostMapping("/mail/send-response")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-    public ResponseEntity<?> sendMailResponseFeedback(@RequestParam String email, @RequestBody FeedbackRequest feedbackRequest){
+    public ResponseEntity<?> sendMailResponseFeedback(@RequestParam String email, @RequestBody FeedbackRequest feedbackRequest) {
         log.info("REST request to send mail response for user's feedback");
         String emailDecrypted;
         try {
@@ -149,7 +139,8 @@ public class EmailResource {
             emailService.sendHTMLMail(emailDecrypted, ValidateConstant.EMAIL_SUBJECT_RESPONSE,
                     ValidateConstant.getResponseFeedbackContent(feedbackRequest.getMessage()));
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }

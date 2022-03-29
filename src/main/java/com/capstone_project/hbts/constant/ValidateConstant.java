@@ -26,7 +26,8 @@ public class ValidateConstant {
     public static final String EMAIL_SUBJECT_CONFIRM = "Confirmation for reservation number Booking ID ";
 
     public static String getConfirmBookingContent(){
-        return "Your booking is now confirmed !\n" + "Hi Nguyễn Thúc Nguyên Chương\n" + "Thank you for booking with Travesily!\n";
+        return "<h3>Hi Nguyễn Thúc Nguyên Chương</h3></br><h3>Your booking is now confirmed !</h3></br>" +
+                "<h3>Thank you for booking with Travesily!</h3></br>";
     }
 
     // mail response user feedback
