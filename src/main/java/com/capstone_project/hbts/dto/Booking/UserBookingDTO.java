@@ -34,4 +34,6 @@ public class UserBookingDTO {
 
     private int type;
 
+    private String email;
+
 }

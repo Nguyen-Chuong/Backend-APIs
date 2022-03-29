@@ -131,6 +131,8 @@ public class BookingServiceImpl {
             BigDecimal totalPaid = countTotalPaidForABooking(resultList.get(i));
             // set total paid for each user booking
             userBookingDTOList.get(i).setTotalPaid(totalPaid);
+            // set email
+            userBookingDTOList.get(i).setEmail(resultList.get(i).getUsers().getEmail());
         }
         return new CustomPageImpl<>(userBookingDTOList);
     }
