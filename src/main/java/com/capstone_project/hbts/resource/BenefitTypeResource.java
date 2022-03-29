@@ -29,7 +29,8 @@ public class BenefitTypeResource {
             List<BenefitTypeDTO> benefitTypeDTOList = benefitTypeService.getAllBenefitType();
             return ResponseEntity.ok()
                     .body(new ApiResponse<>(200, benefitTypeDTOList, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -40,7 +41,8 @@ public class BenefitTypeResource {
         try {
             benefitTypeService.addBenefitType(benefitTypeRequest);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }

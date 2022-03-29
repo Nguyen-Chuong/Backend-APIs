@@ -23,7 +23,9 @@ public class ResponseServiceImpl{
     private final ModelMapper modelMapper;
 
     public ResponseServiceImpl(ResponseRepository responseRepository, UserRepository userRepository, ModelMapper modelMapper) {
-        this.responseRepository = responseRepository;this.userRepository = userRepository;this.modelMapper = modelMapper;
+        this.responseRepository = responseRepository;
+        this.userRepository = userRepository;
+        this.modelMapper = modelMapper;
     }
 
     // rule: two admins/managers cannot response to one user in one feedback (only one) and vice versa
@@ -33,7 +35,8 @@ public class ResponseServiceImpl{
         int userId = userRepository.getUserId(responseAdminRequest.getUsername());
         // get current timestamp
         responseAdminRequest.setModifyDate(new Timestamp(System.currentTimeMillis()));
-        responseRepository.sendResponseFromFeedback(responseAdminRequest.getAdminId(), responseAdminRequest.getMessage(), responseAdminRequest.getModifyDate(), userId, responseAdminRequest.getFeedbackId());
+        responseRepository.sendResponseFromFeedback(responseAdminRequest.getAdminId(), responseAdminRequest.getMessage(),
+                responseAdminRequest.getModifyDate(), userId, responseAdminRequest.getFeedbackId());
     }
 
     @Transactional
@@ -42,12 +45,14 @@ public class ResponseServiceImpl{
         Integer adminId = responseRepository.getAdminId(responseUserRequest.getFeedbackId());
         // get current timestamp
         responseUserRequest.setModifyDate(new Timestamp(System.currentTimeMillis()));
-        responseRepository.sendResponseFromFeedback(adminId, responseUserRequest.getMessage(), responseUserRequest.getModifyDate(), responseUserRequest.getUserId(), responseUserRequest.getFeedbackId());
+        responseRepository.sendResponseFromFeedback(adminId, responseUserRequest.getMessage(), responseUserRequest.getModifyDate(),
+                responseUserRequest.getUserId(), responseUserRequest.getFeedbackId());
     }
 
     public List<ResponseDTO> getAllResponseByFeedbackId(int feedbackId) {
         // first response always be admin/ manager
-        return responseRepository.findAllByFeedback_IdOrderByModifyDateAsc(feedbackId).stream().map(item -> modelMapper.map(item, ResponseDTO.class)).collect(Collectors.toList());
+        return responseRepository.findAllByFeedback_IdOrderByModifyDateAsc(feedbackId).stream()
+                .map(item -> modelMapper.map(item, ResponseDTO.class)).collect(Collectors.toList());
     }
 
 }

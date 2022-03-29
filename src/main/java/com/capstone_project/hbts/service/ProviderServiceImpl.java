@@ -23,7 +23,8 @@ public class ProviderServiceImpl{
     private final ModelMapper modelMapper;
 
     public ProviderServiceImpl(ProviderRepository providerRepository, ModelMapper modelMapper) {
-        this.providerRepository = providerRepository;this.modelMapper = modelMapper;
+        this.providerRepository = providerRepository;
+        this.modelMapper = modelMapper;
     }
 
     public ProviderDTO loadProviderByEmail(String email) {
@@ -67,7 +68,8 @@ public class ProviderServiceImpl{
 
     @Transactional
     public void updateProviderProfile(ProviderDTO providerDTO) {
-        providerRepository.updateProviderProfile(providerDTO.getProviderName(), providerDTO.getPhone(), providerDTO.getAddress(), providerDTO.getId());
+        providerRepository.updateProviderProfile(providerDTO.getProviderName(), providerDTO.getPhone(),
+                providerDTO.getAddress(), providerDTO.getId());
     }
 
     @Transactional
@@ -81,7 +83,8 @@ public class ProviderServiceImpl{
 
     public Page<ProviderDTO> getAllProvider(Pageable pageable) {
         List<Provider> providerList = providerRepository.findAllProvider(pageable).getContent();
-        List<ProviderDTO> providerDTOList = providerList.stream().map(item -> modelMapper.map(item, ProviderDTO.class)).collect(Collectors.toList());
+        List<ProviderDTO> providerDTOList = providerList.stream().map(item -> modelMapper.map(item, ProviderDTO.class))
+                .collect(Collectors.toList());
         return new CustomPageImpl<>(providerDTOList);
     }
 

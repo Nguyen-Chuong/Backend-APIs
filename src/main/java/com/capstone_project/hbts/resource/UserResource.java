@@ -24,7 +24,9 @@ public class UserResource {
     private final DataDecryption dataDecryption;
 
     public UserResource(UserServiceImpl userService, JwtTokenUtil jwtTokenUtil, DataDecryption dataDecryption) {
-        this.userService = userService;this.jwtTokenUtil = jwtTokenUtil;this.dataDecryption = dataDecryption;
+        this.userService = userService;
+        this.jwtTokenUtil = jwtTokenUtil;
+        this.dataDecryption = dataDecryption;
     }
 
     /**
@@ -32,18 +34,19 @@ public class UserResource {
      */
     // add a new admin account / assign by type, admin and manager account cannot be registered
     @PostMapping("/register/user")
-    public ResponseEntity<?> registerUser(@RequestBody UserRequest userRequest){
+    public ResponseEntity<?> registerUser(@RequestBody UserRequest userRequest) {
         log.info("REST request to register a new user : {}", userRequest);
-        if(userService.isEmailExist(userRequest.getEmail())){
+        if (userService.isEmailExist(userRequest.getEmail())) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_USER_004_LABEL));
         }
-        if(userService.isUsernameExist("u-" + userRequest.getUsername())){
+        if (userService.isUsernameExist("u-" + userRequest.getUsername())) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_USER_005_LABEL));
         }
         try {
             userService.register(userRequest);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        } catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -52,13 +55,14 @@ public class UserResource {
      * @apiNote for user can get their profile, both admin/manager can use it
      */
     @GetMapping("/profile/user")
-    public ResponseEntity<?> getUserProfile(@RequestHeader("Authorization") String jwttoken){
+    public ResponseEntity<?> getUserProfile(@RequestHeader("Authorization") String jwttoken) {
         log.info("REST request to get user profile");
         try {
             String username = jwtTokenUtil.getUsernameFromToken(jwttoken.substring(7));
             UserDTO userDTO = userService.getUserProfile(username);
             return ResponseEntity.ok().body(new ApiResponse<>(200, userDTO, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -67,7 +71,8 @@ public class UserResource {
      * @apiNote for user can change their password, both admin/manager can use it
      */
     @PatchMapping("/change-password/user")
-    public ResponseEntity<?> changePassword(@RequestHeader("Authorization") String jwttoken, @RequestParam String oldPass, @RequestParam String newPass){
+    public ResponseEntity<?> changePassword(@RequestHeader("Authorization") String jwttoken, @RequestParam String oldPass,
+                                            @RequestParam String newPass) {
         log.info("REST request to change user's password");
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         String newPasswordEncoded = bCryptPasswordEncoder.encode(newPass);
@@ -75,13 +80,14 @@ public class UserResource {
         String username = jwtTokenUtil.getUsernameFromToken(jwttoken.substring(7));
         String userPassword = userService.getOldPassword(username);
 
-        if(!bCryptPasswordEncoder.matches(oldPass, userPassword)){
+        if (!bCryptPasswordEncoder.matches(oldPass, userPassword)) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_USER_001_LABEL));
-        }else {
+        } else {
             try {
                 userService.changeUserPassword(username, newPasswordEncoded);
-                return ResponseEntity.ok().body(new ApiResponse<>(200, null,null));
-            }catch (Exception e){ e.printStackTrace();
+                return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
+            } catch (Exception e) {
+                e.printStackTrace();
                 return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
             }
         }
@@ -91,34 +97,37 @@ public class UserResource {
      * @apiNote for user to update their profile, both admin/manager can use it
      */
     @PatchMapping("/update-profile/user")
-    public ResponseEntity<?> updateUserProfile(@RequestBody UserDTO userDTO){
+    public ResponseEntity<?> updateUserProfile(@RequestBody UserDTO userDTO) {
         log.info("REST request to update an user : {}", userDTO);
-        try{
+        try {
             userService.updateUserProfile(userDTO);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
 
     @GetMapping("/check/user/username/{username}")
-    public ResponseEntity<?> isUsernameExist(@PathVariable String username){
+    public ResponseEntity<?> isUsernameExist(@PathVariable String username) {
         log.info("REST request to check duplicate user's username");
         try {
             boolean isUsernameExist = userService.isUsernameExist(username);
             return ResponseEntity.ok().body(new ApiResponse<>(200, isUsernameExist, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
 
     @GetMapping("/check/user/email/{email}")
-    public ResponseEntity<?> isEmailExist(@PathVariable String email){
+    public ResponseEntity<?> isEmailExist(@PathVariable String email) {
         log.info("REST request to check duplicate user's email");
         try {
             boolean isEmailExist = userService.isEmailExist(email);
             return ResponseEntity.ok().body(new ApiResponse<>(200, isEmailExist, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -127,13 +136,14 @@ public class UserResource {
      * @apiNote for user to update their vip status after completing a booking
      */
     @PatchMapping("/update-vip-status")
-    public ResponseEntity<?> updateVipStatus(@RequestHeader("Authorization") String jwttoken){
+    public ResponseEntity<?> updateVipStatus(@RequestHeader("Authorization") String jwttoken) {
         log.info("REST request to update user's vip status");
-        try{
+        try {
             int userId = Integer.parseInt(jwtTokenUtil.getUserIdFromToken(jwttoken.substring(7)));
             userService.updateVipStatus(userId);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -142,7 +152,7 @@ public class UserResource {
      * @apiNote for user who forgot their password can refresh new password via email
      */
     @PatchMapping("/authenticate/user/forgot-password")
-    public ResponseEntity<?> changePassword(@RequestParam String email, @RequestParam String newPass){
+    public ResponseEntity<?> changePassword(@RequestParam String email, @RequestParam String newPass) {
         log.info("REST request to change user's password cuz they forgot them :) !");
         String emailDecrypted;
         try {
@@ -155,7 +165,8 @@ public class UserResource {
         try {
             userService.changeForgotPassword(emailDecrypted, newPasswordEncoded);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -165,13 +176,14 @@ public class UserResource {
      * provider don't have feature to delete account but they can be disabled by admin
      */
     @PatchMapping("/delete-account/user")
-    public ResponseEntity<?> deleteAccount(@RequestHeader("Authorization") String jwttoken){
+    public ResponseEntity<?> deleteAccount(@RequestHeader("Authorization") String jwttoken) {
         log.info("REST request to delete an user account");
-        try{
+        try {
             int userId = Integer.parseInt(jwtTokenUtil.getUserIdFromToken(jwttoken.substring(7)));
             userService.deleteAccount(userId);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }

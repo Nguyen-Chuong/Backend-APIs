@@ -32,20 +32,25 @@ public class FeedbackResource {
 
     private final DataDecryption dataDecryption;
 
-    public FeedbackResource(FeedbackServiceImpl feedbackService, UserServiceImpl userService, JwtTokenUtil jwtTokenUtil, DataDecryption dataDecryption) {
-        this.feedbackService = feedbackService;this.userService = userService;this.jwtTokenUtil = jwtTokenUtil;this.dataDecryption = dataDecryption;
+    public FeedbackResource(FeedbackServiceImpl feedbackService, UserServiceImpl userService, JwtTokenUtil jwtTokenUtil,
+                            DataDecryption dataDecryption) {
+        this.feedbackService = feedbackService;
+        this.userService = userService;
+        this.jwtTokenUtil = jwtTokenUtil;
+        this.dataDecryption = dataDecryption;
     }
 
     /**
      * @apiNote for user
      */
     @PostMapping("/send-feedback")
-    public ResponseEntity<?> sendFeedback(@RequestBody FeedbackRequest feedbackRequest){
+    public ResponseEntity<?> sendFeedback(@RequestBody FeedbackRequest feedbackRequest) {
         log.info("REST request to send user feedback");
         try {
             feedbackService.sendFeedback(feedbackRequest);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -55,13 +60,16 @@ public class FeedbackResource {
      */
     @GetMapping("/get-all-feedback")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-    public ResponseEntity<?> getAllFeedback(@RequestParam(defaultValue = ValidateConstant.PAGE) int page, @RequestParam(defaultValue = ValidateConstant.PER_PAGE) int pageSize){
+    public ResponseEntity<?> getAllFeedback(@RequestParam(defaultValue = ValidateConstant.PAGE) int page,
+                                            @RequestParam(defaultValue = ValidateConstant.PER_PAGE) int pageSize) {
         log.info("REST request to get all user's feedback");
         try {
             Page<FeedbackDTO> feedbackDTOPage = feedbackService.viewPageUserFeedback(PageRequest.of(page, pageSize));
-            DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(feedbackDTOPage.getContent(), feedbackDTOPage.getTotalElements(), page, feedbackDTOPage.getSize());
+            DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(feedbackDTOPage.getContent(),
+                    feedbackDTOPage.getTotalElements(), page, feedbackDTOPage.getSize());
             return ResponseEntity.ok().body(new ApiResponse<>(200, dataPagingResponse, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -71,24 +79,25 @@ public class FeedbackResource {
      */
     @GetMapping("/search-feedback")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-    public ResponseEntity<?> searchFeedbackOfAnUser(@RequestParam String username){
+    public ResponseEntity<?> searchFeedbackOfAnUser(@RequestParam String username) {
         log.info("REST request to search an user's feedback");
         String usernameDecrypted;
-        try{
+        try {
             usernameDecrypted = dataDecryption.convertEncryptedDataToString(username);
-        } catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001_LABEL));
         }
         int userId;
-        try{
+        try {
             userId = userService.getUserId(usernameDecrypted);
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_USER_006_LABEL));
         }
         try {
             List<FeedbackDTO> feedbackDTOList = feedbackService.getListAnUserFeedback(userId);
             return ResponseEntity.ok().body(new ApiResponse<>(200, feedbackDTOList, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -97,13 +106,14 @@ public class FeedbackResource {
      * @apiNote for user
      */
     @GetMapping("/list-feedback")
-    public ResponseEntity<?> getListFeedback(@RequestHeader("Authorization") String jwttoken){
+    public ResponseEntity<?> getListFeedback(@RequestHeader("Authorization") String jwttoken) {
         log.info("REST request to get user's feedbacks that sent");
         int userId = Integer.parseInt(jwtTokenUtil.getUserIdFromToken(jwttoken.substring(7)));
         try {
             List<FeedbackDTO> feedbackDTOList = feedbackService.getListAnUserFeedback(userId);
             return ResponseEntity.ok().body(new ApiResponse<>(200, feedbackDTOList, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -112,7 +122,7 @@ public class FeedbackResource {
      * @apiNote both admin and user can user it
      */
     @GetMapping("/feedback")
-    public ResponseEntity<?> getFeedbackById(@RequestParam String feedbackId){
+    public ResponseEntity<?> getFeedbackById(@RequestParam String feedbackId) {
         log.info("REST request to get feedback by id");
         int id;
         try {
@@ -123,7 +133,8 @@ public class FeedbackResource {
         try {
             FeedbackDTO feedbackDTO = feedbackService.getFeedbackById(id);
             return ResponseEntity.ok().body(new ApiResponse<>(200, feedbackDTO, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -133,7 +144,7 @@ public class FeedbackResource {
      */
     @PatchMapping("/update-receiver")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-    public ResponseEntity<?> updateFeedbackReceiver(@RequestParam String feedbackId, @RequestHeader("Authorization") String jwttoken){
+    public ResponseEntity<?> updateFeedbackReceiver(@RequestParam String feedbackId, @RequestHeader("Authorization") String jwttoken) {
         log.info("REST request to update feedback receiver");
         int adminId = Integer.parseInt(jwtTokenUtil.getUserIdFromToken(jwttoken.substring(7)));
         int id;
@@ -145,7 +156,8 @@ public class FeedbackResource {
         try {
             feedbackService.updateFeedbackReceiver(id, adminId);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }

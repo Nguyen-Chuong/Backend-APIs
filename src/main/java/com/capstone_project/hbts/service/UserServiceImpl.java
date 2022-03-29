@@ -30,9 +30,13 @@ public class UserServiceImpl{
 
     private final VipRepository vipRepository;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, BookingRepository bookingRepository, RoleRepository roleRepository, VipRepository vipRepository) {
-        this.userRepository = userRepository;this.modelMapper = modelMapper;this.bookingRepository = bookingRepository;
-        this.roleRepository = roleRepository;this.vipRepository = vipRepository;
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, BookingRepository bookingRepository,
+                           RoleRepository roleRepository, VipRepository vipRepository) {
+        this.userRepository = userRepository;
+        this.modelMapper = modelMapper;
+        this.bookingRepository = bookingRepository;
+        this.roleRepository = roleRepository;
+        this.vipRepository = vipRepository;
     }
 
     public void register(UserRequest userRequest) {
@@ -105,7 +109,8 @@ public class UserServiceImpl{
         int numberBookingCompleted = bookingRepository.numberBookingCompleted(userId);
         int vipId = 0;
         // consider number get from db cuz it can be change later
-        List<VipDTO> listVipDTO = vipRepository.findAll().stream().map(item -> modelMapper.map(item, VipDTO.class)).collect(Collectors.toList());
+        List<VipDTO> listVipDTO = vipRepository.findAll().stream().map(item -> modelMapper.map(item, VipDTO.class))
+                .collect(Collectors.toList());
         for (VipDTO vipDTO : listVipDTO) {
             if (numberBookingCompleted >= vipDTO.getRangeStart()
                     && numberBookingCompleted <= vipDTO.getRangeEnd()) {

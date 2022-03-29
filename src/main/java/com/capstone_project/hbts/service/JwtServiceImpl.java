@@ -14,7 +14,8 @@ public class JwtServiceImpl{
     private final ModelMapper modelMapper;
 
     public JwtServiceImpl(JwtRepository jwtRepository, ModelMapper modelMapper) {
-        this.jwtRepository = jwtRepository;this.modelMapper = modelMapper;
+        this.jwtRepository = jwtRepository;
+        this.modelMapper = modelMapper;
     }
 
     public void saveTokenKeyForAdmin(JwtRequest jwtRequest) {

@@ -15,11 +15,13 @@ public class TransactionServiceImpl{
     private final ModelMapper modelMapper;
 
     public TransactionServiceImpl(TransactionRepository transactionRepository, ModelMapper modelMapper) {
-        this.transactionRepository = transactionRepository;this.modelMapper = modelMapper;
+        this.transactionRepository = transactionRepository;
+        this.modelMapper = modelMapper;
     }
 
     public TransactionDTO getTransactionInfo(long amount, String bankCode, String bankTranNo, String cardType,
-                                             String orderInfo, String payDate, String responseCode, String transactionNo, long idService, int userId) {
+                                             String orderInfo, String payDate, String responseCode, String transactionNo,
+                                             long idService, int userId) {
         Transaction transaction = new Transaction();
         transaction.setAmount(amount);
         transaction.setBankCode(bankCode);

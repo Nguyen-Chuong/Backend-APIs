@@ -28,7 +28,9 @@ public class ReviewServiceImpl {
     private final ModelMapper modelMapper;
 
     public ReviewServiceImpl(BookingRepository bookingRepository, ReviewRepository reviewRepository, ModelMapper modelMapper) {
-        this.bookingRepository = bookingRepository;this.reviewRepository = reviewRepository;this.modelMapper = modelMapper;
+        this.bookingRepository = bookingRepository;
+        this.reviewRepository = reviewRepository;
+        this.modelMapper = modelMapper;
     }
 
     public Page<ReviewDTO> loadReview(int hotelId, Pageable pageable) {
@@ -40,7 +42,8 @@ public class ReviewServiceImpl {
         // get page review by list user booking id
         Page<Review> pageReview = reviewRepository.loadReviewByBookingId(listBookingId, pageable);
         List<Review> listReview = new ArrayList<>(pageReview.getContent());
-        List<ReviewDTO> reviewDTOList = listReview.stream().map(item -> modelMapper.map(item, ReviewDTO.class)).collect(Collectors.toList());
+        List<ReviewDTO> reviewDTOList = listReview.stream().map(item -> modelMapper.map(item, ReviewDTO.class))
+                .collect(Collectors.toList());
         for(int i = 0; i < reviewDTOList.size(); i++){
             // set user name for review
             reviewDTOList.get(i).setUsername(listReview.get(i).getUserBooking().getUsers().getUsername().substring(2));
@@ -52,8 +55,9 @@ public class ReviewServiceImpl {
 
     @Transactional
     public void addReview(ReviewRequest reviewRequest) {
-        reviewRepository.addNewReview(reviewRequest.getCleanliness(), reviewRequest.getFacilities(), reviewRequest.getLocation(), reviewRequest.getService(),
-                reviewRequest.getValueForMoney(), reviewRequest.getReviewTitle(), reviewRequest.getReviewDetail(), reviewRequest.getUserBookingId(), new Timestamp(System.currentTimeMillis()));
+        reviewRepository.addNewReview(reviewRequest.getCleanliness(), reviewRequest.getFacilities(), reviewRequest.getLocation(),
+                reviewRequest.getService(), reviewRequest.getValueForMoney(), reviewRequest.getReviewTitle(),
+                reviewRequest.getReviewDetail(), reviewRequest.getUserBookingId(), new Timestamp(System.currentTimeMillis()));
         // get user booking need to update review status
         UserBooking userBooking = bookingRepository.getBookingById(reviewRequest.getUserBookingId());
         // set status

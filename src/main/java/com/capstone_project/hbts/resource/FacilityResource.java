@@ -26,7 +26,9 @@ public class FacilityResource {
     private final FacilityServiceImpl facilityService;
 
     public FacilityResource(DataDecryption dataDecryption, FacilityTypeServiceImpl facilityTypeService, FacilityServiceImpl facilityService) {
-        this.dataDecryption = dataDecryption;this.facilityTypeService = facilityTypeService;this.facilityService = facilityService;
+        this.dataDecryption = dataDecryption;
+        this.facilityTypeService = facilityTypeService;
+        this.facilityService = facilityService;
     }
 
     @GetMapping("/list-facility")
@@ -41,7 +43,8 @@ public class FacilityResource {
         try {
             List<FacilityResult> facilityList = facilityTypeService.getAllFacilityByTypeId(id);
             return ResponseEntity.ok().body(new ApiResponse<>(200, facilityList, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -62,7 +65,8 @@ public class FacilityResource {
         try {
             facilityService.addFacility(id, facilityAddRequest);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -76,7 +80,8 @@ public class FacilityResource {
         try {
             facilityService.addFacilityOtherType(facilityRequest.getName());
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }

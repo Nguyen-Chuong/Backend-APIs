@@ -18,7 +18,8 @@ public class VipServiceImpl{
     private final ModelMapper modelMapper;
 
     public VipServiceImpl(VipRepository vipRepository, ModelMapper modelMapper) {
-        this.vipRepository = vipRepository;this.modelMapper = modelMapper;
+        this.vipRepository = vipRepository;
+        this.modelMapper = modelMapper;
     }
 
     public List<VipDTO> getVipStatus() {

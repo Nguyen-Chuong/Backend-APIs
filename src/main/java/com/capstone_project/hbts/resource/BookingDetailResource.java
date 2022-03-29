@@ -21,11 +21,12 @@ public class BookingDetailResource {
     private final DataDecryption dataDecryption;
 
     public BookingDetailResource(BookingDetailServiceImpl bookingDetailService, DataDecryption dataDecryption) {
-        this.bookingDetailService = bookingDetailService;this.dataDecryption = dataDecryption;
+        this.bookingDetailService = bookingDetailService;
+        this.dataDecryption = dataDecryption;
     }
 
     @GetMapping("/booking-detail")
-    public ResponseEntity<?> getBookingDetailByBookingId(@RequestParam String bookingId){
+    public ResponseEntity<?> getBookingDetailByBookingId(@RequestParam String bookingId) {
         log.info("REST request to get list booking detail by booking ID");
         int id;
         try {
@@ -33,10 +34,11 @@ public class BookingDetailResource {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001_LABEL));
         }
-        try{
+        try {
             List<UserBookingDetailDTO> userBookingDetailDTOList = bookingDetailService.getAllBookingDetail(id);
             return ResponseEntity.ok().body(new ApiResponse<>(200, userBookingDetailDTOList, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }

@@ -34,23 +34,28 @@ public class HotelResource {
     private final DataDecryption dataDecryption;
 
     public HotelResource(HotelServiceImpl hotelService, JwtTokenUtil jwtTokenUtil, DataDecryption dataDecryption) {
-        this.hotelService = hotelService;this.jwtTokenUtil = jwtTokenUtil;this.dataDecryption = dataDecryption;
+        this.hotelService = hotelService;
+        this.jwtTokenUtil = jwtTokenUtil;
+        this.dataDecryption = dataDecryption;
     }
 
     @GetMapping("/public/search-hotel")
     public ResponseEntity<?> searchHotel(@RequestParam int districtId, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateIn,
                                          @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateOut, @RequestParam int numberOfPeople,
                                          @RequestParam int numberOfRoom, @RequestParam(defaultValue = ValidateConstant.PAGE) int page,
-                                         @RequestParam(defaultValue = ValidateConstant.PER_PAGE) int pageSize){
+                                         @RequestParam(defaultValue = ValidateConstant.PER_PAGE) int pageSize) {
         log.info("REST request to search hotel via district id and other info");
-        if(!ValidateUtils.isFromDateBeforeToDate(dateIn, dateOut)){
+        if (!ValidateUtils.isFromDateBeforeToDate(dateIn, dateOut)) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_USER_009_LABEL));
         }
-        try{
-            Page<HotelDTO> hotelDTOPage = hotelService.searchHotel(districtId, dateIn, dateOut, numberOfPeople, numberOfRoom, PageRequest.of(page, pageSize));
-            DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(hotelDTOPage.getContent(), hotelDTOPage.getTotalElements(), page, hotelDTOPage.getSize());
+        try {
+            Page<HotelDTO> hotelDTOPage = hotelService.searchHotel(districtId, dateIn, dateOut, numberOfPeople, numberOfRoom,
+                    PageRequest.of(page, pageSize));
+            DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(hotelDTOPage.getContent(),
+                    hotelDTOPage.getTotalElements(), page, hotelDTOPage.getSize());
             return ResponseEntity.ok().body(new ApiResponse<>(200, dataPagingResponse, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -61,13 +66,15 @@ public class HotelResource {
     @GetMapping("/get-hotel/{status}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
     public ResponseEntity<?> getAllHotel(@PathVariable int status, @RequestParam(defaultValue = ValidateConstant.PAGE) int page,
-                                         @RequestParam(defaultValue = ValidateConstant.PER_PAGE) int pageSize){
+                                         @RequestParam(defaultValue = ValidateConstant.PER_PAGE) int pageSize) {
         log.info("REST request to get all hotel by status for admin");
-        try{
+        try {
             Page<HotelDTO> hotelDTOPage = hotelService.getAllHotels(status, PageRequest.of(page, pageSize));
-            DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(hotelDTOPage.getContent(), hotelDTOPage.getTotalElements(), page, hotelDTOPage.getSize());
+            DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(hotelDTOPage.getContent(),
+                    hotelDTOPage.getTotalElements(), page, hotelDTOPage.getSize());
             return ResponseEntity.ok().body(new ApiResponse<>(200, dataPagingResponse, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -77,7 +84,7 @@ public class HotelResource {
      */
     @GetMapping("/hotel-detail")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-    public ResponseEntity<?> viewHotelDetail(@RequestParam String hotelId){
+    public ResponseEntity<?> viewHotelDetail(@RequestParam String hotelId) {
         log.info("REST request to get hotel detail by hotel id");
         int id;
         try {
@@ -85,10 +92,11 @@ public class HotelResource {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001_LABEL));
         }
-        try{
+        try {
             HotelDetailDTO hotelDetailDTO = hotelService.getDetailHotelById(id);
             return ResponseEntity.ok().body(new ApiResponse<>(200, hotelDetailDTO, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -98,12 +106,13 @@ public class HotelResource {
      */
     @PatchMapping("/ban-hotel/{hotelId}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<?> banHotelById(@PathVariable int hotelId){
+    public ResponseEntity<?> banHotelById(@PathVariable int hotelId) {
         log.info("REST request to ban hotel by hotel id");
-        try{
+        try {
             hotelService.banHotelByHotelId(hotelId);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -112,13 +121,14 @@ public class HotelResource {
      * @apiNote for provider can view list their hotel
      */
     @GetMapping("/list-hotel")
-    public ResponseEntity<?> viewListHotelByProviderId(@RequestHeader("Authorization") String jwttoken){
+    public ResponseEntity<?> viewListHotelByProviderId(@RequestHeader("Authorization") String jwttoken) {
         log.info("REST request to get list hotel by provider id");
         int providerId = Integer.parseInt(jwtTokenUtil.getUserIdFromToken(jwttoken.substring(7)));
-        try{
+        try {
             List<HotelDTO> hotelDTOList = hotelService.viewListHotelByProviderId(providerId);
             return ResponseEntity.ok().body(new ApiResponse<>(200, hotelDTOList, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -127,7 +137,7 @@ public class HotelResource {
      * @apiNote for provider can disable a hotel, they can enable again if they want (is not banned)
      */
     @PatchMapping("/disable-hotel")
-    public ResponseEntity<?> disableHotelById(@RequestParam String hotelId){
+    public ResponseEntity<?> disableHotelById(@RequestParam String hotelId) {
         log.info("REST request to disable hotel by hotel id");
         int id;
         try {
@@ -135,10 +145,11 @@ public class HotelResource {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001_LABEL));
         }
-        try{
+        try {
             hotelService.disableHotel(id);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -147,7 +158,7 @@ public class HotelResource {
      * @apiNote for provider can enable a hotel again
      */
     @PatchMapping("/enable-hotel")
-    public ResponseEntity<?> enableHotelById(@RequestParam String hotelId){
+    public ResponseEntity<?> enableHotelById(@RequestParam String hotelId) {
         log.info("REST request to enable hotel by hotel id");
         int id;
         try {
@@ -156,13 +167,14 @@ public class HotelResource {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001_LABEL));
         }
         // if hotel status = 4 -> it is banned, provider cannot enable hotel again
-        if(hotelService.viewHotelStatus(id) == 4){
+        if (hotelService.viewHotelStatus(id) == 4) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_HOTEL_001_LABEL));
         }
-        try{
+        try {
             hotelService.enableHotel(id);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -171,7 +183,7 @@ public class HotelResource {
      * @apiNote get hotel by id
      */
     @GetMapping("/public/hotel")
-    public ResponseEntity<?> viewHotelById(@RequestParam String hotelId){
+    public ResponseEntity<?> viewHotelById(@RequestParam String hotelId) {
         log.info("REST request to get hotel by id");
         int id;
         try {
@@ -179,10 +191,11 @@ public class HotelResource {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001_LABEL));
         }
-        try{
+        try {
             HotelDTO hotelDTO = hotelService.getHotelById(id);
             return ResponseEntity.ok().body(new ApiResponse<>(200, hotelDTO, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -191,16 +204,17 @@ public class HotelResource {
      * @apiNote for provider to add their hotel, they have to complete adding at least one room type to add a new request to post hotel
      */
     @PostMapping("/add-hotel")
-    public ResponseEntity<?> addHotelForProvider(@RequestHeader("Authorization") String jwttoken, @RequestBody HotelRequest hotelRequest){
+    public ResponseEntity<?> addHotelForProvider(@RequestHeader("Authorization") String jwttoken, @RequestBody HotelRequest hotelRequest) {
         log.info("REST request to add new hotel for provider");
         int providerId = Integer.parseInt(jwtTokenUtil.getUserIdFromToken(jwttoken.substring(7)));
         // set provider id
         hotelRequest.setProviderId(providerId);
-        try{
+        try {
             hotelService.addHotelByProvider(hotelRequest);
             Integer hotelId = hotelService.getHotelIdJustInsert();
             return ResponseEntity.ok().body(new ApiResponse<>(200, hotelId, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -209,12 +223,13 @@ public class HotelResource {
      * @apiNote for provider can update a hotel
      */
     @PatchMapping("/update-hotel-info")
-    public ResponseEntity<?> updateHotel(@RequestBody HotelDTO hotelDTO){
+    public ResponseEntity<?> updateHotel(@RequestBody HotelDTO hotelDTO) {
         log.info("REST request to update hotel");
-        try{
+        try {
             hotelService.updateHotel(hotelDTO);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -223,7 +238,7 @@ public class HotelResource {
      * @apiNote get top hot hotel
      */
     @GetMapping("/public/top-hotel")
-    public ResponseEntity<?> viewTopHotelHot(@RequestParam String topHotel){
+    public ResponseEntity<?> viewTopHotelHot(@RequestParam String topHotel) {
         log.info("REST request to get top hot hotel");
         int top;
         try {
@@ -231,10 +246,11 @@ public class HotelResource {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001_LABEL));
         }
-        try{
+        try {
             List<HotelDTO> hotelDTOList = hotelService.getTopHotHotel(top);
             return ResponseEntity.ok().body(new ApiResponse<>(200, hotelDTOList, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }

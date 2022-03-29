@@ -32,35 +32,41 @@ public class RequestResource {
 
     private final HotelServiceImpl hotelService;
 
-    public RequestResource(RequestServiceImpl requestService, JwtTokenUtil jwtTokenUtil, DataDecryption dataDecryption, HotelServiceImpl hotelService) {
-        this.requestService = requestService;this.jwtTokenUtil = jwtTokenUtil;this.dataDecryption = dataDecryption;this.hotelService = hotelService;
+    public RequestResource(RequestServiceImpl requestService, JwtTokenUtil jwtTokenUtil, DataDecryption dataDecryption,
+                           HotelServiceImpl hotelService) {
+        this.requestService = requestService;
+        this.jwtTokenUtil = jwtTokenUtil;
+        this.dataDecryption = dataDecryption;
+        this.hotelService = hotelService;
     }
 
     /**
      * @apiNote for provider to add their request to post hotel after completing enough hotel information
      */
     @PostMapping("/add-request")
-    public ResponseEntity<?> addRequestPostHotel(@RequestHeader("Authorization") String jwttoken, @RequestBody PostHotelRequest postHotelRequest){
+    public ResponseEntity<?> addRequestPostHotel(@RequestHeader("Authorization") String jwttoken,
+                                                 @RequestBody PostHotelRequest postHotelRequest) {
         log.info("REST request to add new request to post hotel for provider");
-        if(!hotelService.isHotelHadRoom(postHotelRequest.getHotelId())){
+        if (!hotelService.isHotelHadRoom(postHotelRequest.getHotelId())) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_HOTEL_002_LABEL));
         }
         // if hotel status = 4 -> it is banned, provider cannot send request for this hotel anymore
-        if(hotelService.viewHotelStatus(postHotelRequest.getHotelId()) == 4){
+        if (hotelService.viewHotelStatus(postHotelRequest.getHotelId()) == 4) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_HOTEL_001_LABEL));
         }
         int providerId = Integer.parseInt(jwtTokenUtil.getUserIdFromToken(jwttoken.substring(7)));
         // set provider id
         postHotelRequest.setProviderId(providerId);
-        try{
+        try {
             // if list request status contain 1 or 2 -> cannot request
-            if(!requestService.checkRequest(postHotelRequest.getHotelId())){
+            if (!requestService.checkRequest(postHotelRequest.getHotelId())) {
                 return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_REQ_001_LABEL));
             } else { // else status 3-denied / 4-cancelled -> return 200 and can add request
                 requestService.addNewRequest(postHotelRequest);
                 return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
             }
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -70,7 +76,7 @@ public class RequestResource {
      */
     @PatchMapping("/accept-request")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-    public ResponseEntity<?> acceptRequest(@RequestParam String requestId){
+    public ResponseEntity<?> acceptRequest(@RequestParam String requestId) {
         log.info("REST request to accept provider's request to post hotel");
         int id;
         try {
@@ -78,10 +84,11 @@ public class RequestResource {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001_LABEL));
         }
-        try{
+        try {
             requestService.acceptRequest(id);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -91,7 +98,7 @@ public class RequestResource {
      */
     @PatchMapping("/deny-request")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-    public ResponseEntity<?> denyRequest(@RequestParam String requestId){
+    public ResponseEntity<?> denyRequest(@RequestParam String requestId) {
         log.info("REST request to deny provider's request to post hotel");
         int id;
         try {
@@ -99,10 +106,11 @@ public class RequestResource {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001_LABEL));
         }
-        try{
+        try {
             requestService.denyRequest(id);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -113,13 +121,15 @@ public class RequestResource {
     @GetMapping("/admin/view-request")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
     public ResponseEntity<?> viewListRequestByStatus(@RequestParam int status, @RequestParam(defaultValue = ValidateConstant.PAGE) int page,
-                                                     @RequestParam(defaultValue = ValidateConstant.PER_PAGE) int pageSize){
+                                                     @RequestParam(defaultValue = ValidateConstant.PER_PAGE) int pageSize) {
         log.info("REST request to view all provider's request by status");
-        try{
+        try {
             Page<RequestDTO> requestDTOPage = requestService.viewAllRequestByStatus(status, PageRequest.of(page, pageSize));
-            DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(requestDTOPage.getContent(), requestDTOPage.getTotalElements(), page, requestDTOPage.getSize());
+            DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(requestDTOPage.getContent(),
+                    requestDTOPage.getTotalElements(), page, requestDTOPage.getSize());
             return ResponseEntity.ok().body(new ApiResponse<>(200, dataPagingResponse, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -128,13 +138,14 @@ public class RequestResource {
      * @apiNote for provider to view their list request
      */
     @GetMapping("/provider/view-request")
-    public ResponseEntity<?> viewListRequestByProviderId(@RequestHeader("Authorization") String jwttoken){
+    public ResponseEntity<?> viewListRequestByProviderId(@RequestHeader("Authorization") String jwttoken) {
         log.info("REST request to view all provider's request by status");
         int providerId = Integer.parseInt(jwtTokenUtil.getUserIdFromToken(jwttoken.substring(7)));
-        try{
+        try {
             List<RequestDTO> requestDTOList = requestService.getRequestByProviderId(providerId);
-            return ResponseEntity.ok().body(new ApiResponse<>(200, requestDTOList,null));
-        }catch (Exception e){ e.printStackTrace();
+            return ResponseEntity.ok().body(new ApiResponse<>(200, requestDTOList, null));
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -143,7 +154,7 @@ public class RequestResource {
      * @apiNote for provider to cancel their request
      */
     @PatchMapping("/provider/cancel-request")
-    public ResponseEntity<?> cancelRequest(@RequestParam String requestId){
+    public ResponseEntity<?> cancelRequest(@RequestParam String requestId) {
         log.info("REST request to cancel request by provider");
         int id;
         try {
@@ -151,14 +162,15 @@ public class RequestResource {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001_LABEL));
         }
-        try{
-            if(requestService.getRequestStatus(id) != 1){
+        try {
+            if (requestService.getRequestStatus(id) != 1) {
                 return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_REQ_002_LABEL));
             } else {
                 requestService.cancelRequest(id);
                 return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
             }
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }

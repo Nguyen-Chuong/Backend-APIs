@@ -16,11 +16,13 @@ public class CityServiceImpl {
     private final ModelMapper modelMapper;
 
     public CityServiceImpl(CityRepository cityRepository, ModelMapper modelMapper) {
-        this.cityRepository = cityRepository;this.modelMapper = modelMapper;
+        this.cityRepository = cityRepository;
+        this.modelMapper = modelMapper;
     }
 
     public List<CityDTO> viewAllCity() {
-        return cityRepository.findAll().stream().map(item -> modelMapper.map(item, CityDTO.class)).collect(Collectors.toList());
+        return cityRepository.findAll().stream().map(item -> modelMapper.map(item, CityDTO.class))
+                .collect(Collectors.toList());
     }
 
 }

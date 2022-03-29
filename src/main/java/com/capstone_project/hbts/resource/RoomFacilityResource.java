@@ -25,7 +25,8 @@ public class RoomFacilityResource {
     private final DataDecryption dataDecryption;
 
     public RoomFacilityResource(RoomFacilityServiceImpl roomFacilityService, DataDecryption dataDecryption) {
-        this.roomFacilityService = roomFacilityService;this.dataDecryption = dataDecryption;
+        this.roomFacilityService = roomFacilityService;
+        this.dataDecryption = dataDecryption;
     }
 
     /**
@@ -42,17 +43,18 @@ public class RoomFacilityResource {
         List<Integer> common = new ArrayList<>(listFacilityIds);
         common.retainAll(listIds);
         // check if they have common item
-        if(!common.isEmpty()){
+        if (!common.isEmpty()) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_ITEM_002_LABEL));
         }
         Set<Integer> setIds = new HashSet<>(listIds);
-        if(setIds.size() < listIds.size()){
+        if (setIds.size() < listIds.size()) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_ITEM_001_LABEL));
         }
         try {
             roomFacilityService.addListFacilityToRoomType(roomFacilityRequest);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -70,9 +72,10 @@ public class RoomFacilityResource {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001_LABEL));
         }
         try {
-            List<RoomFacilityDTO> roomFacilityDTOList= roomFacilityService.viewListFacility(id);
+            List<RoomFacilityDTO> roomFacilityDTOList = roomFacilityService.viewListFacility(id);
             return ResponseEntity.ok().body(new ApiResponse<>(200, roomFacilityDTOList, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -92,7 +95,8 @@ public class RoomFacilityResource {
         try {
             roomFacilityService.deleteRoomFacility(id);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }

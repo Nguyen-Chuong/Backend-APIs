@@ -20,14 +20,15 @@ public class ExcelResource {
     private final DataDecryption dataDecryption;
 
     public ExcelResource(ExcelServiceImpl excelService, DataDecryption dataDecryption) {
-        this.excelService = excelService;this.dataDecryption = dataDecryption;
+        this.excelService = excelService;
+        this.dataDecryption = dataDecryption;
     }
 
     /**
      * @apiNote for admin can use excel file to add list district to database
      */
-    @PostMapping(value = "/upload-file-excel-district", consumes = {"application/json", MediaType.MULTIPART_FORM_DATA_VALUE })
-    public ResponseEntity<?> uploadFileExcel(@RequestPart(value = "file") MultipartFile multipartFile, @RequestParam String cityId){
+    @PostMapping(value = "/upload-file-excel-district", consumes = {"application/json", MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<?> uploadFileExcel(@RequestPart(value = "file") MultipartFile multipartFile, @RequestParam String cityId) {
         log.info("REST request to import list district into table database");
         int id;
         try {
@@ -35,11 +36,12 @@ public class ExcelResource {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001_LABEL));
         }
-        if(excelService.hasExcelFormat(multipartFile)){
+        if (excelService.hasExcelFormat(multipartFile)) {
             try {
                 excelService.saveExcelDataToTableDatabase(multipartFile, id);
                 return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-            } catch (Exception e) { e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
                 return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
             }
         } else {

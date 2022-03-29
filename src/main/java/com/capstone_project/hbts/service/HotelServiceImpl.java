@@ -31,7 +31,9 @@ public class HotelServiceImpl {
     private final BookingRepository bookingRepository;
 
     public HotelServiceImpl(HotelRepository hotelRepository, ModelMapper modelMapper, BookingRepository bookingRepository) {
-        this.hotelRepository = hotelRepository;this.modelMapper = modelMapper;this.bookingRepository = bookingRepository;
+        this.hotelRepository = hotelRepository;
+        this.modelMapper = modelMapper;
+        this.bookingRepository = bookingRepository;
     }
 
     // get total room available in a hotel
@@ -78,7 +80,8 @@ public class HotelServiceImpl {
         // new rating
         RatingDTO ratingDTO = new RatingDTO();
         // get list user booking reviewed
-        Set<UserBooking> userBookingListHasReview = hotel.getListUserBooking().stream().filter(item -> item.getReviewStatus() == 1).collect(Collectors.toSet());
+        Set<UserBooking> userBookingListHasReview = hotel.getListUserBooking().stream()
+                .filter(item -> item.getReviewStatus() == 1).collect(Collectors.toSet());
         // get total number booking rated
         int number = userBookingListHasReview.size();
         // if this hotel has no booking that reviewed
@@ -113,13 +116,15 @@ public class HotelServiceImpl {
     // count average score review
     public float countTotalScoreReview(Review review){
         float total = 0;
-        return total + review.getService() + review.getFacilities() + review.getCleanliness() + review.getLocation() + review.getValueForMoney();
+        return total + review.getService() + review.getFacilities() + review.getCleanliness() + review.getLocation()
+                + review.getValueForMoney();
     }
 
     // get top 1 review
     public ReviewDTO getTop1ReviewAboutHotel(Set<UserBooking> userBookings){
         // get set booking has review
-        Set<UserBooking> userBookingHasReview = userBookings.stream().filter(item -> item.getReviewStatus() == 1).collect(Collectors.toSet());
+        Set<UserBooking> userBookingHasReview = userBookings.stream().filter(item -> item.getReviewStatus() == 1)
+                .collect(Collectors.toSet());
         // if has no booking has review, return empty
         if(userBookingHasReview.size() == 0 ){
             return new ReviewDTO();
@@ -156,7 +161,8 @@ public class HotelServiceImpl {
         List<Hotel> result = new ArrayList<>(hotelPage.getContent());
         // remove some hotel if it is not eligible
         for (int i = result.size() - 1; i >= 0; i--) {
-            if (getTotalRoom(result.get(i).getListRoomType()) < numberOfRoom || getTotalPeople(result.get(i).getListRoomType()) < numberOfPeople) {
+            if (getTotalRoom(result.get(i).getListRoomType()) < numberOfRoom
+                    || getTotalPeople(result.get(i).getListRoomType()) < numberOfPeople) {
                 result.remove(result.get(i));
             }
         }
@@ -231,7 +237,8 @@ public class HotelServiceImpl {
 
     public List<HotelDTO> viewListHotelByProviderId(int providerId) {
         List<Hotel> hotelList = hotelRepository.getAllByProviderId(providerId);
-        List<HotelDTO> hotelDTOList = hotelList.stream().map(item -> modelMapper.map(item, HotelDTO.class)).collect(Collectors.toList());
+        List<HotelDTO> hotelDTOList = hotelList.stream().map(item -> modelMapper.map(item, HotelDTO.class))
+                .collect(Collectors.toList());
         // set property lowest price and deal percentage
         for (int i = 0; i < hotelDTOList.size(); i++) {
             // set price
@@ -277,8 +284,9 @@ public class HotelServiceImpl {
         // set status pending: 3, if admin approved -> status 1, if admin denied -> delete it
         hotelRequest.setStatus(3);
         // add new hotel
-        hotelRepository.addNewHotel(hotelRequest.getAddress(), hotelRequest.getAvatar(), hotelRequest.getDescription(), hotelRequest.getEmail(), hotelRequest.getName(),
-                hotelRequest.getPhone(), hotelRequest.getStatus(), hotelRequest.getDistrictId(), hotelRequest.getProviderId(), hotelRequest.getStar(), hotelRequest.getTaxPercentage());
+        hotelRepository.addNewHotel(hotelRequest.getAddress(), hotelRequest.getAvatar(), hotelRequest.getDescription(),
+                hotelRequest.getEmail(), hotelRequest.getName(), hotelRequest.getPhone(), hotelRequest.getStatus(),
+                hotelRequest.getDistrictId(), hotelRequest.getProviderId(), hotelRequest.getStar(), hotelRequest.getTaxPercentage());
     }
 
     public Integer getHotelIdJustInsert() {

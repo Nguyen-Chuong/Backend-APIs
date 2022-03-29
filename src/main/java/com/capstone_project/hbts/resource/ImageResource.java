@@ -19,7 +19,8 @@ public class ImageResource {
     private final DataDecryption dataDecryption;
 
     public ImageResource(ImageServiceImpl imageService, DataDecryption dataDecryption) {
-        this.imageService = imageService;this.dataDecryption = dataDecryption;
+        this.imageService = imageService;
+        this.dataDecryption = dataDecryption;
     }
 
     /**
@@ -29,13 +30,14 @@ public class ImageResource {
     public ResponseEntity<?> addListImageForRoomType(@RequestBody ImageRequest imageRequest) {
         log.info("REST request to add a list image to provider's room type");
         int totalImageInDb = imageService.getTotalNumberRoomTypeImage(imageRequest.getRoomTypeId());
-        if(totalImageInDb >= 15 || totalImageInDb + imageRequest.getSourceUrl().size() > 15){
+        if (totalImageInDb >= 15 || totalImageInDb + imageRequest.getSourceUrl().size() > 15) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_ITEM_003_LABEL));
         }
         try {
             imageService.addListImageToRoomType(imageRequest);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -55,7 +57,8 @@ public class ImageResource {
         try {
             imageService.deleteListImage(id);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }

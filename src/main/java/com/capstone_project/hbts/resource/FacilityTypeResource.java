@@ -28,7 +28,8 @@ public class FacilityTypeResource {
         try {
             List<FacilityTypeDTO> facilityTypeDTOList = facilityTypeService.getAllFacilityType();
             return ResponseEntity.ok().body(new ApiResponse<>(200, facilityTypeDTOList, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -39,7 +40,8 @@ public class FacilityTypeResource {
         try {
             facilityTypeService.addFacilityType(facilityTypeRequest);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }

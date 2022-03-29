@@ -33,7 +33,8 @@ public class PaymentResource {
         try {
             PaymentResultDTO paymentResultDTO = paymentService.createPayment(paymentDTO);
             return ResponseEntity.ok().body(new ApiResponse<>(200, paymentResultDTO, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }

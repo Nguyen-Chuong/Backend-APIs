@@ -39,15 +39,20 @@ public class RoomTypeServiceImpl {
 
     private final BookingDetailRepository bookingDetailRepository;
 
-    public RoomTypeServiceImpl(RoomTypeRepository roomTypeRepository, ModelMapper modelMapper, FacilityRepository facilityRepository, BenefitRepository benefitRepository, BookingDetailRepository bookingDetailRepository) {
-        this.roomTypeRepository = roomTypeRepository;this.modelMapper = modelMapper;this.facilityRepository = facilityRepository;
-        this.benefitRepository = benefitRepository;this.bookingDetailRepository = bookingDetailRepository;
+    public RoomTypeServiceImpl(RoomTypeRepository roomTypeRepository, ModelMapper modelMapper, FacilityRepository facilityRepository,
+                               BenefitRepository benefitRepository, BookingDetailRepository bookingDetailRepository) {
+        this.roomTypeRepository = roomTypeRepository;
+        this.modelMapper = modelMapper;
+        this.facilityRepository = facilityRepository;
+        this.benefitRepository = benefitRepository;
+        this.bookingDetailRepository = bookingDetailRepository;
     }
 
     @Transactional
     public void createRoomType(RoomTypeRequest roomTypeRequest) {
-        roomTypeRepository.addNewRoomType(roomTypeRequest.getAvailableRooms(), roomTypeRequest.getDealExpire(), roomTypeRequest.getDealPercentage(), roomTypeRequest.getName(),
-                roomTypeRequest.getNumberOfPeople(), roomTypeRequest.getPrice(), roomTypeRequest.getQuantity(), roomTypeRequest.getHotelId());
+        roomTypeRepository.addNewRoomType(roomTypeRequest.getAvailableRooms(), roomTypeRequest.getDealExpire(),
+                roomTypeRequest.getDealPercentage(), roomTypeRequest.getName(), roomTypeRequest.getNumberOfPeople(),
+                roomTypeRequest.getPrice(), roomTypeRequest.getQuantity(), roomTypeRequest.getHotelId());
     }
 
     public Integer getRoomIdJustInsert() {
@@ -96,7 +101,8 @@ public class RoomTypeServiceImpl {
                 // get list user booking detail
                 Set<UserBookingDetail> setBookingDetail = userBooking.getListUserBookingDetail();
                 // get room type equal w/ room type user want to book
-                UserBookingDetail userBookingDetail = setBookingDetail.stream().filter(item -> item.getRoomType().equals(roomType)).findFirst().orElse(new UserBookingDetail());
+                UserBookingDetail userBookingDetail = setBookingDetail.stream().filter(item -> item.getRoomType()
+                        .equals(roomType)).findFirst().orElse(new UserBookingDetail());
                 numberOfRoomsTotal = numberOfRoomsTotal - userBookingDetail.getQuantity();
             }
         }
@@ -113,7 +119,8 @@ public class RoomTypeServiceImpl {
         Map<RoomType, List<UserBooking>> mapRoomAndBooking = new LinkedHashMap<>();
         for (RoomType roomType : list) {
             // filter booking detail has room type equal w/ item in list room type
-            List<UserBookingDetail> bookingDetail = bookingDetailList.stream().filter(element -> element.getRoomType().equals(roomType)).collect(Collectors.toList());
+            List<UserBookingDetail> bookingDetail = bookingDetailList.stream().filter(element -> element.getRoomType()
+                    .equals(roomType)).collect(Collectors.toList());
             // get list user booking
             List<UserBooking> userBookings = bookingDetail.stream().map(UserBookingDetail::getUserBooking).collect(Collectors.toList());
             // put them into map
@@ -132,7 +139,8 @@ public class RoomTypeServiceImpl {
                 entry.getKey().setAvailableRooms(numberRoomLeft);
             }
         }
-        return mapRoomAndBooking.keySet().stream().map(item -> modelMapper.map(item, RoomTypeDTO.class)).collect(Collectors.toList());
+        return mapRoomAndBooking.keySet().stream().map(item -> modelMapper.map(item, RoomTypeDTO.class))
+                .collect(Collectors.toList());
     }
 
     @Transactional
@@ -149,13 +157,15 @@ public class RoomTypeServiceImpl {
         // get room type by id
         RoomType roomType = roomTypeRepository.getRoomTypeById(roomTypeId);
         // get set image from this room type and transfer to DTO
-        Set<ImageDTO> imageDTOSet = roomType.getListImage().stream().map(item -> modelMapper.map(item, ImageDTO.class)).collect(Collectors.toSet());
+        Set<ImageDTO> imageDTOSet = roomType.getListImage().stream().map(item -> modelMapper.map(item, ImageDTO.class))
+                .collect(Collectors.toSet());
         // handle benefit
         List<Integer> listBenefitId = new ArrayList<>();
         // get benefit from this room and add id to list
         roomType.getListRoomBenefit().forEach(item -> listBenefitId.add(item.getBenefit().getId()));
         // get set benefitDTO by list id
-        List<BenefitDTO> benefitDTOList = benefitRepository.findAllById(listBenefitId).stream().map(item -> modelMapper.map(item, BenefitDTO.class)).collect(Collectors.toList());
+        List<BenefitDTO> benefitDTOList = benefitRepository.findAllById(listBenefitId).stream()
+                .map(item -> modelMapper.map(item, BenefitDTO.class)).collect(Collectors.toList());
         // to remove duplicate benefit type
         Set<BenefitTypeDTO> setBenefitType = new HashSet<>();
         benefitDTOList.forEach(item -> setBenefitType.add(item.getBenefitType()));
@@ -164,9 +174,11 @@ public class RoomTypeServiceImpl {
         // loop through set benefit type
         for (BenefitTypeDTO item : setBenefitType) {
             // filter to add benefitDTOs that has this benefit type to a list
-            List<BenefitDTO> listBenefit = benefitDTOList.stream().filter(element -> element.getBenefitType().equals(item)).collect(Collectors.toList());
+            List<BenefitDTO> listBenefit = benefitDTOList.stream().filter(element -> element.getBenefitType().equals(item))
+                    .collect(Collectors.toList());
             // remove BenefitTypeDTO property in list return
-            List<BenefitResult> listBenefitResult = listBenefit.stream().map(element -> modelMapper.map(element, BenefitResult.class)).collect(Collectors.toList());
+            List<BenefitResult> listBenefitResult = listBenefit.stream()
+                    .map(element -> modelMapper.map(element, BenefitResult.class)).collect(Collectors.toList());
             // add new object benefit and put to list
             ObjectBenefit obj = new ObjectBenefit(item.getId(), item.getName(), item.getIcon(), listBenefitResult);
             finalResultBenefit.add(obj);
@@ -177,7 +189,8 @@ public class RoomTypeServiceImpl {
         // get facility from this room and add id to list
         roomType.getListRoomFacility().forEach(item -> listFacilityId.add(item.getFacility().getId()));
         // get set FacilityDTO by list id
-        List<FacilityDTO> facilityDTOList = facilityRepository.findAllById(listFacilityId).stream().map(item -> modelMapper.map(item, FacilityDTO.class)).collect(Collectors.toList());
+        List<FacilityDTO> facilityDTOList = facilityRepository.findAllById(listFacilityId).stream()
+                .map(item -> modelMapper.map(item, FacilityDTO.class)).collect(Collectors.toList());
         // to remove duplicate facility type
         Set<FacilityTypeDTO> setFacilityType = new HashSet<>();
         facilityDTOList.forEach(item -> setFacilityType.add(item.getFacilityType()));
@@ -186,17 +199,20 @@ public class RoomTypeServiceImpl {
         // loop through set facility type
         for (FacilityTypeDTO item : setFacilityType) {
             // filter to add facilityDTOs that has this facility type to a list
-            List<FacilityDTO> listFacility = facilityDTOList.stream().filter(element -> element.getFacilityType().equals(item)).collect(Collectors.toList());
+            List<FacilityDTO> listFacility = facilityDTOList.stream().filter(element -> element.getFacilityType().equals(item))
+                    .collect(Collectors.toList());
             // remove FacilityTypeDTO property in list return
-            List<FacilityResult> listFacilityResult = listFacility.stream().map(element -> modelMapper.map(element, FacilityResult.class)).collect(Collectors.toList());
+            List<FacilityResult> listFacilityResult = listFacility.stream()
+                    .map(element -> modelMapper.map(element, FacilityResult.class)).collect(Collectors.toList());
             // add new object facility and put to list
             ObjectFacility obj = new ObjectFacility(item.getId(), item.getName(), item.getIcon(), listFacilityResult);
             finalResultFacility.add(obj);
         }
 
         // convert to RoomDetailDTO
-        return new RoomDetailDTO(roomType.getId(), roomType.getName(), roomType.getPrice(), roomType.getNumberOfPeople(), roomType.getQuantity(), roomType.getAvailableRooms(),
-                roomType.getDealPercentage(), roomType.getDealExpire(), imageDTOSet, finalResultFacility, finalResultBenefit);
+        return new RoomDetailDTO(roomType.getId(), roomType.getName(), roomType.getPrice(), roomType.getNumberOfPeople(),
+                roomType.getQuantity(), roomType.getAvailableRooms(), roomType.getDealPercentage(), roomType.getDealExpire(),
+                imageDTOSet, finalResultFacility, finalResultBenefit);
     }
 
     @Transactional
@@ -213,7 +229,8 @@ public class RoomTypeServiceImpl {
         // get room type by id
         RoomType roomType = roomTypeRepository.getRoomTypeById(roomTypeId);
         // get list user booking in this room type
-        List<UserBooking> userBookingList = roomType.getListUserBookingDetail().stream().map(UserBookingDetail::getUserBooking).collect(Collectors.toList());
+        List<UserBooking> userBookingList = roomType.getListUserBookingDetail().stream().map(UserBookingDetail::getUserBooking)
+                .collect(Collectors.toList());
         RoomDetailDTO roomDetailDTO = viewRoomDetail(roomTypeId);
         int numberRoomLeft = numberOfRoomLeft(roomType, userBookingList, dateIn, dateOut);
         if (numberRoomLeft <= 0) {

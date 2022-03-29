@@ -33,8 +33,12 @@ public class BookingResource {
 
     private final DataDecryption dataDecryption;
 
-    public BookingResource(BookingServiceImpl bookingService, UserServiceImpl userService, JwtTokenUtil jwtTokenUtil, DataDecryption dataDecryption) {
-        this.bookingService = bookingService;this.userService = userService;this.jwtTokenUtil = jwtTokenUtil;this.dataDecryption = dataDecryption;
+    public BookingResource(BookingServiceImpl bookingService, UserServiceImpl userService, JwtTokenUtil jwtTokenUtil,
+                           DataDecryption dataDecryption) {
+        this.bookingService = bookingService;
+        this.userService = userService;
+        this.jwtTokenUtil = jwtTokenUtil;
+        this.dataDecryption = dataDecryption;
     }
 
 
@@ -53,8 +57,9 @@ public class BookingResource {
         int userId = userService.getUserId(usernameDecrypted);
         try {
             List<UserBookingDTO> userBookingDTOList = bookingService.getAllBookings(userId);
-            return ResponseEntity.ok().body(new ApiResponse<>(200, userBookingDTOList,null));
-        } catch (Exception e) { e.printStackTrace();
+            return ResponseEntity.ok().body(new ApiResponse<>(200, userBookingDTOList, null));
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -65,8 +70,9 @@ public class BookingResource {
         int userId = Integer.parseInt(jwtTokenUtil.getUserIdFromToken(jwttoken.substring(7)));
         try {
             List<UserBookingDTO> userBookingDTOList = bookingService.getAllBookingsReview(reviewStatus, userId);
-            return ResponseEntity.ok().body(new ApiResponse<>(200, userBookingDTOList,null));
-        } catch (Exception e) { e.printStackTrace();
+            return ResponseEntity.ok().body(new ApiResponse<>(200, userBookingDTOList, null));
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -78,7 +84,8 @@ public class BookingResource {
         try {
             int numberBookingCompleted = bookingService.getNumberBookingsCompleted(userId);
             return ResponseEntity.ok().body(new ApiResponse<>(200, numberBookingCompleted, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -90,20 +97,24 @@ public class BookingResource {
         try {
             List<UserBookingDTO> userBookingDTOList = bookingService.getAllBookingsByStatus(status, userId);
             return ResponseEntity.ok().body(new ApiResponse<>(200, userBookingDTOList, null));
-        } catch (Exception e) {e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
 
     @GetMapping("/get-all-booking")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-    public ResponseEntity<?> getAllUserBooking(@RequestParam(defaultValue = ValidateConstant.PAGE) int page, @RequestParam(defaultValue = ValidateConstant.PER_PAGE) int pageSize) {
+    public ResponseEntity<?> getAllUserBooking(@RequestParam(defaultValue = ValidateConstant.PAGE) int page,
+                                               @RequestParam(defaultValue = ValidateConstant.PER_PAGE) int pageSize) {
         log.info("REST request to get list user's booking for admin");
         try {
             Page<BookingListDTO> userBookingDTOList = bookingService.getAllBookingForAdmin(PageRequest.of(page, pageSize));
-            DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(userBookingDTOList.getContent(), userBookingDTOList.getTotalElements(), page, userBookingDTOList.getSize());
+            DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(userBookingDTOList.getContent(),
+                    userBookingDTOList.getTotalElements(), page, userBookingDTOList.getSize());
             return ResponseEntity.ok().body(new ApiResponse<>(200, dataPagingResponse, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -120,7 +131,8 @@ public class BookingResource {
         try {
             UserBookingDTO userBookingDTO = bookingService.getBookingById(id);
             return ResponseEntity.ok().body(new ApiResponse<>(200, userBookingDTO, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -140,9 +152,11 @@ public class BookingResource {
         }
         try {
             Page<UserBookingDTO> userBookingDTOPage = bookingService.getBookingsByHotelId(id, PageRequest.of(page, pageSize));
-            DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(userBookingDTOPage.getContent(), userBookingDTOPage.getTotalElements(), page, userBookingDTOPage.getSize());
+            DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(userBookingDTOPage.getContent(),
+                    userBookingDTOPage.getTotalElements(), page, userBookingDTOPage.getSize());
             return ResponseEntity.ok().body(new ApiResponse<>(200, dataPagingResponse, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -162,7 +176,8 @@ public class BookingResource {
         try {
             bookingService.cancelBooking(id);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -183,7 +198,8 @@ public class BookingResource {
             bookingRequest.setUserId(userId);
             int bookingId = bookingService.addNewBooking(bookingRequest);
             return ResponseEntity.ok().body(new ApiResponse<>(200, bookingId, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -203,7 +219,8 @@ public class BookingResource {
         try {
             bookingService.completeBooking(id);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -223,7 +240,8 @@ public class BookingResource {
         try {
             bookingService.updateBookingType(id, type);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }

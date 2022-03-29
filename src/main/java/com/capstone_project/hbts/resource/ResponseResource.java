@@ -24,7 +24,8 @@ public class ResponseResource {
     private final DataDecryption dataDecryption;
 
     public ResponseResource(ResponseServiceImpl responseService, DataDecryption dataDecryption) {
-        this.responseService = responseService;this.dataDecryption = dataDecryption;
+        this.responseService = responseService;
+        this.dataDecryption = dataDecryption;
     }
 
     /**
@@ -38,7 +39,8 @@ public class ResponseResource {
         try {
             responseService.sendResponseToUser(responseAdminRequest);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -53,7 +55,8 @@ public class ResponseResource {
         try {
             responseService.sendResponseToAdmin(responseUserRequest);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -77,7 +80,8 @@ public class ResponseResource {
             } else {
                 return ResponseEntity.ok().body(new ApiResponse<>(200, responseDTOList, null));
             }
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }

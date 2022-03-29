@@ -17,12 +17,14 @@ public class BookingDetailServiceImpl {
     private final ModelMapper modelMapper;
 
     public BookingDetailServiceImpl(BookingDetailRepository bookingDetailRepository, ModelMapper modelMapper) {
-        this.bookingDetailRepository = bookingDetailRepository;this.modelMapper = modelMapper;
+        this.bookingDetailRepository = bookingDetailRepository;
+        this.modelMapper = modelMapper;
     }
 
     public List<UserBookingDetailDTO> getAllBookingDetail(int bookingId) {
         List<UserBookingDetail> bookingDetailList = bookingDetailRepository.getAllByBookingId(bookingId);
-        List<UserBookingDetailDTO> userBookingDetailDTOList = bookingDetailList.stream().map(item -> modelMapper.map(item, UserBookingDetailDTO.class)).collect(Collectors.toList());
+        List<UserBookingDetailDTO> userBookingDetailDTOList = bookingDetailList.stream()
+                .map(item -> modelMapper.map(item, UserBookingDetailDTO.class)).collect(Collectors.toList());
         for(int i = 0; i < userBookingDetailDTOList.size(); i++){
             userBookingDetailDTOList.get(i).setRoomTypeId(bookingDetailList.get(i).getRoomType().getId());
         }

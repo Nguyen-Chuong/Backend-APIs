@@ -27,7 +27,9 @@ public class BenefitResource {
     private final BenefitTypeServiceImpl benefitTypeService;
 
     public BenefitResource(BenefitServiceImpl benefitService, DataDecryption dataDecryption, BenefitTypeServiceImpl benefitTypeService) {
-        this.benefitService = benefitService;this.dataDecryption = dataDecryption;this.benefitTypeService = benefitTypeService;
+        this.benefitService = benefitService;
+        this.dataDecryption = dataDecryption;
+        this.benefitTypeService = benefitTypeService;
     }
 
     /**
@@ -45,7 +47,8 @@ public class BenefitResource {
         try {
             List<ObjectBenefit> benefitObjectList = benefitService.getListBenefitByHotelId(id);
             return ResponseEntity.ok().body(new ApiResponse<>(200, benefitObjectList, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -62,7 +65,8 @@ public class BenefitResource {
         try {
             List<BenefitResult> benefitList = benefitTypeService.getAllBenefitByTypeId(id);
             return ResponseEntity.ok().body(new ApiResponse<>(200, benefitList, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -82,7 +86,8 @@ public class BenefitResource {
         try {
             benefitService.addBenefit(id, benefitAddRequest);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -96,7 +101,8 @@ public class BenefitResource {
         try {
             benefitService.addBenefitOtherType(benefitRequest.getName());
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }

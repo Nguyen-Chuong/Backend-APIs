@@ -25,7 +25,8 @@ public class RoomBenefitResource {
     private final DataDecryption dataDecryption;
 
     public RoomBenefitResource(RoomBenefitServiceImpl roomBenefitService, DataDecryption dataDecryption) {
-        this.roomBenefitService = roomBenefitService;this.dataDecryption = dataDecryption;
+        this.roomBenefitService = roomBenefitService;
+        this.dataDecryption = dataDecryption;
     }
 
     /**
@@ -52,7 +53,8 @@ public class RoomBenefitResource {
         try {
             roomBenefitService.addListBenefitToRoomType(roomBenefitRequest);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -72,7 +74,8 @@ public class RoomBenefitResource {
         try {
             List<RoomBenefitDTO> roomBenefitDTOList = roomBenefitService.viewListBenefit(id);
             return ResponseEntity.ok().body(new ApiResponse<>(200, roomBenefitDTOList, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -92,7 +95,8 @@ public class RoomBenefitResource {
         try {
             roomBenefitService.deleteRoomBenefit(id);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }

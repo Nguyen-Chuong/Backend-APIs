@@ -21,7 +21,8 @@ public class RoomFacilityServiceImpl {
     private final ModelMapper modelMapper;
 
     public RoomFacilityServiceImpl(RoomFacilityRepository roomFacilityRepository, ModelMapper modelMapper) {
-        this.roomFacilityRepository = roomFacilityRepository;this.modelMapper = modelMapper;
+        this.roomFacilityRepository = roomFacilityRepository;
+        this.modelMapper = modelMapper;
     }
 
     public void addListFacilityToRoomType(RoomFacilityRequest roomFacilityRequest) {
@@ -46,7 +47,8 @@ public class RoomFacilityServiceImpl {
     }
 
     public List<RoomFacilityDTO> viewListFacility(int roomTypeId) {
-        return roomFacilityRepository.getAllByRoomTypeId(roomTypeId).stream().map(item -> modelMapper.map(item, RoomFacilityDTO.class)).collect(Collectors.toList());
+        return roomFacilityRepository.getAllByRoomTypeId(roomTypeId).stream()
+                .map(item -> modelMapper.map(item, RoomFacilityDTO.class)).collect(Collectors.toList());
     }
 
     public void deleteRoomFacility(int roomFacilityId) {

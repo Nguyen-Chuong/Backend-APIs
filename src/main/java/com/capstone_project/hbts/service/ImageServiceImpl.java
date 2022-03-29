@@ -19,7 +19,8 @@ public class ImageServiceImpl{
     private final RoomTypeRepository roomTypeRepository;
 
     public ImageServiceImpl(ImageRepository imageRepository, RoomTypeRepository roomTypeRepository) {
-        this.imageRepository = imageRepository;this.roomTypeRepository = roomTypeRepository;
+        this.imageRepository = imageRepository;
+        this.roomTypeRepository = roomTypeRepository;
     }
 
     public void addListImageToRoomType(ImageRequest imageRequest) {

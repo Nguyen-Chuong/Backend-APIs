@@ -26,22 +26,24 @@ public class DistrictResource {
     private final DataDecryption dataDecryption;
 
     public DistrictResource(DistrictServiceImpl districtService, DataDecryption dataDecryption) {
-        this.districtService = districtService;this.dataDecryption = dataDecryption;
+        this.districtService = districtService;
+        this.dataDecryption = dataDecryption;
     }
 
     @GetMapping("/public/search-city-district")
-    public ResponseEntity<?> searchCityDistrict(@RequestParam String text){
+    public ResponseEntity<?> searchCityDistrict(@RequestParam String text) {
         log.info("REST request to search city and district by text");
-        try{
+        try {
             List<ResultSearch> cityDistricts = districtService.searchDistrictCity(text);
             return ResponseEntity.ok().body(new ApiResponse<>(200, cityDistricts, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
 
     @GetMapping("/get-district")
-    public ResponseEntity<?> getDistrictInCity(@RequestParam String cityId){
+    public ResponseEntity<?> getDistrictInCity(@RequestParam String cityId) {
         log.info("REST request to get all district in city");
         int id;
         try {
@@ -49,16 +51,17 @@ public class DistrictResource {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001_LABEL));
         }
-        try{
+        try {
             List<DistrictSearchDTO> districtSearchDTOList = districtService.getAllDistrictInCity(id);
-            return ResponseEntity.ok().body(new ApiResponse<>(200, districtSearchDTOList,null));
-        }catch (Exception e){ e.printStackTrace();
+            return ResponseEntity.ok().body(new ApiResponse<>(200, districtSearchDTOList, null));
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
 
     @GetMapping("/public/hot-location")
-    public ResponseEntity<?> getTopHotLocation(@RequestParam String topLocation){
+    public ResponseEntity<?> getTopHotLocation(@RequestParam String topLocation) {
         log.info("REST request to get top hot location");
         int top;
         try {
@@ -66,10 +69,11 @@ public class DistrictResource {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001_LABEL));
         }
-        try{
+        try {
             List<DistrictDTO> districtDTOList = districtService.getTopHotLocation(top);
             return ResponseEntity.ok().body(new ApiResponse<>(200, districtDTOList, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }

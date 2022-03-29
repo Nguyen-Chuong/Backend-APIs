@@ -21,7 +21,8 @@ public class CartServiceImpl {
     private final ModelMapper modelMapper;
 
     public CartServiceImpl(CartRepository cartRepository, ModelMapper modelMapper) {
-        this.cartRepository = cartRepository;this.modelMapper = modelMapper;
+        this.cartRepository = cartRepository;
+        this.modelMapper = modelMapper;
     }
 
     public void addToCart(int roomTypeId, int hotelId, int quantity, int bookedQuantity, int userId, Date dateIn, Date dateOut) {
@@ -48,7 +49,8 @@ public class CartServiceImpl {
     }
 
     public List<CartDTO> getAllCartItem(int userId) {
-        return cartRepository.getAllCartItem(userId).stream().map(item -> modelMapper.map(item, CartDTO.class)).collect(Collectors.toList());
+        return cartRepository.getAllCartItem(userId).stream().map(item -> modelMapper.map(item, CartDTO.class))
+                .collect(Collectors.toList());
     }
 
     public Integer getTotalNumberItemInCart(int userId) {

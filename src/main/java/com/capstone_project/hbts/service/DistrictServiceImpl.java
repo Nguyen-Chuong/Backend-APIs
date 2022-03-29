@@ -23,7 +23,8 @@ public class DistrictServiceImpl {
     private final ModelMapper modelMapper;
 
     public DistrictServiceImpl(DistrictRepository districtRepository, ModelMapper modelMapper) {
-        this.districtRepository = districtRepository;this.modelMapper = modelMapper;
+        this.districtRepository = districtRepository;
+        this.modelMapper = modelMapper;
     }
 
     public List<ResultSearch> searchDistrictCity(String text) {
@@ -33,14 +34,16 @@ public class DistrictServiceImpl {
         List<ResultSearch> listResultSearch = new ArrayList<>();
         // new object result search from city and district searched
         for (CityDistrict cityDistrict : list) {
-            ResultSearch resultSearch = new ResultSearch(cityDistrict.getId(), cityDistrict.getDistrictName() + " District, " + cityDistrict.getCityName());
+            ResultSearch resultSearch = new ResultSearch(cityDistrict.getId(), cityDistrict.getDistrictName()
+                    + " District, " + cityDistrict.getCityName());
             listResultSearch.add(resultSearch);
         }
         return listResultSearch;
     }
 
     public List<DistrictSearchDTO> getAllDistrictInCity(int cityId) {
-        return districtRepository.getAllByCityIdOrderByNameDistrictAsc(cityId).stream().map(item -> modelMapper.map(item, DistrictSearchDTO.class)).collect(Collectors.toList());
+        return districtRepository.getAllByCityIdOrderByNameDistrictAsc(cityId).stream()
+                .map(item -> modelMapper.map(item, DistrictSearchDTO.class)).collect(Collectors.toList());
     }
 
     // count total booking of an district
@@ -59,7 +62,8 @@ public class DistrictServiceImpl {
         // get district from list ids
         List<District> districtList =  districtRepository.findAllById(districtIds);
         // convert to dto
-        List<DistrictDTO> districtDTOList = districtList.stream().map(item -> modelMapper.map(item, DistrictDTO.class)).collect(Collectors.toList());
+        List<DistrictDTO> districtDTOList = districtList.stream().map(item -> modelMapper.map(item, DistrictDTO.class))
+                .collect(Collectors.toList());
         // set number booking property
         for(int i = 0; i < districtDTOList.size(); i++){
             districtDTOList.get(i).setTotalBooking(countTotalBookingForEachDistrict(districtList.get(i)));

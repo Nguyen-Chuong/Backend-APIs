@@ -21,7 +21,8 @@ public class RoomBenefitServiceImpl{
     private final ModelMapper modelMapper;
 
     public RoomBenefitServiceImpl(RoomBenefitRepository roomBenefitRepository, ModelMapper modelMapper) {
-        this.roomBenefitRepository = roomBenefitRepository;this.modelMapper = modelMapper;
+        this.roomBenefitRepository = roomBenefitRepository;
+        this.modelMapper = modelMapper;
     }
 
     public void addListBenefitToRoomType(RoomBenefitRequest roomBenefitRequest) {
@@ -46,7 +47,8 @@ public class RoomBenefitServiceImpl{
     }
 
     public List<RoomBenefitDTO> viewListBenefit(int roomTypeId) {
-        return roomBenefitRepository.getAllByRoomTypeId(roomTypeId).stream().map(item -> modelMapper.map(item, RoomBenefitDTO.class)).collect(Collectors.toList());
+        return roomBenefitRepository.getAllByRoomTypeId(roomTypeId).stream()
+                .map(item -> modelMapper.map(item, RoomBenefitDTO.class)).collect(Collectors.toList());
     }
 
     public void deleteRoomBenefit(int roomBenefitId) {

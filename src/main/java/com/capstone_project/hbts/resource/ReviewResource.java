@@ -24,7 +24,8 @@ public class ReviewResource {
     private final DataDecryption dataDecryption;
 
     public ReviewResource(ReviewServiceImpl reviewService, DataDecryption dataDecryption) {
-        this.reviewService = reviewService;this.dataDecryption = dataDecryption;
+        this.reviewService = reviewService;
+        this.dataDecryption = dataDecryption;
     }
 
     /**
@@ -32,7 +33,7 @@ public class ReviewResource {
      */
     @GetMapping("/reviews")
     public ResponseEntity<?> getReview(@RequestParam String hotelId, @RequestParam(defaultValue = ValidateConstant.PAGE) int page,
-                                       @RequestParam(defaultValue = ValidateConstant.PER_PAGE) int pageSize){
+                                       @RequestParam(defaultValue = ValidateConstant.PER_PAGE) int pageSize) {
         log.info("REST request to get list review by hotel id");
         int id;
         try {
@@ -41,10 +42,12 @@ public class ReviewResource {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001_LABEL));
         }
         try {
-            Page<ReviewDTO> pageReview = reviewService.loadReview(id, PageRequest.of(page,pageSize));
-            DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(pageReview.getContent(), pageReview.getTotalElements(), page, pageReview.getSize());
+            Page<ReviewDTO> pageReview = reviewService.loadReview(id, PageRequest.of(page, pageSize));
+            DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(pageReview.getContent(),
+                    pageReview.getTotalElements(), page, pageReview.getSize());
             return ResponseEntity.ok().body(new ApiResponse<>(200, dataPagingResponse, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -53,16 +56,17 @@ public class ReviewResource {
      * @apiNote for user can add a new review about hotel's service
      */
     @PostMapping("/add-review")
-    public ResponseEntity<?> getReview(@RequestBody ReviewRequest reviewRequest){
+    public ResponseEntity<?> getReview(@RequestBody ReviewRequest reviewRequest) {
         log.info("REST request to add a new review ");
         try {
-            if(reviewService.isUserReviewAboutBooking(reviewRequest.getUserBookingId())){
+            if (reviewService.isUserReviewAboutBooking(reviewRequest.getUserBookingId())) {
                 return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_REVIEW_001_LABEL));
-            }else {
+            } else {
                 reviewService.addReview(reviewRequest);
                 return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
             }
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }

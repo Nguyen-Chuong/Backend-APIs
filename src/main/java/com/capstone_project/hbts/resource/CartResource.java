@@ -22,15 +22,17 @@ public class CartResource {
     private final JwtTokenUtil jwtTokenUtil;
 
     public CartResource(CartServiceImpl cartService, JwtTokenUtil jwtTokenUtil) {
-        this.cartService = cartService;this.jwtTokenUtil = jwtTokenUtil;
+        this.cartService = cartService;
+        this.jwtTokenUtil = jwtTokenUtil;
     }
 
     /**
      * @apiNote for user to add item to cart when they are booking
      */
     @PatchMapping("/add-to-cart")
-    public ResponseEntity<?> addToCart(@RequestHeader("Authorization") String jwttoken, @RequestParam int roomTypeId, @RequestParam int quantity,
-                                       @RequestParam int hotelId, @RequestParam Date dateIn, @RequestParam Date dateOut, @RequestParam int bookedQuantity) {
+    public ResponseEntity<?> addToCart(@RequestHeader("Authorization") String jwttoken, @RequestParam int roomTypeId,
+                                       @RequestParam int quantity, @RequestParam int hotelId, @RequestParam Date dateIn,
+                                       @RequestParam Date dateOut, @RequestParam int bookedQuantity) {
         log.info("REST request to add item to cart");
         int userId = Integer.parseInt(jwtTokenUtil.getUserIdFromToken(jwttoken.substring(7)));
         try {
@@ -58,7 +60,8 @@ public class CartResource {
             }
             cartService.addToCart(roomTypeId, hotelId, quantity, bookedQuantity, userId, dateIn, dateOut);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -73,7 +76,8 @@ public class CartResource {
             int userId = Integer.parseInt(jwtTokenUtil.getUserIdFromToken(jwttoken.substring(7)));
             cartService.clearCart(userId);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -88,7 +92,8 @@ public class CartResource {
             int userId = Integer.parseInt(jwtTokenUtil.getUserIdFromToken(jwttoken.substring(7)));
             List<CartDTO> cartDTOList = cartService.getAllCartItem(userId);
             return ResponseEntity.ok().body(new ApiResponse<>(200, cartDTOList, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }

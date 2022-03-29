@@ -24,7 +24,9 @@ public class EmailResource {
     private final DataDecryption dataDecryption;
 
     public EmailResource(EmailServiceImpl emailService, OTPServiceImpl otpService, DataDecryption dataDecryption) {
-        this.emailService = emailService;this.otpService = otpService;this.dataDecryption = dataDecryption;
+        this.emailService = emailService;
+        this.otpService = otpService;
+        this.dataDecryption = dataDecryption;
     }
 
     /**
@@ -144,7 +146,8 @@ public class EmailResource {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001_LABEL));
         }
         try {
-            emailService.sendHTMLMail(emailDecrypted, ValidateConstant.EMAIL_SUBJECT_RESPONSE, ValidateConstant.getResponseFeedbackContent(feedbackRequest.getMessage()));
+            emailService.sendHTMLMail(emailDecrypted, ValidateConstant.EMAIL_SUBJECT_RESPONSE,
+                    ValidateConstant.getResponseFeedbackContent(feedbackRequest.getMessage()));
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
         }catch (Exception e){ e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));

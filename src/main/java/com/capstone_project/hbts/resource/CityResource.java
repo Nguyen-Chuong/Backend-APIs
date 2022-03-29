@@ -27,12 +27,13 @@ public class CityResource {
      * @apiNote to get all city
      */
     @GetMapping("/get-city")
-    public ResponseEntity<?> getAllCity(){
+    public ResponseEntity<?> getAllCity() {
         log.info("REST request to get all city");
-        try{
+        try {
             List<CityDTO> listCity = cityService.viewAllCity();
             return ResponseEntity.ok().body(new ApiResponse<>(200, listCity, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }

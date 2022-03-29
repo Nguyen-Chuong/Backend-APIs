@@ -26,24 +26,27 @@ public class VipResource {
      * @apiNote both user and admin can use this api
      */
     @GetMapping("/vip-info")
-    public ResponseEntity<?> getVipStatus(){
+    public ResponseEntity<?> getVipStatus() {
         log.info("REST request to get vip table info");
         try {
             List<VipDTO> vipDTOList = vipService.getVipStatus();
             return ResponseEntity.ok().body(new ApiResponse<>(200, vipDTOList, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
 
     @PatchMapping("/update-vip-info")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-    public ResponseEntity<?> updateVipClass(@RequestParam int discount, @RequestParam int rangeStart, @RequestParam int rangeEnd, @RequestParam Integer id){
+    public ResponseEntity<?> updateVipClass(@RequestParam int discount, @RequestParam int rangeStart,
+                                            @RequestParam int rangeEnd, @RequestParam Integer id) {
         log.info("REST request to update vip class for admin");
         try {
             vipService.updateVipClass(discount, rangeStart, rangeEnd, id);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }

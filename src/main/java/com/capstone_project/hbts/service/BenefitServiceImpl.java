@@ -27,7 +27,9 @@ public class BenefitServiceImpl {
     private final BenefitRepository benefitRepository;
 
     public BenefitServiceImpl(HotelRepository hotelRepository, ModelMapper modelMapper, BenefitRepository benefitRepository) {
-        this.hotelRepository = hotelRepository;this.modelMapper = modelMapper;this.benefitRepository = benefitRepository;
+        this.hotelRepository = hotelRepository;
+        this.modelMapper = modelMapper;
+        this.benefitRepository = benefitRepository;
     }
 
     public List<ObjectBenefit> getListBenefitByHotelId(int hotelId) {
@@ -42,7 +44,8 @@ public class BenefitServiceImpl {
         // remove duplicate id from list id above
         List<Integer> benefitIdUnique = new ArrayList<>(new LinkedHashSet<>(benefitId));
         // get set benefitDTO by list id
-        List<BenefitDTO> benefitDTOList = benefitRepository.findAllById(benefitIdUnique).stream().map(item -> modelMapper.map(item, BenefitDTO.class)).collect(Collectors.toList());
+        List<BenefitDTO> benefitDTOList = benefitRepository.findAllById(benefitIdUnique).stream()
+                .map(item -> modelMapper.map(item, BenefitDTO.class)).collect(Collectors.toList());
         // to remove duplicate benefit type
         Set<BenefitTypeDTO> setBenefitType = new HashSet<>();
         benefitDTOList.forEach(item -> setBenefitType.add(item.getBenefitType()));
@@ -51,9 +54,11 @@ public class BenefitServiceImpl {
         // loop through set benefit type
         for (BenefitTypeDTO item : setBenefitType) {
             // filter to add benefitDTOs that has this benefit type to a list
-            List<BenefitDTO> listBenefit = benefitDTOList.stream().filter(element -> element.getBenefitType().equals(item)).collect(Collectors.toList());
+            List<BenefitDTO> listBenefit = benefitDTOList.stream().filter(element -> element.getBenefitType().equals(item))
+                    .collect(Collectors.toList());
             // remove BenefitTypeDTO property in list return
-            List<BenefitResult> listBenefitResult = listBenefit.stream().map(element -> modelMapper.map(element, BenefitResult.class)).collect(Collectors.toList());
+            List<BenefitResult> listBenefitResult = listBenefit.stream().map(element -> modelMapper.map(element, BenefitResult.class))
+                    .collect(Collectors.toList());
             // add new object benefit and put to list
             ObjectBenefit obj = new ObjectBenefit(item.getId(), item.getName(), item.getIcon(), listBenefitResult);
             finalResultBenefit.add(obj);

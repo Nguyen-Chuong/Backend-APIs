@@ -29,25 +29,28 @@ public class ProviderResource {
     private final DataDecryption dataDecryption;
 
     public ProviderResource(ProviderServiceImpl providerService, JwtTokenUtil jwtTokenUtil, DataDecryption dataDecryption) {
-        this.providerService = providerService;this.jwtTokenUtil = jwtTokenUtil;this.dataDecryption = dataDecryption;
+        this.providerService = providerService;
+        this.jwtTokenUtil = jwtTokenUtil;
+        this.dataDecryption = dataDecryption;
     }
 
     /**
      * @apiNote for provider can register
      */
     @PostMapping("/register/provider")
-    public ResponseEntity<?> registerProvider(@RequestBody ProviderRequest providerRequest){
+    public ResponseEntity<?> registerProvider(@RequestBody ProviderRequest providerRequest) {
         log.info("REST request to register a new provider : {}", providerRequest);
-        if(providerService.isEmailExist(providerRequest.getEmail())){
+        if (providerService.isEmailExist(providerRequest.getEmail())) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_USER_004_LABEL));
         }
-        if(providerService.isUsernameExist("p-" + providerRequest.getUsername())){
+        if (providerService.isUsernameExist("p-" + providerRequest.getUsername())) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_USER_005_LABEL));
         }
         try {
             providerService.register(providerRequest);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        } catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -56,35 +59,38 @@ public class ProviderResource {
      * @apiNote for provider can get their profile
      */
     @GetMapping("/profile/provider")
-    public ResponseEntity<?> getProviderProfile(@RequestHeader("Authorization") String jwttoken){
+    public ResponseEntity<?> getProviderProfile(@RequestHeader("Authorization") String jwttoken) {
         log.info("REST request to get provider profile");
         try {
             String username = jwtTokenUtil.getUsernameFromToken(jwttoken.substring(7));
             ProviderDTO providerDTO = providerService.getProviderProfile(username);
             return ResponseEntity.ok().body(new ApiResponse<>(200, providerDTO, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
 
     @GetMapping("/check/provider/username/{username}")
-    public ResponseEntity<?> isUsernameExist(@PathVariable String username){
+    public ResponseEntity<?> isUsernameExist(@PathVariable String username) {
         log.info("REST request to check duplicate provider username");
         try {
             boolean isUsernameExist = providerService.isUsernameExist(username);
             return ResponseEntity.ok().body(new ApiResponse<>(200, isUsernameExist, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
 
     @GetMapping("/check/provider/email/{email}")
-    public ResponseEntity<?> isEmailExist(@PathVariable String email){
+    public ResponseEntity<?> isEmailExist(@PathVariable String email) {
         log.info("REST request to check duplicate provider email");
         try {
             boolean isEmailExist = providerService.isEmailExist(email);
             return ResponseEntity.ok().body(new ApiResponse<>(200, isEmailExist, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -93,12 +99,13 @@ public class ProviderResource {
      * @apiNote for provider to update their profile
      */
     @PatchMapping("/update-profile/provider")
-    public ResponseEntity<?> updateProviderProfile(@RequestBody ProviderDTO providerDTO){
+    public ResponseEntity<?> updateProviderProfile(@RequestBody ProviderDTO providerDTO) {
         log.info("REST request to update a provider : {}", providerDTO);
-        try{
+        try {
             providerService.updateProviderProfile(providerDTO);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -107,7 +114,8 @@ public class ProviderResource {
      * @apiNote for provider to change their password
      */
     @PatchMapping("/change-password/provider")
-    public ResponseEntity<?> changePassword(@RequestHeader("Authorization") String jwttoken, @RequestParam String oldPass, @RequestParam String newPass){
+    public ResponseEntity<?> changePassword(@RequestHeader("Authorization") String jwttoken, @RequestParam String oldPass,
+                                            @RequestParam String newPass) {
         log.info("REST request to change provider's password");
 
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -116,13 +124,14 @@ public class ProviderResource {
         String username = jwtTokenUtil.getUsernameFromToken(jwttoken.substring(7));
         String userPassword = providerService.getOldPassword(username);
 
-        if(!bCryptPasswordEncoder.matches(oldPass, userPassword)){
+        if (!bCryptPasswordEncoder.matches(oldPass, userPassword)) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_USER_001_LABEL));
-        }else {
+        } else {
             try {
                 providerService.changeProviderPassword(username, newPasswordEncoded);
                 return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-            }catch (Exception e){ e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
                 return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
             }
         }
@@ -133,13 +142,16 @@ public class ProviderResource {
      */
     @GetMapping("/get-all-provider")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-    public ResponseEntity<?> getAllProvider(@RequestParam(defaultValue = ValidateConstant.PAGE) int page, @RequestParam(defaultValue = ValidateConstant.PER_PAGE) int pageSize){
+    public ResponseEntity<?> getAllProvider(@RequestParam(defaultValue = ValidateConstant.PAGE) int page,
+                                            @RequestParam(defaultValue = ValidateConstant.PER_PAGE) int pageSize) {
         log.info("REST request to get all provider for admin");
         try {
             Page<ProviderDTO> providerDTOPage = providerService.getAllProvider(PageRequest.of(page, pageSize));
-            DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(providerDTOPage.getContent(), providerDTOPage.getTotalElements(), page, providerDTOPage.getSize());
+            DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(providerDTOPage.getContent(),
+                    providerDTOPage.getTotalElements(), page, providerDTOPage.getSize());
             return ResponseEntity.ok().body(new ApiResponse<>(200, dataPagingResponse, null));
-        } catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -148,7 +160,7 @@ public class ProviderResource {
      * @apiNote for user who forgot their password can refresh new password via email
      */
     @PatchMapping("/authenticate/provider/forgot-password")
-    public ResponseEntity<?> changePassword(@RequestParam String email, @RequestParam String newPass){
+    public ResponseEntity<?> changePassword(@RequestParam String email, @RequestParam String newPass) {
         log.info("REST request to change provider's password cuz they forgot them :) !");
         String emailDecrypted;
         try {
@@ -162,7 +174,8 @@ public class ProviderResource {
         try {
             providerService.changeForgotPassword(emailDecrypted, newPasswordEncoded);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        }catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }

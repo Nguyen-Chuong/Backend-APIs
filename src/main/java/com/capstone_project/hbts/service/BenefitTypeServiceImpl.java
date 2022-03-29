@@ -19,15 +19,18 @@ public class BenefitTypeServiceImpl {
     private final ModelMapper modelMapper;
 
     public BenefitTypeServiceImpl(BenefitTypeRepository benefitTypeRepository, ModelMapper modelMapper) {
-        this.benefitTypeRepository = benefitTypeRepository;this.modelMapper = modelMapper;
+        this.benefitTypeRepository = benefitTypeRepository;
+        this.modelMapper = modelMapper;
     }
 
     public List<BenefitTypeDTO> getAllBenefitType() {
-        return benefitTypeRepository.findAll().stream().map(item -> modelMapper.map(item, BenefitTypeDTO.class)).collect(Collectors.toList());
+        return benefitTypeRepository.findAll().stream().map(item -> modelMapper.map(item, BenefitTypeDTO.class))
+                .collect(Collectors.toList());
     }
 
     public List<BenefitResult> getAllBenefitByTypeId(int benefitTypeId) {
-        return benefitTypeRepository.getBenefitTypeById(benefitTypeId).getListBenefit().stream().map(item -> modelMapper.map(item, BenefitResult.class)).collect(Collectors.toList());
+        return benefitTypeRepository.getBenefitTypeById(benefitTypeId).getListBenefit().stream()
+                .map(item -> modelMapper.map(item, BenefitResult.class)).collect(Collectors.toList());
     }
 
     public void addBenefitType(BenefitTypeRequest benefitTypeRequest) {

@@ -30,14 +30,17 @@ public class RoomTypeResource {
     private final HotelServiceImpl hotelService;
 
     public RoomTypeResource(RoomTypeServiceImpl roomTypeService, DataDecryption dataDecryption, HotelServiceImpl hotelService) {
-        this.roomTypeService = roomTypeService;this.dataDecryption = dataDecryption;this.hotelService = hotelService;
+        this.roomTypeService = roomTypeService;
+        this.dataDecryption = dataDecryption;
+        this.hotelService = hotelService;
     }
 
     /**
      * @apiNote public for guest can view
      */
     @GetMapping("/public/room-type")
-    public ResponseEntity<?> getListRoomTypeByHotelForSearch(@RequestParam String hotelId, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateIn,
+    public ResponseEntity<?> getListRoomTypeByHotelForSearch(@RequestParam String hotelId,
+                                                             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateIn,
                                                              @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateOut) {
         log.info("REST request to get list room type by hotel id");
         int id;
@@ -54,7 +57,8 @@ public class RoomTypeResource {
             hotelRatingDTO.setListRooms(list);
             hotelRatingDTO.setRating(ratingDTO);
             return ResponseEntity.ok().body(new ApiResponse<>(200, hotelRatingDTO, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -73,8 +77,9 @@ public class RoomTypeResource {
         }
         try {
             RoomDetailDTO roomDetailDTO = roomTypeService.viewRoomDetail(id);
-            return ResponseEntity.ok().body(new ApiResponse<>(200, roomDetailDTO,null));
-        } catch (Exception e) { e.printStackTrace();
+            return ResponseEntity.ok().body(new ApiResponse<>(200, roomDetailDTO, null));
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -88,8 +93,9 @@ public class RoomTypeResource {
         try {
             roomTypeService.createRoomType(roomTypeRequest);
             Integer roomId = roomTypeService.getRoomIdJustInsert();
-            return ResponseEntity.ok().body(new ApiResponse<>(200, roomId,null));
-        } catch (Exception e) { e.printStackTrace();
+            return ResponseEntity.ok().body(new ApiResponse<>(200, roomId, null));
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -103,7 +109,8 @@ public class RoomTypeResource {
         try {
             roomTypeService.updateRoomType(roomTypeDTO);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -122,8 +129,9 @@ public class RoomTypeResource {
         }
         try {
             roomTypeService.disableRoomType(id);
-            return ResponseEntity.ok().body(new ApiResponse<>(200, null,null));
-        } catch (Exception e) { e.printStackTrace();
+            return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -143,7 +151,8 @@ public class RoomTypeResource {
         try {
             roomTypeService.enableRoomType(id);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -157,7 +166,8 @@ public class RoomTypeResource {
         try {
             roomTypeService.createSQLEventUpdateDealViaDateExpired();
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -177,7 +187,8 @@ public class RoomTypeResource {
         try {
             List<RoomTypeDTO> list = roomTypeService.loadRoomTypeByHotelId(id);
             return ResponseEntity.ok().body(new ApiResponse<>(200, list, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -186,7 +197,8 @@ public class RoomTypeResource {
      * @apiNote public for guest can view
      */
     @GetMapping("/room-detail")
-    public ResponseEntity<?> getRoomDetailAndAvailableQuantity(@RequestParam String roomTypeId, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateIn,
+    public ResponseEntity<?> getRoomDetailAndAvailableQuantity(@RequestParam String roomTypeId,
+                                                               @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateIn,
                                                                @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateOut) {
         log.info("REST request to get detail room type by room type id and available quantity");
         int id;
@@ -198,7 +210,8 @@ public class RoomTypeResource {
         try {
             RoomDetailDTO roomDetailDTO = roomTypeService.viewRoomDetailWithAvailableQuantity(id, dateIn, dateOut);
             return ResponseEntity.ok().body(new ApiResponse<>(200, roomDetailDTO, null));
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }

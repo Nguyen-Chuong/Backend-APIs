@@ -24,7 +24,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final ProviderRepository providerRepository;
 
     public CustomUserDetailsService(UserRepository userRepository, ProviderRepository providerRepository) {
-        this.userRepository = userRepository;this.providerRepository = providerRepository;
+        this.userRepository = userRepository;
+        this.providerRepository = providerRepository;
     }
 
     @Override
@@ -37,7 +38,8 @@ public class CustomUserDetailsService implements UserDetailsService {
             }
             // if use pre-authorize via role -> config has role (role name) in format ROLE_NAME
             // if use pre-authorize via authority -> create new table authority many to one role (rcm)
-            Set<GrantedAuthority> grantedAuthoritySet = user.getListRole().stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toSet());
+            Set<GrantedAuthority> grantedAuthoritySet = user.getListRole().stream()
+                    .map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toSet());
             return new User(user.getUsername(), user.getPassword(), grantedAuthoritySet);
         } else {
             Provider provider = providerRepository.getProviderByUsername(username);

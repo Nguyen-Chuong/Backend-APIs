@@ -33,7 +33,9 @@ public class BookingServiceImpl {
     private final BookingDetailRepository bookingDetailRepository;
 
     public BookingServiceImpl(BookingRepository bookingRepository, ModelMapper modelMapper, BookingDetailRepository bookingDetailRepository) {
-        this.bookingRepository = bookingRepository;this.modelMapper = modelMapper;this.bookingDetailRepository = bookingDetailRepository;
+        this.bookingRepository = bookingRepository;
+        this.modelMapper = modelMapper;
+        this.bookingDetailRepository = bookingDetailRepository;
     }
 
     public BigDecimal countTotalPaidForABooking(UserBooking userBooking){
@@ -47,7 +49,8 @@ public class BookingServiceImpl {
         Set<UserBookingDetail> userBookingDetails = userBooking.getListUserBookingDetail();
         BigDecimal totalPaid = BigDecimal.valueOf(0);
         for(UserBookingDetail item : userBookingDetails){
-            totalPaid = totalPaid.add(item.getPaid().multiply(BigDecimal.valueOf(item.getQuantity())).multiply(BigDecimal.valueOf(numberDayBooking)));
+            totalPaid = totalPaid.add(item.getPaid().multiply(BigDecimal.valueOf(item.getQuantity()))
+                    .multiply(BigDecimal.valueOf(numberDayBooking)));
         }
         // count total paid discounted by travesily VIP
         BigDecimal totalPaidDiscountedVIP = totalPaid.multiply(BigDecimal.valueOf(1 - (double) discount/100));
@@ -58,7 +61,8 @@ public class BookingServiceImpl {
 
     public List<UserBookingDTO> getAllBookings(int userId) {
         List<UserBooking> list = bookingRepository.findAllByUserId(userId);
-        List<UserBookingDTO> userBookingDTOList = list.stream().map(item -> modelMapper.map(item, UserBookingDTO.class)).collect(Collectors.toList());
+        List<UserBookingDTO> userBookingDTOList = list.stream().map(item -> modelMapper.map(item, UserBookingDTO.class))
+                .collect(Collectors.toList());
         for(int i = 0 ; i < list.size(); i++){
             BigDecimal totalPaid = countTotalPaidForABooking(list.get(i));
             // set total paid for each user booking
@@ -69,7 +73,8 @@ public class BookingServiceImpl {
 
     public List<UserBookingDTO> getAllBookingsReview(int reviewStatus, int userId) {
         List<UserBooking> list = bookingRepository.findBookingsReview(reviewStatus, userId);
-        List<UserBookingDTO> userBookingDTOList = list.stream().map(item -> modelMapper.map(item, UserBookingDTO.class)).collect(Collectors.toList());
+        List<UserBookingDTO> userBookingDTOList = list.stream().map(item -> modelMapper.map(item, UserBookingDTO.class))
+                .collect(Collectors.toList());
         for(int i = 0 ; i < list.size(); i++){
             BigDecimal totalPaid = countTotalPaidForABooking(list.get(i));
             // set total paid for each user booking
@@ -84,7 +89,8 @@ public class BookingServiceImpl {
 
     public List<UserBookingDTO> getAllBookingsByStatus(int status, int userId) {
         List<UserBooking> list = bookingRepository.findBookingsByStatus(status, userId);
-        List<UserBookingDTO> userBookingDTOList = list.stream().map(item -> modelMapper.map(item, UserBookingDTO.class)).collect(Collectors.toList());
+        List<UserBookingDTO> userBookingDTOList = list.stream().map(item -> modelMapper.map(item, UserBookingDTO.class))
+                .collect(Collectors.toList());
         for(int i = 0 ; i < list.size(); i++){
             BigDecimal totalPaid = countTotalPaidForABooking(list.get(i));
             // set total paid for each user booking
@@ -96,7 +102,8 @@ public class BookingServiceImpl {
     public Page<BookingListDTO> getAllBookingForAdmin(Pageable pageable) {
         Page<UserBooking> userBookingPage = bookingRepository.findAllByOrderByBookingDateDesc(pageable);
         List<UserBooking> userBookingList = userBookingPage.getContent();
-        List<BookingListDTO> listBookingDTOList = userBookingList.stream().map(item -> modelMapper.map(item, BookingListDTO.class)).collect(Collectors.toList());
+        List<BookingListDTO> listBookingDTOList = userBookingList.stream().map(item -> modelMapper.map(item, BookingListDTO.class))
+                .collect(Collectors.toList());
         for(int i = 0; i < listBookingDTOList.size(); i++){
             listBookingDTOList.get(i).setUsername(userBookingList.get(i).getUsers().getUsername());
         }
@@ -113,7 +120,8 @@ public class BookingServiceImpl {
     public Page<UserBookingDTO> getBookingsByHotelId(int hotelId, Pageable pageable) {
         Page<UserBooking> userBookingPage = bookingRepository.findAllByHotel_IdOrderByBookingDateDesc(hotelId, pageable);
         List<UserBooking> list = userBookingPage.getContent();
-        List<UserBookingDTO> userBookingDTOList = list.stream().map(item -> modelMapper.map(item, UserBookingDTO.class)).collect(Collectors.toList());
+        List<UserBookingDTO> userBookingDTOList = list.stream().map(item -> modelMapper.map(item, UserBookingDTO.class))
+                .collect(Collectors.toList());
         for(int i = 0 ; i < list.size(); i++){
             BigDecimal totalPaid = countTotalPaidForABooking(list.get(i));
             // set total paid for each user booking
@@ -137,8 +145,10 @@ public class BookingServiceImpl {
         // completed a booking -> set to 2 - call when they paid money or hotel confirm
         bookingRequest.setStatus(1);
         // save to db
-        bookingRepository.addNewBooking(bookingRequest.getBookedQuantity(), bookingRequest.getBookingDate(), bookingRequest.getCheckIn(), bookingRequest.getCheckOut(),
-                bookingRequest.getReviewStatus(), bookingRequest.getStatus(), bookingRequest.getHotelId(), bookingRequest.getUserId(), bookingRequest.getOtherRequirement(), bookingRequest.getType());
+        bookingRepository.addNewBooking(bookingRequest.getBookedQuantity(), bookingRequest.getBookingDate(),
+                bookingRequest.getCheckIn(), bookingRequest.getCheckOut(), bookingRequest.getReviewStatus(),
+                bookingRequest.getStatus(), bookingRequest.getHotelId(), bookingRequest.getUserId(),
+                bookingRequest.getOtherRequirement(), bookingRequest.getType());
         // get booking that just insert to db
         Integer bookingId = bookingRepository.getBookingIdJustInsert();
         // new list user booking detail for adding

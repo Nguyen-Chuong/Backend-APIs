@@ -32,9 +32,12 @@ public class AdminResource {
 
     private final HotelServiceImpl hotelService;
 
-    public AdminResource(AdminServiceImpl adminService, UserServiceImpl userService, ProviderServiceImpl providerService, HotelServiceImpl hotelService) {
-        this.adminService = adminService;this.userService = userService;
-        this.providerService = providerService;this.hotelService = hotelService;
+    public AdminResource(AdminServiceImpl adminService, UserServiceImpl userService, ProviderServiceImpl providerService,
+                         HotelServiceImpl hotelService) {
+        this.adminService = adminService;
+        this.userService = userService;
+        this.providerService = providerService;
+        this.hotelService = hotelService;
     }
 
     /**
@@ -42,19 +45,20 @@ public class AdminResource {
      */
     @PostMapping("/add-manager")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<?> addManager(@RequestBody ManagerRequest managerRequest){
+    public ResponseEntity<?> addManager(@RequestBody ManagerRequest managerRequest) {
         log.info("REST request to add a new manager : {}", managerRequest);
-        if(userService.isEmailExist(managerRequest.getEmail())){
-            return ResponseEntity.badRequest().body(new ApiResponse<>(400,null, ErrorConstant.ERR_USER_004_LABEL));
+        if (userService.isEmailExist(managerRequest.getEmail())) {
+            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_USER_004_LABEL));
         }
-        if(userService.isUsernameExist("u-" + managerRequest.getUsername())){
-            return ResponseEntity.badRequest().body(new ApiResponse<>(400,null, ErrorConstant.ERR_USER_005_LABEL));
+        if (userService.isUsernameExist("u-" + managerRequest.getUsername())) {
+            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_USER_005_LABEL));
         }
         try {
             adminService.addNewManager(managerRequest);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        } catch (Exception e){ e.printStackTrace();
-            return ResponseEntity.badRequest().body(new ApiResponse<>(400,null, ErrorConstant.ERR_000_LABEL));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
 
@@ -63,13 +67,16 @@ public class AdminResource {
      */
     @GetMapping("/get-all-user")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-    public ResponseEntity<?> getAllUser(@RequestParam(defaultValue = ValidateConstant.PAGE) int page, @RequestParam(defaultValue = ValidateConstant.PER_PAGE) int pageSize){
+    public ResponseEntity<?> getAllUser(@RequestParam(defaultValue = ValidateConstant.PAGE) int page,
+                                        @RequestParam(defaultValue = ValidateConstant.PER_PAGE) int pageSize) {
         log.info("REST request to get all user for admin");
         try {
             Page<UserDTO> userDTOPage = adminService.getAllUser(PageRequest.of(page, pageSize));
-            DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(userDTOPage.getContent(), userDTOPage.getTotalElements(), page, userDTOPage.getSize());
+            DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(userDTOPage.getContent(),
+                    userDTOPage.getTotalElements(), page, userDTOPage.getSize());
             return ResponseEntity.ok().body(new ApiResponse<>(200, dataPagingResponse, null));
-        } catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -79,12 +86,13 @@ public class AdminResource {
      */
     @GetMapping("/get-all-manager")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<?> getAllManager(){
+    public ResponseEntity<?> getAllManager() {
         log.info("REST request to get all manager for admin");
         try {
             List<UserDTO> userDTOList = adminService.getListManager();
             return ResponseEntity.ok().body(new ApiResponse<>(200, userDTOList, null));
-        } catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -94,12 +102,13 @@ public class AdminResource {
      */
     @PatchMapping("/delete-manager/{userId}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<?> deleteManager(@PathVariable int userId){
+    public ResponseEntity<?> deleteManager(@PathVariable int userId) {
         log.info("REST request to delete manager for admin");
         try {
             adminService.deleteManager(userId);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        } catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }
@@ -109,7 +118,7 @@ public class AdminResource {
      */
     @PatchMapping("/ban-provider/{providerId}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<?> banProviderById(@PathVariable int providerId){
+    public ResponseEntity<?> banProviderById(@PathVariable int providerId) {
         log.info("REST request to ban provider and their hotel for admin");
         try {
             // ban provider
@@ -117,7 +126,8 @@ public class AdminResource {
             // ban their hotels
             hotelService.banHotelByProviderId(providerId);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
-        } catch (Exception e){ e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
         }
     }

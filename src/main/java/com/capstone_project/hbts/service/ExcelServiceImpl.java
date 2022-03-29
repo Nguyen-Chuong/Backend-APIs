@@ -17,7 +17,8 @@ public class ExcelServiceImpl{
     private final DistrictRepository districtRepository;
 
     public ExcelServiceImpl(ExcelHelper excelHelper, DistrictRepository districtRepository) {
-        this.excelHelper = excelHelper;this.districtRepository = districtRepository;
+        this.excelHelper = excelHelper;
+        this.districtRepository = districtRepository;
     }
 
     public void saveExcelDataToTableDatabase(MultipartFile multipartFile, int cityId) {
@@ -25,7 +26,8 @@ public class ExcelServiceImpl{
             List<District> districtList = excelHelper.convertExcelToObjectDistrict(multipartFile.getInputStream(), cityId);
             // batch processing w/ max num = 10
             districtRepository.saveAll(districtList);
-        } catch (IOException e) { e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

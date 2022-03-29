@@ -26,7 +26,9 @@ public class RequestServiceImpl {
     private final ModelMapper modelMapper;
 
     public RequestServiceImpl(RequestRepository requestRepository, HotelRepository hotelRepository, ModelMapper modelMapper) {
-        this.requestRepository = requestRepository;this.hotelRepository = hotelRepository;this.modelMapper = modelMapper;
+        this.requestRepository = requestRepository;
+        this.hotelRepository = hotelRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Transactional
@@ -35,7 +37,8 @@ public class RequestServiceImpl {
         postHotelRequest.setRequestDate(new Timestamp(System.currentTimeMillis()));
         // set status to 1-pending, await admin to process
         postHotelRequest.setStatus(1);
-        requestRepository.addNewRequest(postHotelRequest.getRequestDate(), postHotelRequest.getStatus(), postHotelRequest.getHotelId(), postHotelRequest.getProviderId());
+        requestRepository.addNewRequest(postHotelRequest.getRequestDate(), postHotelRequest.getStatus(),
+                postHotelRequest.getHotelId(), postHotelRequest.getProviderId());
     }
 
     @Transactional
@@ -65,14 +68,16 @@ public class RequestServiceImpl {
             // get page
             Page<Request> requestPage = requestRepository.findAllByOrderByRequestDateDesc(pageable);
             // convert to list dto
-            List<RequestDTO> requestDTOList = requestPage.getContent().stream().map(item -> modelMapper.map(item, RequestDTO.class)).collect(Collectors.toList());
+            List<RequestDTO> requestDTOList = requestPage.getContent().stream()
+                    .map(item -> modelMapper.map(item, RequestDTO.class)).collect(Collectors.toList());
             // convert to paging
             return new CustomPageImpl<>(requestDTOList);
         } else {  // 1-pending, 2-accepted, 3-denied, 4-cancelled
             // get page
             Page<Request> requestPage = requestRepository.getAllRequestByStatus(status, pageable);
             // convert to list dto
-            List<RequestDTO> requestDTOList = requestPage.getContent().stream().map(item -> modelMapper.map(item, RequestDTO.class)).collect(Collectors.toList());
+            List<RequestDTO> requestDTOList = requestPage.getContent().stream()
+                    .map(item -> modelMapper.map(item, RequestDTO.class)).collect(Collectors.toList());
             // convert to paging
             return new CustomPageImpl<>(requestDTOList);
         }
@@ -86,7 +91,8 @@ public class RequestServiceImpl {
     }
 
     public List<RequestDTO> getRequestByProviderId(int providerId) {
-        return requestRepository.getAllByProviderIdOrderByRequestDateDesc(providerId).stream().map(item -> modelMapper.map(item, RequestDTO.class)).collect(Collectors.toList());
+        return requestRepository.getAllByProviderIdOrderByRequestDateDesc(providerId).stream()
+                .map(item -> modelMapper.map(item, RequestDTO.class)).collect(Collectors.toList());
     }
 
     public Integer getRequestStatus(int requestId) {

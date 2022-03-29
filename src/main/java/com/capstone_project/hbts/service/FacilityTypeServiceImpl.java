@@ -19,19 +19,23 @@ public class FacilityTypeServiceImpl {
     private final ModelMapper modelMapper;
 
     public FacilityTypeServiceImpl(FacilityTypeRepository facilityTypeRepository, ModelMapper modelMapper) {
-        this.facilityTypeRepository = facilityTypeRepository;this.modelMapper = modelMapper;
+        this.facilityTypeRepository = facilityTypeRepository;
+        this.modelMapper = modelMapper;
     }
 
     public List<FacilityTypeDTO> getAllFacilityType() {
-        return facilityTypeRepository.findAll().stream().map(item -> modelMapper.map(item, FacilityTypeDTO.class)).collect(Collectors.toList());
+        return facilityTypeRepository.findAll().stream().map(item -> modelMapper.map(item, FacilityTypeDTO.class))
+                .collect(Collectors.toList());
     }
 
     public List<FacilityResult> getAllFacilityByTypeId(int facilityTypeId) {
-        return facilityTypeRepository.getFacilityTypeById(facilityTypeId).getListFacility().stream().map(item -> modelMapper.map(item, FacilityResult.class)).collect(Collectors.toList());
+        return facilityTypeRepository.getFacilityTypeById(facilityTypeId).getListFacility().stream()
+                .map(item -> modelMapper.map(item, FacilityResult.class)).collect(Collectors.toList());
     }
 
     public void addFacilityType(FacilityTypeRequest facilityTypeRequest) {
         FacilityType facilityType = modelMapper.map(facilityTypeRequest, FacilityType.class);
         facilityTypeRepository.save(facilityType);
     }
+
 }

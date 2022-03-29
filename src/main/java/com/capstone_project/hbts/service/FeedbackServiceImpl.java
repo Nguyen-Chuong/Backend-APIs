@@ -23,7 +23,8 @@ public class FeedbackServiceImpl {
     private final ModelMapper modelMapper;
 
     public FeedbackServiceImpl(FeedbackRepository feedbackRepository, ModelMapper modelMapper) {
-        this.feedbackRepository = feedbackRepository;this.modelMapper = modelMapper;
+        this.feedbackRepository = feedbackRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Transactional
@@ -32,12 +33,14 @@ public class FeedbackServiceImpl {
         feedbackRequest.setModifyDate(new Timestamp(System.currentTimeMillis()));
         // not yet processed
         feedbackRequest.setIsProcessed(0);
-        feedbackRepository.sendFeedback(feedbackRequest.getType(), feedbackRequest.getSenderId(), feedbackRequest.getMessage(), feedbackRequest.getModifyDate(), feedbackRequest.getIsProcessed());
+        feedbackRepository.sendFeedback(feedbackRequest.getType(), feedbackRequest.getSenderId(), feedbackRequest.getMessage(),
+                feedbackRequest.getModifyDate(), feedbackRequest.getIsProcessed());
     }
 
     public Page<FeedbackDTO> viewPageUserFeedback(Pageable pageable) {
         Page<Feedback> feedbacks = feedbackRepository.findAllByOrderByModifyDateDesc(pageable);
-        List<FeedbackDTO> feedbackDTOList = feedbacks.getContent().stream().map(item -> modelMapper.map(item, FeedbackDTO.class)).collect(Collectors.toList());
+        List<FeedbackDTO> feedbackDTOList = feedbacks.getContent().stream().map(item -> modelMapper.map(item, FeedbackDTO.class))
+                .collect(Collectors.toList());
         for (int i = 0; i < feedbackDTOList.size(); i++) {
             // set sender name
             feedbackDTOList.get(i).setSenderName(feedbacks.getContent().get(i).getSender().getUsername());
@@ -53,7 +56,8 @@ public class FeedbackServiceImpl {
 
     public List<FeedbackDTO> getListAnUserFeedback(int userId) {
         List<Feedback> list = feedbackRepository.getUserFeedback(userId);
-        List<FeedbackDTO> feedbackDTOList = list.stream().map(item -> modelMapper.map(item, FeedbackDTO.class)).collect(Collectors.toList());
+        List<FeedbackDTO> feedbackDTOList = list.stream().map(item -> modelMapper.map(item, FeedbackDTO.class))
+                .collect(Collectors.toList());
         for (int i = 0; i < feedbackDTOList.size(); i++) {
             // set sender name
             feedbackDTOList.get(i).setSenderName(list.get(i).getSender().getUsername());
