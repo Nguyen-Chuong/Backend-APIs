@@ -5,8 +5,8 @@ import com.capstone_project.hbts.constant.ValidateConstant;
 import com.capstone_project.hbts.decryption.DataDecryption;
 import com.capstone_project.hbts.request.FeedbackRequest;
 import com.capstone_project.hbts.response.ApiResponse;
-import com.capstone_project.hbts.service.EmailServiceImpl;
-import com.capstone_project.hbts.service.OTPServiceImpl;
+import com.capstone_project.hbts.service.EmailService;
+import com.capstone_project.hbts.service.OTPService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1")
 public class EmailResource {
 
-    private final EmailServiceImpl emailService;
+    private final EmailService emailService;
 
-    private final OTPServiceImpl otpService;
+    private final OTPService otpService;
 
     private final DataDecryption dataDecryption;
 
-    public EmailResource(EmailServiceImpl emailService, OTPServiceImpl otpService, DataDecryption dataDecryption) {
+    public EmailResource(EmailService emailService, OTPService otpService, DataDecryption dataDecryption) {
         this.emailService = emailService;
         this.otpService = otpService;
         this.dataDecryption = dataDecryption;

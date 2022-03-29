@@ -4,7 +4,7 @@ import com.capstone_project.hbts.constant.ErrorConstant;
 import com.capstone_project.hbts.dto.Benefit.BenefitTypeDTO;
 import com.capstone_project.hbts.request.BenefitTypeRequest;
 import com.capstone_project.hbts.response.ApiResponse;
-import com.capstone_project.hbts.service.BenefitTypeServiceImpl;
+import com.capstone_project.hbts.service.BenefitTypeService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +16,9 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class BenefitTypeResource {
 
-    private final BenefitTypeServiceImpl benefitTypeService;
+    private final BenefitTypeService benefitTypeService;
 
-    public BenefitTypeResource(BenefitTypeServiceImpl benefitTypeService) {
+    public BenefitTypeResource(BenefitTypeService benefitTypeService) {
         this.benefitTypeService = benefitTypeService;
     }
 

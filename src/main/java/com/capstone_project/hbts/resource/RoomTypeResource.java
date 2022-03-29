@@ -8,8 +8,8 @@ import com.capstone_project.hbts.dto.Room.RoomDetailDTO;
 import com.capstone_project.hbts.dto.Room.RoomTypeDTO;
 import com.capstone_project.hbts.request.RoomTypeRequest;
 import com.capstone_project.hbts.response.ApiResponse;
-import com.capstone_project.hbts.service.HotelServiceImpl;
-import com.capstone_project.hbts.service.RoomTypeServiceImpl;
+import com.capstone_project.hbts.service.HotelService;
+import com.capstone_project.hbts.service.RoomTypeService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +23,13 @@ import java.util.List;
 @RequestMapping("api/v1")
 public class RoomTypeResource {
 
-    private final RoomTypeServiceImpl roomTypeService;
+    private final RoomTypeService roomTypeService;
 
     private final DataDecryption dataDecryption;
 
-    private final HotelServiceImpl hotelService;
+    private final HotelService hotelService;
 
-    public RoomTypeResource(RoomTypeServiceImpl roomTypeService, DataDecryption dataDecryption, HotelServiceImpl hotelService) {
+    public RoomTypeResource(RoomTypeService roomTypeService, DataDecryption dataDecryption, HotelService hotelService) {
         this.roomTypeService = roomTypeService;
         this.dataDecryption = dataDecryption;
         this.hotelService = hotelService;

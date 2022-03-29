@@ -2,7 +2,7 @@ package com.capstone_project.hbts.security;
 
 import com.capstone_project.hbts.security.jwt.JwtAuthenticationEntryPoint;
 import com.capstone_project.hbts.security.jwt.JwtTokenBeforeFilter;
-import com.capstone_project.hbts.service.CustomUserDetailsService;
+import com.capstone_project.hbts.service.impl.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

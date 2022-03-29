@@ -6,7 +6,7 @@ import com.capstone_project.hbts.dto.Actor.UserDTO;
 import com.capstone_project.hbts.request.UserRequest;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.security.jwt.JwtTokenUtil;
-import com.capstone_project.hbts.service.UserServiceImpl;
+import com.capstone_project.hbts.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1")
 public class UserResource {
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
     private final JwtTokenUtil jwtTokenUtil;
 
     private final DataDecryption dataDecryption;
 
-    public UserResource(UserServiceImpl userService, JwtTokenUtil jwtTokenUtil, DataDecryption dataDecryption) {
+    public UserResource(UserService userService, JwtTokenUtil jwtTokenUtil, DataDecryption dataDecryption) {
         this.userService = userService;
         this.jwtTokenUtil = jwtTokenUtil;
         this.dataDecryption = dataDecryption;

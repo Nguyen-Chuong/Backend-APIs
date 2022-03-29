@@ -7,8 +7,8 @@ import com.capstone_project.hbts.dto.Benefit.ObjectBenefit;
 import com.capstone_project.hbts.request.BenefitAddRequest;
 import com.capstone_project.hbts.request.BenefitRequest;
 import com.capstone_project.hbts.response.ApiResponse;
-import com.capstone_project.hbts.service.BenefitServiceImpl;
-import com.capstone_project.hbts.service.BenefitTypeServiceImpl;
+import com.capstone_project.hbts.service.BenefitService;
+import com.capstone_project.hbts.service.BenefitTypeService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,13 +20,13 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class BenefitResource {
 
-    private final BenefitServiceImpl benefitService;
+    private final BenefitService benefitService;
 
     private final DataDecryption dataDecryption;
 
-    private final BenefitTypeServiceImpl benefitTypeService;
+    private final BenefitTypeService benefitTypeService;
 
-    public BenefitResource(BenefitServiceImpl benefitService, DataDecryption dataDecryption, BenefitTypeServiceImpl benefitTypeService) {
+    public BenefitResource(BenefitService benefitService, DataDecryption dataDecryption, BenefitTypeService benefitTypeService) {
         this.benefitService = benefitService;
         this.dataDecryption = dataDecryption;
         this.benefitTypeService = benefitTypeService;

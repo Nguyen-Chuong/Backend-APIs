@@ -4,7 +4,7 @@ import com.capstone_project.hbts.constant.ErrorConstant;
 import com.capstone_project.hbts.dto.CartDTO;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.security.jwt.JwtTokenUtil;
-import com.capstone_project.hbts.service.CartServiceImpl;
+import com.capstone_project.hbts.service.CartService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +17,11 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class CartResource {
 
-    private final CartServiceImpl cartService;
+    private final CartService cartService;
 
     private final JwtTokenUtil jwtTokenUtil;
 
-    public CartResource(CartServiceImpl cartService, JwtTokenUtil jwtTokenUtil) {
+    public CartResource(CartService cartService, JwtTokenUtil jwtTokenUtil) {
         this.cartService = cartService;
         this.jwtTokenUtil = jwtTokenUtil;
     }

@@ -4,7 +4,7 @@ import com.capstone_project.hbts.constant.ErrorConstant;
 import com.capstone_project.hbts.dto.Payment.TransactionDTO;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.security.jwt.JwtTokenUtil;
-import com.capstone_project.hbts.service.TransactionServiceImpl;
+import com.capstone_project.hbts.service.TransactionService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1")
 public class TransactionResource {
 
-    private final TransactionServiceImpl transactionService;
+    private final TransactionService transactionService;
 
     private final JwtTokenUtil jwtTokenUtil;
 
-    public TransactionResource(TransactionServiceImpl transactionService, JwtTokenUtil jwtTokenUtil) {
+    public TransactionResource(TransactionService transactionService, JwtTokenUtil jwtTokenUtil) {
         this.transactionService = transactionService;
         this.jwtTokenUtil = jwtTokenUtil;
     }

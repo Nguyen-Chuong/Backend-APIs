@@ -7,7 +7,7 @@ import com.capstone_project.hbts.dto.Report.ReviewDTO;
 import com.capstone_project.hbts.request.ReviewRequest;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.response.DataPagingResponse;
-import com.capstone_project.hbts.service.ReviewServiceImpl;
+import com.capstone_project.hbts.service.ReviewService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1")
 public class ReviewResource {
 
-    private final ReviewServiceImpl reviewService;
+    private final ReviewService reviewService;
 
     private final DataDecryption dataDecryption;
 
-    public ReviewResource(ReviewServiceImpl reviewService, DataDecryption dataDecryption) {
+    public ReviewResource(ReviewService reviewService, DataDecryption dataDecryption) {
         this.reviewService = reviewService;
         this.dataDecryption = dataDecryption;
     }

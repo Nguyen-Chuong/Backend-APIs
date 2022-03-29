@@ -8,7 +8,7 @@ import com.capstone_project.hbts.request.ProviderRequest;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.response.DataPagingResponse;
 import com.capstone_project.hbts.security.jwt.JwtTokenUtil;
-import com.capstone_project.hbts.service.ProviderServiceImpl;
+import com.capstone_project.hbts.service.ProviderService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,13 +22,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1")
 public class ProviderResource {
 
-    private final ProviderServiceImpl providerService;
+    private final ProviderService providerService;
 
     private final JwtTokenUtil jwtTokenUtil;
 
     private final DataDecryption dataDecryption;
 
-    public ProviderResource(ProviderServiceImpl providerService, JwtTokenUtil jwtTokenUtil, DataDecryption dataDecryption) {
+    public ProviderResource(ProviderService providerService, JwtTokenUtil jwtTokenUtil, DataDecryption dataDecryption) {
         this.providerService = providerService;
         this.jwtTokenUtil = jwtTokenUtil;
         this.dataDecryption = dataDecryption;

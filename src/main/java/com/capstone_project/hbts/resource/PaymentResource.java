@@ -4,7 +4,7 @@ import com.capstone_project.hbts.constant.ErrorConstant;
 import com.capstone_project.hbts.dto.Payment.PaymentDTO;
 import com.capstone_project.hbts.dto.Payment.PaymentResultDTO;
 import com.capstone_project.hbts.response.ApiResponse;
-import com.capstone_project.hbts.service.PaymentServiceImpl;
+import com.capstone_project.hbts.service.PaymentService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/v1")
 public class PaymentResource {
 
-    private final PaymentServiceImpl paymentService;
+    private final PaymentService paymentService;
 
-    public PaymentResource(PaymentServiceImpl paymentService) {
+    public PaymentResource(PaymentService paymentService) {
         this.paymentService = paymentService;
     }
 

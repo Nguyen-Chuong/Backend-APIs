@@ -4,7 +4,7 @@ import com.capstone_project.hbts.constant.ErrorConstant;
 import com.capstone_project.hbts.decryption.DataDecryption;
 import com.capstone_project.hbts.dto.Booking.UserBookingDetailDTO;
 import com.capstone_project.hbts.response.ApiResponse;
-import com.capstone_project.hbts.service.BookingDetailServiceImpl;
+import com.capstone_project.hbts.service.BookingDetailService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +16,11 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class BookingDetailResource {
 
-    private final BookingDetailServiceImpl bookingDetailService;
+    private final BookingDetailService bookingDetailService;
 
     private final DataDecryption dataDecryption;
 
-    public BookingDetailResource(BookingDetailServiceImpl bookingDetailService, DataDecryption dataDecryption) {
+    public BookingDetailResource(BookingDetailService bookingDetailService, DataDecryption dataDecryption) {
         this.bookingDetailService = bookingDetailService;
         this.dataDecryption = dataDecryption;
     }

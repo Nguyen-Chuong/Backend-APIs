@@ -3,7 +3,7 @@ package com.capstone_project.hbts.resource;
 import com.capstone_project.hbts.constant.ErrorConstant;
 import com.capstone_project.hbts.dto.VipDTO;
 import com.capstone_project.hbts.response.ApiResponse;
-import com.capstone_project.hbts.service.VipServiceImpl;
+import com.capstone_project.hbts.service.VipService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,9 +16,9 @@ import java.util.List;
 @RequestMapping("api/v1")
 public class VipResource {
 
-    private final VipServiceImpl vipService;
+    private final VipService vipService;
 
-    public VipResource(VipServiceImpl vipService) {
+    public VipResource(VipService vipService) {
         this.vipService = vipService;
     }
 

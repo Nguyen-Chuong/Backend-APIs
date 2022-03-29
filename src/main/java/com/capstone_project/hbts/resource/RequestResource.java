@@ -8,8 +8,8 @@ import com.capstone_project.hbts.request.PostHotelRequest;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.response.DataPagingResponse;
 import com.capstone_project.hbts.security.jwt.JwtTokenUtil;
-import com.capstone_project.hbts.service.HotelServiceImpl;
-import com.capstone_project.hbts.service.RequestServiceImpl;
+import com.capstone_project.hbts.service.HotelService;
+import com.capstone_project.hbts.service.RequestService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,16 +24,15 @@ import java.util.List;
 @RequestMapping("api/v1")
 public class RequestResource {
 
-    private final RequestServiceImpl requestService;
+    private final RequestService requestService;
 
     private final JwtTokenUtil jwtTokenUtil;
 
     private final DataDecryption dataDecryption;
 
-    private final HotelServiceImpl hotelService;
+    private final HotelService hotelService;
 
-    public RequestResource(RequestServiceImpl requestService, JwtTokenUtil jwtTokenUtil, DataDecryption dataDecryption,
-                           HotelServiceImpl hotelService) {
+    public RequestResource(RequestService requestService, JwtTokenUtil jwtTokenUtil, DataDecryption dataDecryption, HotelService hotelService) {
         this.requestService = requestService;
         this.jwtTokenUtil = jwtTokenUtil;
         this.dataDecryption = dataDecryption;

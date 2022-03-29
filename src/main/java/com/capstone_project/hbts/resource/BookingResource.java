@@ -9,8 +9,8 @@ import com.capstone_project.hbts.request.BookingRequest;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.response.DataPagingResponse;
 import com.capstone_project.hbts.security.jwt.JwtTokenUtil;
-import com.capstone_project.hbts.service.BookingServiceImpl;
-import com.capstone_project.hbts.service.UserServiceImpl;
+import com.capstone_project.hbts.service.BookingService;
+import com.capstone_project.hbts.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,22 +25,20 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class BookingResource {
 
-    private final BookingServiceImpl bookingService;
+    private final BookingService bookingService;
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
     private final JwtTokenUtil jwtTokenUtil;
 
     private final DataDecryption dataDecryption;
 
-    public BookingResource(BookingServiceImpl bookingService, UserServiceImpl userService, JwtTokenUtil jwtTokenUtil,
-                           DataDecryption dataDecryption) {
+    public BookingResource(BookingService bookingService, UserService userService, JwtTokenUtil jwtTokenUtil, DataDecryption dataDecryption) {
         this.bookingService = bookingService;
         this.userService = userService;
         this.jwtTokenUtil = jwtTokenUtil;
         this.dataDecryption = dataDecryption;
     }
-
 
     /**
      * @apiNote both admin & user can call this

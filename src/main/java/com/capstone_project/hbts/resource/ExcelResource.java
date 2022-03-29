@@ -3,7 +3,7 @@ package com.capstone_project.hbts.resource;
 import com.capstone_project.hbts.constant.ErrorConstant;
 import com.capstone_project.hbts.decryption.DataDecryption;
 import com.capstone_project.hbts.response.ApiResponse;
-import com.capstone_project.hbts.service.ExcelServiceImpl;
+import com.capstone_project.hbts.service.ExcelService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +15,11 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api/v1")
 public class ExcelResource {
 
-    private final ExcelServiceImpl excelService;
+    private final ExcelService excelService;
 
     private final DataDecryption dataDecryption;
 
-    public ExcelResource(ExcelServiceImpl excelService, DataDecryption dataDecryption) {
+    public ExcelResource(ExcelService excelService, DataDecryption dataDecryption) {
         this.excelService = excelService;
         this.dataDecryption = dataDecryption;
     }

@@ -9,16 +9,17 @@ import com.capstone_project.hbts.request.UserRequest;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.response.JwtResponse;
 import com.capstone_project.hbts.security.jwt.JwtTokenUtil;
-import com.capstone_project.hbts.service.CustomUserDetailsService;
-import com.capstone_project.hbts.service.JwtServiceImpl;
-import com.capstone_project.hbts.service.ProviderServiceImpl;
-import com.capstone_project.hbts.service.UserServiceImpl;
+import com.capstone_project.hbts.service.JwtService;
+import com.capstone_project.hbts.service.ProviderService;
+import com.capstone_project.hbts.service.UserService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,17 +31,17 @@ public class JwtAuthenticationResource {
 
     private final JwtTokenUtil jwtTokenUtil;
 
-    private final CustomUserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
-    private final ProviderServiceImpl providerService;
+    private final ProviderService providerService;
 
-    private final JwtServiceImpl jwtService;
+    private final JwtService jwtService;
 
     public JwtAuthenticationResource(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil,
-                                     CustomUserDetailsService userDetailsService, UserServiceImpl userService,
-                                     ProviderServiceImpl providerService, JwtServiceImpl jwtService) {
+                                     @Qualifier("customUserDetailsService") UserDetailsService userDetailsService,
+                                     UserService userService, ProviderService providerService, JwtService jwtService) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenUtil = jwtTokenUtil;
         this.userDetailsService = userDetailsService;
@@ -48,6 +49,7 @@ public class JwtAuthenticationResource {
         this.providerService = providerService;
         this.jwtService = jwtService;
     }
+
 
     /**
      * @apiNote for admin/manager/user can authenticate

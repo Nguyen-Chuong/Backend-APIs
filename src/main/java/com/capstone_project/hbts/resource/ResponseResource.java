@@ -6,7 +6,7 @@ import com.capstone_project.hbts.dto.Report.ResponseDTO;
 import com.capstone_project.hbts.request.ResponseAdminRequest;
 import com.capstone_project.hbts.request.ResponseUserRequest;
 import com.capstone_project.hbts.response.ApiResponse;
-import com.capstone_project.hbts.service.ResponseServiceImpl;
+import com.capstone_project.hbts.service.ResponseService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,11 +19,11 @@ import java.util.List;
 @RequestMapping("api/v1")
 public class ResponseResource {
 
-    private final ResponseServiceImpl responseService;
+    private final ResponseService responseService;
 
     private final DataDecryption dataDecryption;
 
-    public ResponseResource(ResponseServiceImpl responseService, DataDecryption dataDecryption) {
+    public ResponseResource(ResponseService responseService, DataDecryption dataDecryption) {
         this.responseService = responseService;
         this.dataDecryption = dataDecryption;
     }

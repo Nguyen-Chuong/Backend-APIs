@@ -6,10 +6,10 @@ import com.capstone_project.hbts.dto.Actor.UserDTO;
 import com.capstone_project.hbts.request.ManagerRequest;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.response.DataPagingResponse;
-import com.capstone_project.hbts.service.AdminServiceImpl;
-import com.capstone_project.hbts.service.HotelServiceImpl;
-import com.capstone_project.hbts.service.ProviderServiceImpl;
-import com.capstone_project.hbts.service.UserServiceImpl;
+import com.capstone_project.hbts.service.AdminService;
+import com.capstone_project.hbts.service.HotelService;
+import com.capstone_project.hbts.service.ProviderService;
+import com.capstone_project.hbts.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,21 +24,21 @@ import java.util.List;
 @RequestMapping("api/v1")
 public class AdminResource {
 
-    private final AdminServiceImpl adminService;
+    private final AdminService adminService;
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
-    private final ProviderServiceImpl providerService;
+    private final ProviderService providerService;
 
-    private final HotelServiceImpl hotelService;
+    private final HotelService hotelService;
 
-    public AdminResource(AdminServiceImpl adminService, UserServiceImpl userService, ProviderServiceImpl providerService,
-                         HotelServiceImpl hotelService) {
+    public AdminResource(AdminService adminService, UserService userService, ProviderService providerService, HotelService hotelService) {
         this.adminService = adminService;
         this.userService = userService;
         this.providerService = providerService;
         this.hotelService = hotelService;
     }
+
 
     /**
      * @apiNote only for admin

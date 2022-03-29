@@ -6,8 +6,8 @@ import com.capstone_project.hbts.dto.Facility.FacilityResult;
 import com.capstone_project.hbts.request.FacilityAddRequest;
 import com.capstone_project.hbts.request.FacilityRequest;
 import com.capstone_project.hbts.response.ApiResponse;
-import com.capstone_project.hbts.service.FacilityServiceImpl;
-import com.capstone_project.hbts.service.FacilityTypeServiceImpl;
+import com.capstone_project.hbts.service.FacilityService;
+import com.capstone_project.hbts.service.FacilityTypeService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +21,11 @@ public class FacilityResource {
 
     private final DataDecryption dataDecryption;
 
-    private final FacilityTypeServiceImpl facilityTypeService;
+    private final FacilityTypeService facilityTypeService;
 
-    private final FacilityServiceImpl facilityService;
+    private final FacilityService facilityService;
 
-    public FacilityResource(DataDecryption dataDecryption, FacilityTypeServiceImpl facilityTypeService, FacilityServiceImpl facilityService) {
+    public FacilityResource(DataDecryption dataDecryption, FacilityTypeService facilityTypeService, FacilityService facilityService) {
         this.dataDecryption = dataDecryption;
         this.facilityTypeService = facilityTypeService;
         this.facilityService = facilityService;

@@ -5,7 +5,7 @@ import com.capstone_project.hbts.decryption.DataDecryption;
 import com.capstone_project.hbts.dto.Room.RoomBenefitDTO;
 import com.capstone_project.hbts.request.RoomBenefitRequest;
 import com.capstone_project.hbts.response.ApiResponse;
-import com.capstone_project.hbts.service.RoomBenefitServiceImpl;
+import com.capstone_project.hbts.service.RoomBenefitService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,11 +20,11 @@ import java.util.Set;
 @RequestMapping("api/v1")
 public class RoomBenefitResource {
 
-    private final RoomBenefitServiceImpl roomBenefitService;
+    private final RoomBenefitService roomBenefitService;
 
     private final DataDecryption dataDecryption;
 
-    public RoomBenefitResource(RoomBenefitServiceImpl roomBenefitService, DataDecryption dataDecryption) {
+    public RoomBenefitResource(RoomBenefitService roomBenefitService, DataDecryption dataDecryption) {
         this.roomBenefitService = roomBenefitService;
         this.dataDecryption = dataDecryption;
     }

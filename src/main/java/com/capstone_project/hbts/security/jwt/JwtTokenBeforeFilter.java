@@ -1,6 +1,6 @@
 package com.capstone_project.hbts.security.jwt;
 
-import com.capstone_project.hbts.service.CustomUserDetailsService;
+import com.capstone_project.hbts.service.impl.CustomUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

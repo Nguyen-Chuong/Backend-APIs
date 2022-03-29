@@ -6,7 +6,7 @@ import com.capstone_project.hbts.dto.Location.DistrictDTO;
 import com.capstone_project.hbts.dto.Location.DistrictSearchDTO;
 import com.capstone_project.hbts.dto.Location.ResultSearch;
 import com.capstone_project.hbts.response.ApiResponse;
-import com.capstone_project.hbts.service.DistrictServiceImpl;
+import com.capstone_project.hbts.service.DistrictService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,11 +21,11 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class DistrictResource {
 
-    private final DistrictServiceImpl districtService;
+    private final DistrictService districtService;
 
     private final DataDecryption dataDecryption;
 
-    public DistrictResource(DistrictServiceImpl districtService, DataDecryption dataDecryption) {
+    public DistrictResource(DistrictService districtService, DataDecryption dataDecryption) {
         this.districtService = districtService;
         this.dataDecryption = dataDecryption;
     }

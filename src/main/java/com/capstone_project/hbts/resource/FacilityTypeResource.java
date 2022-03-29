@@ -4,7 +4,7 @@ import com.capstone_project.hbts.constant.ErrorConstant;
 import com.capstone_project.hbts.dto.Facility.FacilityTypeDTO;
 import com.capstone_project.hbts.request.FacilityTypeRequest;
 import com.capstone_project.hbts.response.ApiResponse;
-import com.capstone_project.hbts.service.FacilityTypeServiceImpl;
+import com.capstone_project.hbts.service.FacilityTypeService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +16,9 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class FacilityTypeResource {
 
-    private final FacilityTypeServiceImpl facilityTypeService;
+    private final FacilityTypeService facilityTypeService;
 
-    public FacilityTypeResource(FacilityTypeServiceImpl facilityTypeService) {
+    public FacilityTypeResource(FacilityTypeService facilityTypeService) {
         this.facilityTypeService = facilityTypeService;
     }
 

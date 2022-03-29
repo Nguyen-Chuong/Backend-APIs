@@ -9,7 +9,7 @@ import com.capstone_project.hbts.request.HotelRequest;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.response.DataPagingResponse;
 import com.capstone_project.hbts.security.jwt.JwtTokenUtil;
-import com.capstone_project.hbts.service.HotelServiceImpl;
+import com.capstone_project.hbts.service.HotelService;
 import com.capstone_project.hbts.validation.ValidateUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
@@ -27,13 +27,13 @@ import java.util.List;
 @RequestMapping("api/v1")
 public class HotelResource {
 
-    private final HotelServiceImpl hotelService;
+    private final HotelService hotelService;
 
     private final JwtTokenUtil jwtTokenUtil;
 
     private final DataDecryption dataDecryption;
 
-    public HotelResource(HotelServiceImpl hotelService, JwtTokenUtil jwtTokenUtil, DataDecryption dataDecryption) {
+    public HotelResource(HotelService hotelService, JwtTokenUtil jwtTokenUtil, DataDecryption dataDecryption) {
         this.hotelService = hotelService;
         this.jwtTokenUtil = jwtTokenUtil;
         this.dataDecryption = dataDecryption;

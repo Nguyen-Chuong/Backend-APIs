@@ -8,8 +8,8 @@ import com.capstone_project.hbts.request.FeedbackRequest;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.response.DataPagingResponse;
 import com.capstone_project.hbts.security.jwt.JwtTokenUtil;
-import com.capstone_project.hbts.service.FeedbackServiceImpl;
-import com.capstone_project.hbts.service.UserServiceImpl;
+import com.capstone_project.hbts.service.FeedbackService;
+import com.capstone_project.hbts.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,16 +24,15 @@ import java.util.List;
 @RequestMapping("api/v1")
 public class FeedbackResource {
 
-    private final FeedbackServiceImpl feedbackService;
+    private final FeedbackService feedbackService;
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
     private final JwtTokenUtil jwtTokenUtil;
 
     private final DataDecryption dataDecryption;
 
-    public FeedbackResource(FeedbackServiceImpl feedbackService, UserServiceImpl userService, JwtTokenUtil jwtTokenUtil,
-                            DataDecryption dataDecryption) {
+    public FeedbackResource(FeedbackService feedbackService, UserService userService, JwtTokenUtil jwtTokenUtil, DataDecryption dataDecryption) {
         this.feedbackService = feedbackService;
         this.userService = userService;
         this.jwtTokenUtil = jwtTokenUtil;

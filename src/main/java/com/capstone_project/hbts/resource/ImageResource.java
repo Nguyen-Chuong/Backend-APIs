@@ -4,7 +4,7 @@ import com.capstone_project.hbts.constant.ErrorConstant;
 import com.capstone_project.hbts.decryption.DataDecryption;
 import com.capstone_project.hbts.request.ImageRequest;
 import com.capstone_project.hbts.response.ApiResponse;
-import com.capstone_project.hbts.service.ImageServiceImpl;
+import com.capstone_project.hbts.service.ImageService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1")
 public class ImageResource {
 
-    private final ImageServiceImpl imageService;
+    private final ImageService imageService;
 
     private final DataDecryption dataDecryption;
 
-    public ImageResource(ImageServiceImpl imageService, DataDecryption dataDecryption) {
+    public ImageResource(ImageService imageService, DataDecryption dataDecryption) {
         this.imageService = imageService;
         this.dataDecryption = dataDecryption;
     }
