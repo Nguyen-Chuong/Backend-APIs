@@ -39,7 +39,6 @@ public class AdminResource {
         this.hotelService = hotelService;
     }
 
-
     /**
      * @apiNote only for admin
      */

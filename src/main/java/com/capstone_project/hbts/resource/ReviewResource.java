@@ -56,7 +56,7 @@ public class ReviewResource {
      * @apiNote for user can add a new review about hotel's service
      */
     @PostMapping("/add-review")
-    public ResponseEntity<?> getReview(@RequestBody ReviewRequest reviewRequest) {
+    public ResponseEntity<?> addReview(@RequestBody ReviewRequest reviewRequest) {
         log.info("REST request to add a new review ");
         try {
             if (reviewService.isUserReviewAboutBooking(reviewRequest.getUserBookingId())) {
