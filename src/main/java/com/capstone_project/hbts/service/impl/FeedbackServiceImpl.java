@@ -36,7 +36,8 @@ public class FeedbackServiceImpl implements FeedbackService {
         // not yet processed
         feedbackRequest.setIsProcessed(0);
         feedbackRepository.sendFeedback(feedbackRequest.getType(), feedbackRequest.getSenderId(), feedbackRequest.getMessage(),
-                feedbackRequest.getModifyDate(), feedbackRequest.getIsProcessed());
+                feedbackRequest.getModifyDate(), feedbackRequest.getIsProcessed(), feedbackRequest.getBookingId(),
+                feedbackRequest.getEmail(), feedbackRequest.getPhone());
     }
 
     @Override

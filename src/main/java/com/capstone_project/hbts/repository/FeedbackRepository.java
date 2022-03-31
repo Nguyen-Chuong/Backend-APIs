@@ -14,10 +14,11 @@ import java.util.List;
 public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
 
     @Modifying
-    @Query(value = "insert into heroku_4fe5c149618a3f9.feedback(type, sender_id, message, modify_date, is_completed) " +
-            "values (:type, :senderId, :message, :modifyDate, :isCompleted);", nativeQuery = true)
+    @Query(value = "insert into heroku_4fe5c149618a3f9.feedback(type, sender_id, message, modify_date, is_completed, booking_id, email, phone) " +
+            "values (:type, :senderId, :message, :modifyDate, :isCompleted, :bookingId, :email, :phone);", nativeQuery = true)
     void sendFeedback(@Param("type") int type, @Param("senderId") int senderId, @Param("message") String message,
-                      @Param("modifyDate") Timestamp modifyDate, @Param("isCompleted") int isCompleted);
+                      @Param("modifyDate") Timestamp modifyDate, @Param("isCompleted") int isCompleted, @Param("bookingId") int bookingId,
+                      @Param("email") String email, @Param("phone") String phone);
 
     Page<Feedback> findAllByOrderByModifyDateDesc(Pageable pageable);
 

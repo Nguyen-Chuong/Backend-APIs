@@ -20,4 +20,10 @@ public class FeedbackRequest {
 
     private int isProcessed; // not required
 
+    private String email;
+
+    private int bookingId;
+
+    private String phone;
+
 }
