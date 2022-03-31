@@ -20,9 +20,18 @@ public class Feedback extends Auditable<String> implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    // type 0: complain, type 1: refund, type 2: other, v v
+    // type 1: complain, type 2: refund, type 3: other, v v
     @Column(name = "type")
     private int type;
+
+    @Column(name = "booking_id")
+    private int bookingId;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "phone")
+    private String phone;
 
     @Column(name = "message")
     private String message;

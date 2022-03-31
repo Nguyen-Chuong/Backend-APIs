@@ -26,4 +26,8 @@ public class FeedbackDTO {
 
     private String email;
 
+    private int bookingId;
+
+    private String phone;
+
 }

@@ -80,8 +80,6 @@ public class FeedbackServiceImpl implements FeedbackService {
     public FeedbackDTO getFeedbackById(int feedbackId) {
         Feedback feedback = feedbackRepository.getFeedbackById(feedbackId);
         FeedbackDTO feedbackDTO = modelMapper.map(feedback, FeedbackDTO.class);
-        // set email
-        feedbackDTO.setEmail(feedback.getSender().getEmail());
         // set sender name
         feedbackDTO.setSenderName(feedback.getSender().getUsername());
         // set receiver id
