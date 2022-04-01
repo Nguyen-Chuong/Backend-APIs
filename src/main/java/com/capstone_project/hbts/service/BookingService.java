@@ -43,7 +43,7 @@ public interface BookingService {
     /**
      * get booking by hotel id
      */
-    Page<UserBookingDTO> getBookingsByHotelId(int hotelId, int status,Pageable pageable);
+    Page<UserBookingDTO> getBookingsByHotelId(int hotelId, int status, Pageable pageable);
 
     /**
      * cancel a booking
