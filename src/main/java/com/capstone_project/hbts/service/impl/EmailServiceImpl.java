@@ -21,7 +21,7 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void send(String to, String subject, String content) {
         SimpleMailMessage mail = new SimpleMailMessage();
-        mail.setFrom("travesily.no.reply@gmail.com");
+        mail.setFrom("travesily.no.reply@travesily.software");
         mail.setTo(to);
         mail.setSubject(subject);
         mail.setText(content);
@@ -36,7 +36,7 @@ public class EmailServiceImpl implements EmailService {
             mimeMessageHelper.setText(content, true);
             mimeMessageHelper.setTo(to);
             mimeMessageHelper.setSubject(subject);
-            mimeMessageHelper.setFrom("travesily.no.reply@gmail.com");
+            mimeMessageHelper.setFrom("travesily.no.reply@travesily.software");
             sender.send(mimeMessage);
         } catch (MessagingException e) {
             e.printStackTrace();

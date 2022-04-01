@@ -13,10 +13,10 @@ public class EmailConfig {
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.gmail.com");
+        mailSender.setHost("smtp.titan.email");
         mailSender.setPort(587);
-        mailSender.setUsername("travesily.no.reply@gmail.com");
-        mailSender.setPassword("Trung12345@");
+        mailSender.setUsername("travesily.no.reply@travesily.software");
+        mailSender.setPassword("123456789a");
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
