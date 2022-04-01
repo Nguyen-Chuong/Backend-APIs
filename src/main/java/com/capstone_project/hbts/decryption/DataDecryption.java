@@ -2,7 +2,11 @@ package com.capstone_project.hbts.decryption;
 
 import org.springframework.stereotype.Component;
 
-import javax.crypto.*;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.Mac;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -23,7 +27,8 @@ public class DataDecryption {
         String dataEncrypted = null;
         try {
             dataEncrypted = new URI(URLDecoded).getPath();
-        } catch (URISyntaxException e) { e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         }
         SecretKeySpec secretKeySpec = new SecretKeySpec(SECRET_KEY.getBytes(), "DES");
         try {
@@ -37,7 +42,8 @@ public class DataDecryption {
             byte[] byteDecrypted = cipher.doFinal(dataNeedToDecrypted);
             String decrypted = new String(byteDecrypted);
             return Integer.parseInt(decrypted);
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) { e.printStackTrace();
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -48,7 +54,8 @@ public class DataDecryption {
         String dataEncrypted = null;
         try {
             dataEncrypted = new URI(URLDecoded).getPath();
-        } catch (URISyntaxException e) { e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         }
         SecretKeySpec secretKeySpec = new SecretKeySpec(SECRET_KEY.getBytes(), "DES");
         try {
@@ -61,7 +68,8 @@ public class DataDecryption {
             // get the data byte[] decrypted after decrypt
             byte[] byteDecrypted = cipher.doFinal(dataNeedToDecrypted);
             return new String(byteDecrypted);
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) { e.printStackTrace();
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -84,7 +92,8 @@ public class DataDecryption {
                 stringBuilder.append(String.format("%02x", b & 0xff));
             }
             return stringBuilder.toString();
-        } catch (Exception e) { e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return "";
         }
     }

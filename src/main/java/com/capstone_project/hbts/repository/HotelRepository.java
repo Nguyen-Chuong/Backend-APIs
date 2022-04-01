@@ -16,7 +16,6 @@ public interface HotelRepository extends JpaRepository<Hotel, Integer> {
     @Query(value = "select h from Hotel h where h.district.id = :districtId and h.status = 1 ")
     Page<Hotel> searchHotelByDistrict(@Param("districtId") int districtId, Pageable pageable);
 
-    // find all hotel active with out paging
     @Query(value = "select h from Hotel h where h.district.id = :districtId and h.status = 1 ")
     List<Hotel> getTotalHotelWithoutPaging(@Param("districtId") int districtId);
 

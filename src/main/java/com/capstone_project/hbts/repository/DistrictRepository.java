@@ -10,8 +10,8 @@ import java.util.List;
 
 public interface DistrictRepository extends JpaRepository<District, Integer> {
 
-    @Query(value = "select new com.capstone_project.hbts.dto.Location.CityDistrict(district.id, district.nameDistrict, city.nameCity) from District " +
-            "as district join City as city on district.city.id = city.id where district.nameDistrict like lower(concat('%',:text,'%')) " +
+    @Query(value = "select new com.capstone_project.hbts.dto.Location.CityDistrict(district.id, district.nameDistrict, city.nameCity) " +
+            "from District as district join City as city on district.city.id = city.id where district.nameDistrict like lower(concat('%',:text,'%')) " +
             "or city.nameCity like lower(concat('%',:text,'%')) ")
     List<CityDistrict> searchDistrictCity(@Param("text") String text);
 

@@ -27,8 +27,8 @@ public class ExcelHelper {
     }
 
     // read excel file and convert it into object
-    public List<District> convertExcelToObjectDistrict(InputStream inputStream, int cityId){
-        try{
+    public List<District> convertExcelToObjectDistrict(InputStream inputStream, int cityId) {
+        try {
             // create new workbook base on excel file input
             Workbook workbook = new XSSFWorkbook(inputStream);
             // read the first sheet
@@ -55,14 +55,14 @@ public class ExcelHelper {
                 }
             }
             // loop through row
-            while (rowIterator.hasNext()){
+            while (rowIterator.hasNext()) {
                 rowNumber += 1;
                 // loop till the last non empty row, break
-                if(rowNumber == (notNullRowCount + 1)) {
+                if (rowNumber == (notNullRowCount + 1)) {
                     break;
                 }
                 Row currentRow = rowIterator.next();
-                if(currentRow.getRowNum() == 0){
+                if (currentRow.getRowNum() == 0) {
                     continue;
                 }
                 // loop through the cell
@@ -78,7 +78,8 @@ public class ExcelHelper {
             }
             workbook.close();
             return districtList;
-        }catch (IOException e){ e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
             return new ArrayList<>();
         }
     }
