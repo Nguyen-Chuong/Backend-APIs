@@ -45,7 +45,7 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
     @Query(value = "UPDATE Users u SET u.password = :newPass WHERE u.email = :email")
     void changeForgotPassword(@Param("email") String email, @Param("newPass") String newPass);
 
-    @Query(value = "SELECT u from Users u ")
+    @Query(value = "SELECT u from Users u WHERE u.type = 0")
     Page<Users> findAllUser(Pageable pageable);
 
     @Query(value = "SELECT u from Users u WHERE u.type = 1")
