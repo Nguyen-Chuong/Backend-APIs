@@ -49,7 +49,7 @@ public class ReviewResource {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001_LABEL));
         }
         try {
-            Page<ReviewDTO> pageReview = reviewService.loadReview(id, PageRequest.of(page, pageSize));
+            Page<ReviewDTO> pageReview = reviewService.loadReview(id, page, pageSize);
             int totalNumberReview = reviewService.totalReview(id);
             DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(pageReview.getContent(),
                     totalNumberReview, page, pageReview.getSize());

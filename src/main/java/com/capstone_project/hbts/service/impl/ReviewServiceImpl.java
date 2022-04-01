@@ -10,7 +10,9 @@ import com.capstone_project.hbts.response.CustomPageImpl;
 import com.capstone_project.hbts.service.ReviewService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +38,10 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Page<ReviewDTO> loadReview(int hotelId, Pageable pageable) {
+    public Page<ReviewDTO> loadReview(int hotelId, int page, int pageSize) {
+        // sort criteria
+        Sort sort = Sort.by("reviewDate").descending();
+        Pageable pageable = PageRequest.of(page, pageSize, sort);
         // get list user booking
         List<UserBooking> userBookingList = bookingRepository.findUserBookingByHotelId(hotelId);
         // add list user booking ids to list
