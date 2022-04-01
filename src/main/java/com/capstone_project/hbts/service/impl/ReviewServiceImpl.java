@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -67,6 +68,23 @@ public class ReviewServiceImpl implements ReviewService {
         userBooking.setReviewStatus(1);
         // save it again
         bookingRepository.save(userBooking);
+    }
+
+    @Override
+    public List<ReviewDTO> getTopReview(int hotelId, int limit) {
+        // get list user booking
+        List<UserBooking> userBookingList = bookingRepository.findUserBookingByHotelId(hotelId);
+        // add list user booking ids to list
+        ArrayList<Integer> listBookingId = new ArrayList<>();
+        userBookingList.forEach(item -> listBookingId.add(item.getId()));
+        List<Review> listReview = reviewRepository.loadReviewByBookingIdNoPaging(listBookingId);
+        // sort by total score and limit result return
+        List<Review> listSorted = listReview
+                .stream()
+                .sorted((Comparator.comparing(Review::totalScore).reversed()))
+                .collect(Collectors.toList())
+                .subList(0, limit);
+        return listSorted.stream().map(item -> modelMapper.map(item, ReviewDTO.class)).collect(Collectors.toList());
     }
 
     @Override

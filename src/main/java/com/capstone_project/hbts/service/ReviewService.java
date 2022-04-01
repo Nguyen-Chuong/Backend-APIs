@@ -5,6 +5,8 @@ import com.capstone_project.hbts.request.ReviewRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface ReviewService {
 
     /**
@@ -26,5 +28,10 @@ public interface ReviewService {
      * Load total number review by hotelId
      */
     int totalReview(int hotelId);
+
+    /**
+     * Load total number review by hotelId
+     */
+    List<ReviewDTO> getTopReview(int hotelId, int limit);
 
 }

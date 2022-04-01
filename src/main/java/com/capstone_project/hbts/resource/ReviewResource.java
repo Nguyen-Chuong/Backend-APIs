@@ -14,6 +14,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Log4j2
 @RequestMapping("api/v1")
@@ -66,6 +68,27 @@ public class ReviewResource {
                 reviewService.addReview(reviewRequest);
                 return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
+        }
+    }
+
+    /**
+     * @apiNote for admin/user/provider can view top review
+     */
+    @GetMapping("/top-reviews")
+    public ResponseEntity<?> getTopReview(@RequestParam String hotelId, @RequestParam int limit) {
+        log.info("REST request to get list review by hotel id");
+        int id;
+        try {
+            id = dataDecryption.convertEncryptedDataToInt(hotelId);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001_LABEL));
+        }
+        try {
+            List<ReviewDTO> reviewDTOList = reviewService.getTopReview(id, limit);
+            return ResponseEntity.ok().body(new ApiResponse<>(200, reviewDTOList, null));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));

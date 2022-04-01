@@ -46,5 +46,9 @@ public class Review extends Auditable<String> implements Serializable {
     @ManyToOne @JoinColumn(name = "userBooking_Id")
     private UserBooking userBooking;
 
+    public float totalScore(){
+        return this.getValueForMoney() + this.getService() + this.getLocation() + this.getCleanliness() + this.getFacilities();
+    }
+
 }
 
