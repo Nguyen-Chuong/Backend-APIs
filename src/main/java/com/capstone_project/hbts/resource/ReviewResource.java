@@ -43,8 +43,9 @@ public class ReviewResource {
         }
         try {
             Page<ReviewDTO> pageReview = reviewService.loadReview(id, PageRequest.of(page, pageSize));
+            int totalNumberReview = reviewService.totalReview(id);
             DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(pageReview.getContent(),
-                    pageReview.getTotalElements(), page, pageReview.getSize());
+                    totalNumberReview, page, pageReview.getSize());
             return ResponseEntity.ok().body(new ApiResponse<>(200, dataPagingResponse, null));
         } catch (Exception e) {
             e.printStackTrace();

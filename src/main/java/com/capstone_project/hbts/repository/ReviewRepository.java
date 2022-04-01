@@ -10,11 +10,15 @@ import org.springframework.data.repository.query.Param;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
 
     @Query(value = "select r from Review r where r.userBooking.id in :userBookingIds")
     Page<Review> loadReviewByBookingId(@Param("userBookingIds") ArrayList<Integer> userBookingIds, Pageable pageable);
+
+    @Query(value = "select r from Review r where r.userBooking.id in :userBookingIds")
+    List<Review> loadReviewByBookingIdNoPaging(@Param("userBookingIds") ArrayList<Integer> userBookingIds);
 
     @Modifying
     @Query(value = "insert into heroku_4fe5c149618a3f9.review(cleanliness, facilities, location, service, value_money, " +

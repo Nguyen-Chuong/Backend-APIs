@@ -75,4 +75,15 @@ public class ReviewServiceImpl implements ReviewService {
         return review != null;
     }
 
+    @Override
+    public int totalReview(int hotelId) {
+        // get list user booking
+        List<UserBooking> userBookingList = bookingRepository.findUserBookingByHotelId(hotelId);
+        // add list user booking ids to list
+        ArrayList<Integer> listBookingId = new ArrayList<>();
+        userBookingList.forEach(item -> listBookingId.add(item.getId()));
+        List<Review> listReview = reviewRepository.loadReviewByBookingIdNoPaging(listBookingId);
+        return  listReview.size();
+    }
+
 }

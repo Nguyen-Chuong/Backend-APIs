@@ -22,4 +22,9 @@ public interface ReviewService {
      */
     boolean isUserReviewAboutBooking(int bookingId);
 
+    /**
+     * Load total number review by hotelId
+     */
+    int totalReview(int hotelId);
+
 }
