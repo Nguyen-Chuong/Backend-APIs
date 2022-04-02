@@ -15,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -32,7 +31,7 @@ public class District implements Serializable {
     @GenericGenerator(name = "generator", strategy = "increment")
     private Integer id;
 
-    @Column(name = "name_district") @NotNull
+    @Column(name = "name_district")
     private String nameDistrict;
 
     @Column(name = "avatar")

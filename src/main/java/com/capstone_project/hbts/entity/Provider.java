@@ -13,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -30,7 +29,6 @@ public class Provider implements Serializable {
     private Integer id;
 
     @Column(name = "username")
-    @Size(max = 30)
     private String username;
 
     @Column(name = "password")

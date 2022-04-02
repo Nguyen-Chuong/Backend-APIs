@@ -13,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -29,7 +28,7 @@ public class City implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "name") @NotNull
+    @Column(name = "name")
     private String nameCity;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "city")
