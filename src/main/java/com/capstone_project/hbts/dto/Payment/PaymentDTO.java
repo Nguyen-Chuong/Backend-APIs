@@ -14,4 +14,6 @@ public class PaymentDTO {
 
     private String description;
 
+    private String ipAddress;
+
 }

@@ -1,6 +1,8 @@
 package com.capstone_project.hbts.service.impl;
 
 import com.capstone_project.hbts.dto.Request.RequestDTO;
+import com.capstone_project.hbts.entity.Hotel;
+import com.capstone_project.hbts.entity.Provider;
 import com.capstone_project.hbts.entity.Request;
 import com.capstone_project.hbts.repository.HotelRepository;
 import com.capstone_project.hbts.repository.RequestRepository;
@@ -39,8 +41,17 @@ public class RequestServiceImpl implements RequestService {
         postHotelRequest.setRequestDate(new Timestamp(System.currentTimeMillis()));
         // set status to 1-pending, await admin to process
         postHotelRequest.setStatus(1);
-        requestRepository.addNewRequest(postHotelRequest.getRequestDate(), postHotelRequest.getStatus(),
-                postHotelRequest.getHotelId(), postHotelRequest.getProviderId());
+        // set hotel
+        Hotel hotel = new Hotel();
+        hotel.setId(postHotelRequest.getHotelId());
+        // set provider
+        Provider provider = new Provider();
+        provider.setId(postHotelRequest.getProviderId());
+        Request request = modelMapper.map(postHotelRequest, Request.class);
+        // set provider and hotel for request
+        request.setHotel(hotel);
+        request.setProvider(provider);
+        requestRepository.save(request);
     }
 
     @Transactional
