@@ -14,4 +14,6 @@ public class ResponseDTO {
 
     private Timestamp modifyDate;
 
+    private int sendBy;
+
 }
