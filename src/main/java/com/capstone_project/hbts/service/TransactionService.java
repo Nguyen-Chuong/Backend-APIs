@@ -1,6 +1,6 @@
 package com.capstone_project.hbts.service;
 
-import com.capstone_project.hbts.dto.Payment.TransactionDTO;
+import com.capstone_project.hbts.dto.payment.TransactionDTO;
 
 public interface TransactionService {
 

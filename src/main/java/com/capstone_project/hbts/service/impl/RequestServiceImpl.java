@@ -1,6 +1,6 @@
 package com.capstone_project.hbts.service.impl;
 
-import com.capstone_project.hbts.dto.Request.RequestDTO;
+import com.capstone_project.hbts.dto.request.RequestDTO;
 import com.capstone_project.hbts.entity.Hotel;
 import com.capstone_project.hbts.entity.Provider;
 import com.capstone_project.hbts.entity.Request;

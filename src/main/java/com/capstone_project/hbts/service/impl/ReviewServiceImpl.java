@@ -1,6 +1,6 @@
 package com.capstone_project.hbts.service.impl;
 
-import com.capstone_project.hbts.dto.Report.ReviewDTO;
+import com.capstone_project.hbts.dto.report.ReviewDTO;
 import com.capstone_project.hbts.entity.Review;
 import com.capstone_project.hbts.entity.UserBooking;
 import com.capstone_project.hbts.repository.BookingRepository;

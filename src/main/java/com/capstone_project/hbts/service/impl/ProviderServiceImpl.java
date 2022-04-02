@@ -1,6 +1,6 @@
 package com.capstone_project.hbts.service.impl;
 
-import com.capstone_project.hbts.dto.Actor.ProviderDTO;
+import com.capstone_project.hbts.dto.actor.ProviderDTO;
 import com.capstone_project.hbts.entity.Provider;
 import com.capstone_project.hbts.repository.ProviderRepository;
 import com.capstone_project.hbts.request.ProviderRequest;

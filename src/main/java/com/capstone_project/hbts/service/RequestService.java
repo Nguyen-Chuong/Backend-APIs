@@ -1,6 +1,6 @@
 package com.capstone_project.hbts.service;
 
-import com.capstone_project.hbts.dto.Request.RequestDTO;
+import com.capstone_project.hbts.dto.request.RequestDTO;
 import com.capstone_project.hbts.request.PostHotelRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

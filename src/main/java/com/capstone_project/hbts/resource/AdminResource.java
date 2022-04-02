@@ -2,7 +2,7 @@ package com.capstone_project.hbts.resource;
 
 import com.capstone_project.hbts.constant.ErrorConstant;
 import com.capstone_project.hbts.constant.ValidateConstant;
-import com.capstone_project.hbts.dto.Actor.UserDTO;
+import com.capstone_project.hbts.dto.actor.UserDTO;
 import com.capstone_project.hbts.request.ManagerRequest;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.response.DataPagingResponse;

@@ -1,7 +1,7 @@
 package com.capstone_project.hbts.service;
 
-import com.capstone_project.hbts.dto.Hotel.HotelDTO;
-import com.capstone_project.hbts.dto.Hotel.HotelDetailDTO;
+import com.capstone_project.hbts.dto.hotel.HotelDTO;
+import com.capstone_project.hbts.dto.hotel.HotelDetailDTO;
 import com.capstone_project.hbts.dto.RatingDTO;
 import com.capstone_project.hbts.request.HotelRequest;
 import org.springframework.data.domain.Page;

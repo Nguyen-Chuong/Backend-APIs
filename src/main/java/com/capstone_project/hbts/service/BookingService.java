@@ -1,7 +1,7 @@
 package com.capstone_project.hbts.service;
 
-import com.capstone_project.hbts.dto.Booking.BookingListDTO;
-import com.capstone_project.hbts.dto.Booking.UserBookingDTO;
+import com.capstone_project.hbts.dto.booking.BookingListDTO;
+import com.capstone_project.hbts.dto.booking.UserBookingDTO;
 import com.capstone_project.hbts.request.BookingRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

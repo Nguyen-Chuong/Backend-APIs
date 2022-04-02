@@ -1,7 +1,7 @@
 package com.capstone_project.hbts.resource;
 
 import com.capstone_project.hbts.constant.ErrorConstant;
-import com.capstone_project.hbts.dto.Facility.FacilityTypeDTO;
+import com.capstone_project.hbts.dto.facility.FacilityTypeDTO;
 import com.capstone_project.hbts.request.FacilityTypeRequest;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.service.FacilityTypeService;

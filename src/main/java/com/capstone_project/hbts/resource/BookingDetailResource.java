@@ -2,7 +2,7 @@ package com.capstone_project.hbts.resource;
 
 import com.capstone_project.hbts.constant.ErrorConstant;
 import com.capstone_project.hbts.decryption.DataDecryption;
-import com.capstone_project.hbts.dto.Booking.UserBookingDetailDTO;
+import com.capstone_project.hbts.dto.booking.UserBookingDetailDTO;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.service.BookingDetailService;
 import lombok.extern.log4j.Log4j2;

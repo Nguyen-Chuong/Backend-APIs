@@ -2,7 +2,7 @@ package com.capstone_project.hbts.resource;
 
 import com.capstone_project.hbts.constant.ErrorConstant;
 import com.capstone_project.hbts.decryption.DataDecryption;
-import com.capstone_project.hbts.dto.Report.ResponseDTO;
+import com.capstone_project.hbts.dto.report.ResponseDTO;
 import com.capstone_project.hbts.request.ResponseAdminRequest;
 import com.capstone_project.hbts.request.ResponseUserRequest;
 import com.capstone_project.hbts.response.ApiResponse;

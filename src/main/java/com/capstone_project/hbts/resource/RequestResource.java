@@ -3,7 +3,7 @@ package com.capstone_project.hbts.resource;
 import com.capstone_project.hbts.constant.ErrorConstant;
 import com.capstone_project.hbts.constant.ValidateConstant;
 import com.capstone_project.hbts.decryption.DataDecryption;
-import com.capstone_project.hbts.dto.Request.RequestDTO;
+import com.capstone_project.hbts.dto.request.RequestDTO;
 import com.capstone_project.hbts.request.PostHotelRequest;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.response.DataPagingResponse;

@@ -3,7 +3,7 @@ package com.capstone_project.hbts.service.impl;
 import com.capstone_project.hbts.constant.ValidateConstant;
 import com.capstone_project.hbts.decryption.DataDecryption;
 import com.capstone_project.hbts.request.PaymentRequest;
-import com.capstone_project.hbts.dto.Payment.PaymentResultDTO;
+import com.capstone_project.hbts.dto.payment.PaymentResultDTO;
 import com.capstone_project.hbts.service.PaymentService;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.capstone_project.hbts.service.impl;
 
-import com.capstone_project.hbts.dto.Actor.UserDTO;
+import com.capstone_project.hbts.dto.actor.UserDTO;
 import com.capstone_project.hbts.dto.VipDTO;
 import com.capstone_project.hbts.entity.Role;
 import com.capstone_project.hbts.entity.Users;

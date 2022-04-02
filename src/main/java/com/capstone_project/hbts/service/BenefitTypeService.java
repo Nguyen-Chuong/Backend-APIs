@@ -1,7 +1,7 @@
 package com.capstone_project.hbts.service;
 
-import com.capstone_project.hbts.dto.Benefit.BenefitResult;
-import com.capstone_project.hbts.dto.Benefit.BenefitTypeDTO;
+import com.capstone_project.hbts.dto.benefit.BenefitResult;
+import com.capstone_project.hbts.dto.benefit.BenefitTypeDTO;
 import com.capstone_project.hbts.request.BenefitTypeRequest;
 
 import java.util.List;

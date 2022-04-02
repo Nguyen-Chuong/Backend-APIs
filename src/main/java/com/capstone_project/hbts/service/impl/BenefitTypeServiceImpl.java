@@ -1,7 +1,7 @@
 package com.capstone_project.hbts.service.impl;
 
-import com.capstone_project.hbts.dto.Benefit.BenefitResult;
-import com.capstone_project.hbts.dto.Benefit.BenefitTypeDTO;
+import com.capstone_project.hbts.dto.benefit.BenefitResult;
+import com.capstone_project.hbts.dto.benefit.BenefitTypeDTO;
 import com.capstone_project.hbts.entity.BenefitType;
 import com.capstone_project.hbts.repository.BenefitTypeRepository;
 import com.capstone_project.hbts.request.BenefitTypeRequest;

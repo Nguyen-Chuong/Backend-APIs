@@ -1,6 +1,6 @@
 package com.capstone_project.hbts.service.impl;
 
-import com.capstone_project.hbts.dto.Payment.TransactionDTO;
+import com.capstone_project.hbts.dto.payment.TransactionDTO;
 import com.capstone_project.hbts.entity.Transaction;
 import com.capstone_project.hbts.entity.Users;
 import com.capstone_project.hbts.repository.TransactionRepository;

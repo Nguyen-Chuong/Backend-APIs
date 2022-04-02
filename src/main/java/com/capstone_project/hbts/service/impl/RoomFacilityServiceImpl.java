@@ -1,6 +1,6 @@
 package com.capstone_project.hbts.service.impl;
 
-import com.capstone_project.hbts.dto.Room.RoomFacilityDTO;
+import com.capstone_project.hbts.dto.room.RoomFacilityDTO;
 import com.capstone_project.hbts.entity.Facility;
 import com.capstone_project.hbts.entity.RoomFacility;
 import com.capstone_project.hbts.entity.RoomType;

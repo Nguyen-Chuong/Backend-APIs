@@ -1,6 +1,6 @@
 package com.capstone_project.hbts.service.impl;
 
-import com.capstone_project.hbts.dto.Location.CityDTO;
+import com.capstone_project.hbts.dto.location.CityDTO;
 import com.capstone_project.hbts.repository.CityRepository;
 import com.capstone_project.hbts.service.CityService;
 import org.modelmapper.ModelMapper;

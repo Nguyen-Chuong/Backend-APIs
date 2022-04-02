@@ -1,6 +1,6 @@
 package com.capstone_project.hbts.service;
 
-import com.capstone_project.hbts.dto.Report.FeedbackDTO;
+import com.capstone_project.hbts.dto.report.FeedbackDTO;
 import com.capstone_project.hbts.request.FeedbackRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

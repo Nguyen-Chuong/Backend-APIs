@@ -2,9 +2,9 @@ package com.capstone_project.hbts.resource;
 
 import com.capstone_project.hbts.constant.ErrorConstant;
 import com.capstone_project.hbts.decryption.DataDecryption;
-import com.capstone_project.hbts.dto.Location.DistrictDTO;
-import com.capstone_project.hbts.dto.Location.DistrictSearchDTO;
-import com.capstone_project.hbts.dto.Location.ResultSearch;
+import com.capstone_project.hbts.dto.location.DistrictDTO;
+import com.capstone_project.hbts.dto.location.DistrictSearchDTO;
+import com.capstone_project.hbts.dto.location.ResultSearch;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.service.DistrictService;
 import lombok.extern.log4j.Log4j2;

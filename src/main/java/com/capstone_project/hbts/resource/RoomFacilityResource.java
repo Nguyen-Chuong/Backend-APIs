@@ -2,7 +2,7 @@ package com.capstone_project.hbts.resource;
 
 import com.capstone_project.hbts.constant.ErrorConstant;
 import com.capstone_project.hbts.decryption.DataDecryption;
-import com.capstone_project.hbts.dto.Room.RoomFacilityDTO;
+import com.capstone_project.hbts.dto.room.RoomFacilityDTO;
 import com.capstone_project.hbts.request.RoomFacilityRequest;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.service.RoomFacilityService;

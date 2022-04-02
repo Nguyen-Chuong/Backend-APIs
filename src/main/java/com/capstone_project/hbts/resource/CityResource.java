@@ -1,7 +1,7 @@
 package com.capstone_project.hbts.resource;
 
 import com.capstone_project.hbts.constant.ErrorConstant;
-import com.capstone_project.hbts.dto.Location.CityDTO;
+import com.capstone_project.hbts.dto.location.CityDTO;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.service.CityService;
 import lombok.extern.log4j.Log4j2;

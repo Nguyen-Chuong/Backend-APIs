@@ -1,9 +1,9 @@
 package com.capstone_project.hbts.service.impl;
 
-import com.capstone_project.hbts.dto.Location.CityDistrict;
-import com.capstone_project.hbts.dto.Location.DistrictDTO;
-import com.capstone_project.hbts.dto.Location.DistrictSearchDTO;
-import com.capstone_project.hbts.dto.Location.ResultSearch;
+import com.capstone_project.hbts.dto.location.CityDistrict;
+import com.capstone_project.hbts.dto.location.DistrictDTO;
+import com.capstone_project.hbts.dto.location.DistrictSearchDTO;
+import com.capstone_project.hbts.dto.location.ResultSearch;
 import com.capstone_project.hbts.entity.District;
 import com.capstone_project.hbts.entity.Hotel;
 import com.capstone_project.hbts.repository.DistrictRepository;

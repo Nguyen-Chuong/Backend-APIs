@@ -1,9 +1,9 @@
 package com.capstone_project.hbts.service.impl;
 
-import com.capstone_project.hbts.dto.Benefit.BenefitDTO;
-import com.capstone_project.hbts.dto.Benefit.BenefitResult;
-import com.capstone_project.hbts.dto.Benefit.BenefitTypeDTO;
-import com.capstone_project.hbts.dto.Benefit.ObjectBenefit;
+import com.capstone_project.hbts.dto.benefit.BenefitDTO;
+import com.capstone_project.hbts.dto.benefit.BenefitResult;
+import com.capstone_project.hbts.dto.benefit.BenefitTypeDTO;
+import com.capstone_project.hbts.dto.benefit.ObjectBenefit;
 import com.capstone_project.hbts.entity.Benefit;
 import com.capstone_project.hbts.entity.BenefitType;
 import com.capstone_project.hbts.entity.RoomType;

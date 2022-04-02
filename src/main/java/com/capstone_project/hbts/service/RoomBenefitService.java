@@ -1,6 +1,6 @@
 package com.capstone_project.hbts.service;
 
-import com.capstone_project.hbts.dto.Room.RoomBenefitDTO;
+import com.capstone_project.hbts.dto.room.RoomBenefitDTO;
 import com.capstone_project.hbts.request.RoomBenefitRequest;
 
 import java.util.List;

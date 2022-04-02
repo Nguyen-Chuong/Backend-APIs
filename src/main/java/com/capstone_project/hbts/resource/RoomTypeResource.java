@@ -2,10 +2,10 @@ package com.capstone_project.hbts.resource;
 
 import com.capstone_project.hbts.constant.ErrorConstant;
 import com.capstone_project.hbts.decryption.DataDecryption;
-import com.capstone_project.hbts.dto.Hotel.HotelRatingDTO;
+import com.capstone_project.hbts.dto.hotel.HotelRatingDTO;
 import com.capstone_project.hbts.dto.RatingDTO;
-import com.capstone_project.hbts.dto.Room.RoomDetailDTO;
-import com.capstone_project.hbts.dto.Room.RoomTypeDTO;
+import com.capstone_project.hbts.dto.room.RoomDetailDTO;
+import com.capstone_project.hbts.dto.room.RoomTypeDTO;
 import com.capstone_project.hbts.request.RoomTypeRequest;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.service.HotelService;

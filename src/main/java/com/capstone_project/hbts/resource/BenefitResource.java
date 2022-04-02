@@ -2,8 +2,8 @@ package com.capstone_project.hbts.resource;
 
 import com.capstone_project.hbts.constant.ErrorConstant;
 import com.capstone_project.hbts.decryption.DataDecryption;
-import com.capstone_project.hbts.dto.Benefit.BenefitResult;
-import com.capstone_project.hbts.dto.Benefit.ObjectBenefit;
+import com.capstone_project.hbts.dto.benefit.BenefitResult;
+import com.capstone_project.hbts.dto.benefit.ObjectBenefit;
 import com.capstone_project.hbts.request.BenefitAddRequest;
 import com.capstone_project.hbts.request.BenefitRequest;
 import com.capstone_project.hbts.response.ApiResponse;

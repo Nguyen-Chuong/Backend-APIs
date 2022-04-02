@@ -1,7 +1,7 @@
 package com.capstone_project.hbts.service;
 
-import com.capstone_project.hbts.dto.Room.RoomDetailDTO;
-import com.capstone_project.hbts.dto.Room.RoomTypeDTO;
+import com.capstone_project.hbts.dto.room.RoomDetailDTO;
+import com.capstone_project.hbts.dto.room.RoomTypeDTO;
 import com.capstone_project.hbts.request.RoomTypeRequest;
 
 import java.util.Date;

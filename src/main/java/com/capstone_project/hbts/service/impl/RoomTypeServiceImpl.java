@@ -1,16 +1,16 @@
 package com.capstone_project.hbts.service.impl;
 
-import com.capstone_project.hbts.dto.Benefit.BenefitDTO;
-import com.capstone_project.hbts.dto.Benefit.BenefitResult;
-import com.capstone_project.hbts.dto.Benefit.BenefitTypeDTO;
-import com.capstone_project.hbts.dto.Benefit.ObjectBenefit;
-import com.capstone_project.hbts.dto.Facility.FacilityDTO;
-import com.capstone_project.hbts.dto.Facility.FacilityResult;
-import com.capstone_project.hbts.dto.Facility.FacilityTypeDTO;
-import com.capstone_project.hbts.dto.Facility.ObjectFacility;
+import com.capstone_project.hbts.dto.benefit.BenefitDTO;
+import com.capstone_project.hbts.dto.benefit.BenefitResult;
+import com.capstone_project.hbts.dto.benefit.BenefitTypeDTO;
+import com.capstone_project.hbts.dto.benefit.ObjectBenefit;
+import com.capstone_project.hbts.dto.facility.FacilityDTO;
+import com.capstone_project.hbts.dto.facility.FacilityResult;
+import com.capstone_project.hbts.dto.facility.FacilityTypeDTO;
+import com.capstone_project.hbts.dto.facility.ObjectFacility;
 import com.capstone_project.hbts.dto.ImageDTO;
-import com.capstone_project.hbts.dto.Room.RoomDetailDTO;
-import com.capstone_project.hbts.dto.Room.RoomTypeDTO;
+import com.capstone_project.hbts.dto.room.RoomDetailDTO;
+import com.capstone_project.hbts.dto.room.RoomTypeDTO;
 import com.capstone_project.hbts.entity.Hotel;
 import com.capstone_project.hbts.entity.RoomType;
 import com.capstone_project.hbts.entity.UserBooking;

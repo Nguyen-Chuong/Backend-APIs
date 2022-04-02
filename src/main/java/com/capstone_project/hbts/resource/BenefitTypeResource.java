@@ -1,7 +1,7 @@
 package com.capstone_project.hbts.resource;
 
 import com.capstone_project.hbts.constant.ErrorConstant;
-import com.capstone_project.hbts.dto.Benefit.BenefitTypeDTO;
+import com.capstone_project.hbts.dto.benefit.BenefitTypeDTO;
 import com.capstone_project.hbts.request.BenefitTypeRequest;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.service.BenefitTypeService;

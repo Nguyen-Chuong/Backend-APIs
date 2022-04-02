@@ -1,6 +1,6 @@
 package com.capstone_project.hbts.service;
 
-import com.capstone_project.hbts.dto.Actor.UserDTO;
+import com.capstone_project.hbts.dto.actor.UserDTO;
 import com.capstone_project.hbts.request.UserRequest;
 
 public interface UserService {

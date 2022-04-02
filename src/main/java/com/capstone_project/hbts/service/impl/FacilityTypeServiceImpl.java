@@ -1,7 +1,7 @@
 package com.capstone_project.hbts.service.impl;
 
-import com.capstone_project.hbts.dto.Facility.FacilityResult;
-import com.capstone_project.hbts.dto.Facility.FacilityTypeDTO;
+import com.capstone_project.hbts.dto.facility.FacilityResult;
+import com.capstone_project.hbts.dto.facility.FacilityTypeDTO;
 import com.capstone_project.hbts.entity.FacilityType;
 import com.capstone_project.hbts.repository.FacilityTypeRepository;
 import com.capstone_project.hbts.request.FacilityTypeRequest;

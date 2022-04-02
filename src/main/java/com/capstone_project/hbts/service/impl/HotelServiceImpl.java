@@ -1,9 +1,9 @@
 package com.capstone_project.hbts.service.impl;
 
-import com.capstone_project.hbts.dto.Hotel.HotelDTO;
-import com.capstone_project.hbts.dto.Hotel.HotelDetailDTO;
+import com.capstone_project.hbts.dto.hotel.HotelDTO;
+import com.capstone_project.hbts.dto.hotel.HotelDetailDTO;
 import com.capstone_project.hbts.dto.RatingDTO;
-import com.capstone_project.hbts.dto.Report.ReviewDTO;
+import com.capstone_project.hbts.dto.report.ReviewDTO;
 import com.capstone_project.hbts.entity.District;
 import com.capstone_project.hbts.entity.Hotel;
 import com.capstone_project.hbts.entity.Provider;

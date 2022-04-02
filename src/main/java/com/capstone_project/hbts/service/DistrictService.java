@@ -1,8 +1,8 @@
 package com.capstone_project.hbts.service;
 
-import com.capstone_project.hbts.dto.Location.DistrictDTO;
-import com.capstone_project.hbts.dto.Location.DistrictSearchDTO;
-import com.capstone_project.hbts.dto.Location.ResultSearch;
+import com.capstone_project.hbts.dto.location.DistrictDTO;
+import com.capstone_project.hbts.dto.location.DistrictSearchDTO;
+import com.capstone_project.hbts.dto.location.ResultSearch;
 
 import java.util.List;
 
