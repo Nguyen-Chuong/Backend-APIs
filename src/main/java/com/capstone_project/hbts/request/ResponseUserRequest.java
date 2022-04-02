@@ -20,4 +20,6 @@ public class ResponseUserRequest {
 
     private int feedbackId;
 
+    private int sendBy;
+
 }

@@ -20,4 +20,6 @@ public class ResponseAdminRequest {
 
     private int feedbackId;
 
+    private int sendBy;
+
 }

@@ -37,19 +37,23 @@ public class ResponseServiceImpl implements ResponseService {
         int userId = userRepository.getUserId(responseAdminRequest.getUsername());
         // get current timestamp
         responseAdminRequest.setModifyDate(new Timestamp(System.currentTimeMillis()));
+        // set send by
+        responseAdminRequest.setSendBy(0);
         responseRepository.sendResponseFromFeedback(responseAdminRequest.getAdminId(), responseAdminRequest.getMessage(),
-                responseAdminRequest.getModifyDate(), userId, responseAdminRequest.getFeedbackId());
+                responseAdminRequest.getSendBy(), responseAdminRequest.getModifyDate(), userId, responseAdminRequest.getFeedbackId());
     }
 
     @Transactional
     @Override
     public void sendResponseToAdmin(ResponseUserRequest responseUserRequest) {
         // get admin id
-        Integer adminId = responseRepository.getAdminId(responseUserRequest.getFeedbackId());
+        int adminId = responseRepository.getAdminId(responseUserRequest.getFeedbackId());
         // get current timestamp
         responseUserRequest.setModifyDate(new Timestamp(System.currentTimeMillis()));
-        responseRepository.sendResponseFromFeedback(adminId, responseUserRequest.getMessage(), responseUserRequest.getModifyDate(),
-                responseUserRequest.getUserId(), responseUserRequest.getFeedbackId());
+        // set send by
+        responseUserRequest.setSendBy(1);
+        responseRepository.sendResponseFromFeedback(adminId, responseUserRequest.getMessage(), responseUserRequest.getSendBy(),
+                responseUserRequest.getModifyDate(), responseUserRequest.getUserId(), responseUserRequest.getFeedbackId());
     }
 
     @Override

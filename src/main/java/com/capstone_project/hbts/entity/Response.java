@@ -41,6 +41,9 @@ public class Response extends Auditable<String> implements Serializable {
     @Column(name = "admin_id")
     private int adminId;
 
+    @Column(name = "send_by")
+    private int sendBy;
+
     @ManyToOne @JoinColumn(name = "feedback_id")
     private Feedback feedback;
 
