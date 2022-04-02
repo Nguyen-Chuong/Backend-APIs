@@ -1,6 +1,8 @@
 package com.capstone_project.hbts.service.impl;
 
 import com.capstone_project.hbts.dto.Report.ResponseDTO;
+import com.capstone_project.hbts.entity.Feedback;
+import com.capstone_project.hbts.entity.Response;
 import com.capstone_project.hbts.repository.ResponseRepository;
 import com.capstone_project.hbts.repository.UserRepository;
 import com.capstone_project.hbts.request.ResponseAdminRequest;
@@ -48,12 +50,17 @@ public class ResponseServiceImpl implements ResponseService {
     public void sendResponseToAdmin(ResponseUserRequest responseUserRequest) {
         // get admin id
         int adminId = responseRepository.getAdminId(responseUserRequest.getFeedbackId());
+        responseUserRequest.setAdminId(adminId);
         // get current timestamp
         responseUserRequest.setModifyDate(new Timestamp(System.currentTimeMillis()));
         // set send by
         responseUserRequest.setSendBy(2);
-        responseRepository.sendResponseFromFeedback(adminId, responseUserRequest.getMessage(), responseUserRequest.getSendBy(),
-                responseUserRequest.getModifyDate(), responseUserRequest.getUserId(), responseUserRequest.getFeedbackId());
+        Response response = modelMapper.map(responseUserRequest, Response.class);
+        // set feedback
+        Feedback feedback = new Feedback();
+        feedback.setId(responseUserRequest.getFeedbackId());
+        response.setFeedback(feedback);
+        responseRepository.save(response);
     }
 
     @Override

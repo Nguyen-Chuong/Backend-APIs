@@ -20,6 +20,6 @@ public class ResponseUserRequest {
 
     private int feedbackId;
 
-    private int sendBy;
+    private int sendBy; // not required
 
 }
