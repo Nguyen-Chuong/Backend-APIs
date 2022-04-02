@@ -38,7 +38,7 @@ public class ResponseServiceImpl implements ResponseService {
         // get current timestamp
         responseAdminRequest.setModifyDate(new Timestamp(System.currentTimeMillis()));
         // set send by
-        responseAdminRequest.setSendBy(0);
+        responseAdminRequest.setSendBy(1);
         responseRepository.sendResponseFromFeedback(responseAdminRequest.getAdminId(), responseAdminRequest.getMessage(),
                 responseAdminRequest.getSendBy(), responseAdminRequest.getModifyDate(), userId, responseAdminRequest.getFeedbackId());
     }
@@ -51,7 +51,7 @@ public class ResponseServiceImpl implements ResponseService {
         // get current timestamp
         responseUserRequest.setModifyDate(new Timestamp(System.currentTimeMillis()));
         // set send by
-        responseUserRequest.setSendBy(1);
+        responseUserRequest.setSendBy(2);
         responseRepository.sendResponseFromFeedback(adminId, responseUserRequest.getMessage(), responseUserRequest.getSendBy(),
                 responseUserRequest.getModifyDate(), responseUserRequest.getUserId(), responseUserRequest.getFeedbackId());
     }
