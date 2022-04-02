@@ -11,6 +11,7 @@ import com.capstone_project.hbts.dto.Facility.ObjectFacility;
 import com.capstone_project.hbts.dto.ImageDTO;
 import com.capstone_project.hbts.dto.Room.RoomDetailDTO;
 import com.capstone_project.hbts.dto.Room.RoomTypeDTO;
+import com.capstone_project.hbts.entity.Hotel;
 import com.capstone_project.hbts.entity.RoomType;
 import com.capstone_project.hbts.entity.UserBooking;
 import com.capstone_project.hbts.entity.UserBookingDetail;
@@ -58,9 +59,14 @@ public class RoomTypeServiceImpl implements RoomTypeService {
     @Transactional
     @Override
     public void createRoomType(RoomTypeRequest roomTypeRequest) {
-        roomTypeRepository.addNewRoomType(roomTypeRequest.getAvailableRooms(), roomTypeRequest.getDealExpire(),
-                roomTypeRequest.getDealPercentage(), roomTypeRequest.getName(),1, roomTypeRequest.getNumberOfPeople(),
-                roomTypeRequest.getPrice(), roomTypeRequest.getQuantity(), roomTypeRequest.getHotelId());
+        roomTypeRequest.setStatus(1);
+        RoomType roomType = modelMapper.map(roomTypeRequest, RoomType.class);
+        // set hotel
+        Hotel hotel = new Hotel();
+        hotel.setId(roomTypeRequest.getHotelId());
+        roomType.setHotel(hotel);
+        // save it
+        roomTypeRepository.save(roomType);
     }
 
     @Override

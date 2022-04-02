@@ -26,4 +26,6 @@ public class RoomTypeRequest {
 
     private Timestamp dealExpire;
 
+    private int status;
+
 }
