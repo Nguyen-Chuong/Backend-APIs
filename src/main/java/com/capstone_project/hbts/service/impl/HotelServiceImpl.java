@@ -4,7 +4,9 @@ import com.capstone_project.hbts.dto.Hotel.HotelDTO;
 import com.capstone_project.hbts.dto.Hotel.HotelDetailDTO;
 import com.capstone_project.hbts.dto.RatingDTO;
 import com.capstone_project.hbts.dto.Report.ReviewDTO;
+import com.capstone_project.hbts.entity.District;
 import com.capstone_project.hbts.entity.Hotel;
+import com.capstone_project.hbts.entity.Provider;
 import com.capstone_project.hbts.entity.Review;
 import com.capstone_project.hbts.entity.RoomType;
 import com.capstone_project.hbts.entity.UserBooking;
@@ -302,10 +304,18 @@ public class HotelServiceImpl implements HotelService {
     public void addHotelByProvider(HotelRequest hotelRequest) {
         // set status pending: 3, if admin approved -> status 1, if admin denied -> status 5
         hotelRequest.setStatus(3);
+        // set district
+        District district = new District();
+        district.setId(hotelRequest.getDistrictId());
+        // set provider
+        Provider provider = new Provider();
+        provider.setId(hotelRequest.getProviderId());
+        Hotel hotel = modelMapper.map(hotelRequest, Hotel.class);
+        hotel.setDistrict(district);
+        hotel.setProvider(provider);
+
         // add new hotel
-        hotelRepository.addNewHotel(hotelRequest.getAddress(), hotelRequest.getAvatar(), hotelRequest.getDescription(),
-                hotelRequest.getEmail(), hotelRequest.getName(), hotelRequest.getPhone(), hotelRequest.getStatus(),
-                hotelRequest.getDistrictId(), hotelRequest.getProviderId(), hotelRequest.getStar(), hotelRequest.getTaxPercentage());
+        hotelRepository.save(hotel);
     }
 
     @Override

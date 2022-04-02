@@ -37,13 +37,6 @@ public interface HotelRepository extends JpaRepository<Hotel, Integer> {
 
     List<Hotel> getAllByProviderId(int providerId);
 
-    @Modifying
-    @Query(value = "insert into heroku_4fe5c149618a3f9.hotel(address, avatar, description, email, name, phone, status, district_id, provider_id, star, tax_percentage) " +
-            "values (:address, :avatar, :description, :email, :name, :phone, :status, :districtId, :providerId, :star, :taxPercentage)", nativeQuery = true)
-    void addNewHotel(@Param("address") String address, @Param("avatar") String avatar, @Param("description") String description, @Param("email") String email,
-                     @Param("name") String name, @Param("phone") String phone, @Param("status") int status, @Param("districtId") int districtId,
-                     @Param("providerId") int providerId, @Param("star") int star, @Param("taxPercentage") int taxPercentage);
-
     @Query(value = "SELECT h.status FROM Hotel h WHERE h.id = :hotelId")
     Integer viewHotelStatus(@Param("hotelId") int hotelId);
 
