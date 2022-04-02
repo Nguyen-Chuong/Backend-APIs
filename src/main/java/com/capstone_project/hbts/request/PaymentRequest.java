@@ -1,4 +1,4 @@
-package com.capstone_project.hbts.dto.Payment;
+package com.capstone_project.hbts.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter @Setter
 @NoArgsConstructor
-public class PaymentDTO {
+public class PaymentRequest {
 
     private Integer idService; // unique - not required
 

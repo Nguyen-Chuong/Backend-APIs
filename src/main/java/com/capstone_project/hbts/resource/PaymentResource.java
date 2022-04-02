@@ -1,7 +1,7 @@
 package com.capstone_project.hbts.resource;
 
 import com.capstone_project.hbts.constant.ErrorConstant;
-import com.capstone_project.hbts.dto.Payment.PaymentDTO;
+import com.capstone_project.hbts.request.PaymentRequest;
 import com.capstone_project.hbts.dto.Payment.PaymentResultDTO;
 import com.capstone_project.hbts.response.ApiResponse;
 import com.capstone_project.hbts.service.PaymentService;
@@ -28,10 +28,10 @@ public class PaymentResource {
      * Since the second times, user can choose cod, so they can pay the money at hotel
      */
     @PostMapping("/create-payment")
-    public ResponseEntity<?> createPayment(@RequestBody PaymentDTO paymentDTO) {
+    public ResponseEntity<?> createPayment(@RequestBody PaymentRequest paymentRequest) {
         log.info("REST request to create payment");
         try {
-            PaymentResultDTO paymentResultDTO = paymentService.createPayment(paymentDTO);
+            PaymentResultDTO paymentResultDTO = paymentService.createPayment(paymentRequest);
             return ResponseEntity.ok().body(new ApiResponse<>(200, paymentResultDTO, null));
         } catch (Exception e) {
             e.printStackTrace();

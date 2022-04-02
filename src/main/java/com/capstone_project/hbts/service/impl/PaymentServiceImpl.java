@@ -2,7 +2,7 @@ package com.capstone_project.hbts.service.impl;
 
 import com.capstone_project.hbts.constant.ValidateConstant;
 import com.capstone_project.hbts.decryption.DataDecryption;
-import com.capstone_project.hbts.dto.Payment.PaymentDTO;
+import com.capstone_project.hbts.request.PaymentRequest;
 import com.capstone_project.hbts.dto.Payment.PaymentResultDTO;
 import com.capstone_project.hbts.service.PaymentService;
 import lombok.SneakyThrows;
@@ -41,13 +41,13 @@ public class PaymentServiceImpl implements PaymentService {
 
     @SneakyThrows
     @Override
-    public PaymentResultDTO createPayment(PaymentDTO paymentDTO) {
+    public PaymentResultDTO createPayment(PaymentRequest paymentRequest) {
         // create new hashmap to store vnpay params
         Map<String, String> vnp_Params = new HashMap<>();
         vnp_Params.put("vnp_Version", ValidateConstant.VNP_VERSION);
         vnp_Params.put("vnp_Command", ValidateConstant.VNP_COMMAND);
         vnp_Params.put("vnp_TmnCode", ValidateConstant.VNP_TMN_CODE);
-        vnp_Params.put("vnp_Amount", String.valueOf(paymentDTO.getAmount()));
+        vnp_Params.put("vnp_Amount", String.valueOf(paymentRequest.getAmount()));
         vnp_Params.put("vnp_BankCode", null);
         // get current time zone to put created date
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
@@ -56,7 +56,7 @@ public class PaymentServiceImpl implements PaymentService {
         vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
         vnp_Params.put("vnp_CurrCode", ValidateConstant.VNP_CURRENCY_CODE);
         vnp_Params.put("vnp_Locale", ValidateConstant.VNP_LOCALE);
-        vnp_Params.put("vnp_OrderInfo", paymentDTO.getDescription());
+        vnp_Params.put("vnp_OrderInfo", paymentRequest.getDescription());
         vnp_Params.put("vnp_IpAddr", ValidateConstant.VNP_IP_ADDRESS);
         vnp_Params.put("vnp_OrderType", ValidateConstant.VNP_ORDER_TYPE);
         vnp_Params.put("vnp_ReturnUrl", ValidateConstant.VNP_RETURN_URL);
