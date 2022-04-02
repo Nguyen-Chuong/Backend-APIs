@@ -2,6 +2,7 @@ package com.capstone_project.hbts.service.impl;
 
 import com.capstone_project.hbts.dto.Report.FeedbackDTO;
 import com.capstone_project.hbts.entity.Feedback;
+import com.capstone_project.hbts.entity.Users;
 import com.capstone_project.hbts.repository.FeedbackRepository;
 import com.capstone_project.hbts.request.FeedbackRequest;
 import com.capstone_project.hbts.response.CustomPageImpl;
@@ -35,9 +36,13 @@ public class FeedbackServiceImpl implements FeedbackService {
         feedbackRequest.setModifyDate(new Timestamp(System.currentTimeMillis()));
         // not yet processed
         feedbackRequest.setIsProcessed(0);
-        feedbackRepository.sendFeedback(feedbackRequest.getType(), feedbackRequest.getSenderId(), feedbackRequest.getMessage(),
-                feedbackRequest.getModifyDate(), feedbackRequest.getIsProcessed(), feedbackRequest.getBookingId(),
-                feedbackRequest.getEmail(), feedbackRequest.getPhone());
+        // set sender
+        Users users = new Users();
+        users.setId(feedbackRequest.getSenderId());
+        Feedback feedback = modelMapper.map(feedbackRequest, Feedback.class);
+        feedback.setSender(users);
+        // save feedback
+        feedbackRepository.save(feedback);
     }
 
     @Override
