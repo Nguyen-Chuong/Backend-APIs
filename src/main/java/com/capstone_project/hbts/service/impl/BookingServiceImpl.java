@@ -2,9 +2,11 @@ package com.capstone_project.hbts.service.impl;
 
 import com.capstone_project.hbts.dto.Booking.BookingListDTO;
 import com.capstone_project.hbts.dto.Booking.UserBookingDTO;
+import com.capstone_project.hbts.entity.Hotel;
 import com.capstone_project.hbts.entity.RoomType;
 import com.capstone_project.hbts.entity.UserBooking;
 import com.capstone_project.hbts.entity.UserBookingDetail;
+import com.capstone_project.hbts.entity.Users;
 import com.capstone_project.hbts.repository.BookingDetailRepository;
 import com.capstone_project.hbts.repository.BookingRepository;
 import com.capstone_project.hbts.request.BookingDetailRequest;
@@ -161,11 +163,18 @@ public class BookingServiceImpl implements BookingService {
         // set booking status is 1-upcoming, user can cancel booking -> set to 3
         // completed a booking -> set to 2 - call when they paid money or hotel confirm
         bookingRequest.setStatus(1);
+        UserBooking userBooking = modelMapper.map(bookingRequest, UserBooking.class);
+        // set hotel
+        Hotel hotel = new Hotel();
+        hotel.setId(bookingRequest.getHotelId());
+        // set user
+        Users users = new Users();
+        users.setId(bookingRequest.getUserId());
+        userBooking.setHotel(hotel);
+        userBooking.setUsers(users);
         // save to db
-        bookingRepository.addNewBooking(bookingRequest.getBookedQuantity(), bookingRequest.getBookingDate(),
-                bookingRequest.getCheckIn(), bookingRequest.getCheckOut(), bookingRequest.getReviewStatus(),
-                bookingRequest.getStatus(), bookingRequest.getHotelId(), bookingRequest.getUserId(),
-                bookingRequest.getOtherRequirement(), bookingRequest.getType());
+        bookingRepository.save(userBooking);
+
         // get booking that just insert to db
         Integer bookingId = bookingRepository.getBookingIdJustInsert();
         // new list user booking detail for adding
@@ -185,9 +194,9 @@ public class BookingServiceImpl implements BookingService {
             roomType.setId(bookingDetailRequest.getRoomTypeId());
             userBookingDetail.setRoomType(roomType);
             // set user booking
-            UserBooking userBooking = new UserBooking();
-            userBooking.setId(bookingId);
-            userBookingDetail.setUserBooking(userBooking);
+            UserBooking userBookingAddForDetail = new UserBooking();
+            userBookingAddForDetail.setId(bookingId);
+            userBookingDetail.setUserBooking(userBookingAddForDetail);
             // add all of them to list
             listBookingDetailToAdd.add(userBookingDetail);
         }
