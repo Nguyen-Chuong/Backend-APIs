@@ -19,10 +19,10 @@ public interface RoomTypeRepository extends JpaRepository<RoomType, Integer> {
 
     @Modifying
     @Query(value = "insert into heroku_4fe5c149618a3f9.room_type(available_rooms, deal_expire, deal_percentage, name, " +
-            "number_of_people, price, quantity, hotel_id) values (:availableRooms, :dealExpire, :dealPercentage, :name, " +
-            ":numberOfPeople, :price, :quantity, :hotelId);", nativeQuery = true)
+            "number_of_people, price, quantity, hotel_id, status) values (:availableRooms, :dealExpire, :dealPercentage, :name, " +
+            ":numberOfPeople, :price, :quantity, :hotelId, :status)", nativeQuery = true)
     void addNewRoomType(@Param("availableRooms") int availableRooms, @Param("dealExpire") Timestamp dealExpire,
-                        @Param("dealPercentage") int dealPercentage, @Param("name") String name,
+                        @Param("dealPercentage") int dealPercentage, @Param("name") String name, @Param("status") int status,
                         @Param("numberOfPeople") int numberOfPeople, @Param("price") long price, @Param("quantity") int quantity,
                         @Param("hotelId") int hotelId);
 

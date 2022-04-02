@@ -59,7 +59,7 @@ public class RoomTypeServiceImpl implements RoomTypeService {
     @Override
     public void createRoomType(RoomTypeRequest roomTypeRequest) {
         roomTypeRepository.addNewRoomType(roomTypeRequest.getAvailableRooms(), roomTypeRequest.getDealExpire(),
-                roomTypeRequest.getDealPercentage(), roomTypeRequest.getName(), roomTypeRequest.getNumberOfPeople(),
+                roomTypeRequest.getDealPercentage(), roomTypeRequest.getName(),1, roomTypeRequest.getNumberOfPeople(),
                 roomTypeRequest.getPrice(), roomTypeRequest.getQuantity(), roomTypeRequest.getHotelId());
     }
 

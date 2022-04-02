@@ -300,7 +300,7 @@ public class HotelServiceImpl implements HotelService {
     @Transactional
     @Override
     public void addHotelByProvider(HotelRequest hotelRequest) {
-        // set status pending: 3, if admin approved -> status 1, if admin denied -> delete it
+        // set status pending: 3, if admin approved -> status 1, if admin denied -> status 5
         hotelRequest.setStatus(3);
         // add new hotel
         hotelRepository.addNewHotel(hotelRequest.getAddress(), hotelRequest.getAvatar(), hotelRequest.getDescription(),
