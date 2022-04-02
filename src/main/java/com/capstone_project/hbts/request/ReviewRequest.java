@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Timestamp;
+
 @Getter @Setter
 @NoArgsConstructor
 public class ReviewRequest {
@@ -23,5 +25,9 @@ public class ReviewRequest {
     private String reviewDetail;
 
     private int userBookingId;
+
+    private float total; // not required
+
+    private Timestamp reviewDate; // not required
 
 }

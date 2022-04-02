@@ -72,12 +72,15 @@ public class ReviewServiceImpl implements ReviewService {
         // count total average
         float total = (reviewRequest.getCleanliness() + reviewRequest.getService() + reviewRequest.getFacilities()
                 + reviewRequest.getLocation() + reviewRequest.getValueForMoney()) / 5;
-        // add review
-        reviewRepository.addNewReview(reviewRequest.getCleanliness(), reviewRequest.getFacilities(), reviewRequest.getLocation(),
-                reviewRequest.getService(), reviewRequest.getValueForMoney(), reviewRequest.getReviewTitle(),
-                reviewRequest.getReviewDetail(), reviewRequest.getUserBookingId(), total, new Timestamp(System.currentTimeMillis()));
+        reviewRequest.setTotal(total);
+        // set time
+        reviewRequest.setReviewDate(new Timestamp(System.currentTimeMillis()));
+        Review review = modelMapper.map(reviewRequest, Review.class);
         // get user booking need to update review status
         UserBooking userBooking = bookingRepository.getBookingById(reviewRequest.getUserBookingId());
+        review.setUserBooking(userBooking);
+        // save review
+        reviewRepository.save(review);
         // set status
         userBooking.setReviewStatus(1);
         // save it again
