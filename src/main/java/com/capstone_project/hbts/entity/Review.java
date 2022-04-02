@@ -50,15 +50,14 @@ public class Review extends Auditable<String> implements Serializable {
     @Column(name = "facilities")
     private float facilities; // type
 
+    @Column(name = "total")
+    private float total; // average score
+
     @Column(name = "review_date")
     private Timestamp reviewDate;
 
     @ManyToOne @JoinColumn(name = "userBooking_Id")
     private UserBooking userBooking;
-
-    public float totalScore(){
-        return this.getValueForMoney() + this.getService() + this.getLocation() + this.getCleanliness() + this.getFacilities();
-    }
 
 }
 

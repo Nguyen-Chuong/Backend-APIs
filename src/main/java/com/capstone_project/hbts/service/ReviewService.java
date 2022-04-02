@@ -11,7 +11,7 @@ public interface ReviewService {
     /**
      * Load Review by hotelId
      */
-    Page<ReviewDTO> loadReview(int hotelId, int page, int pageSize);
+    Page<ReviewDTO> loadReview(int hotelId, int page, int pageSize, int criteria);
 
     /**
      * For user to add new review about hotel

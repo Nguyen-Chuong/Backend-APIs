@@ -32,4 +32,6 @@ public class ReviewDTO {
 
     private Timestamp reviewDate;
 
+    private float total;
+
 }

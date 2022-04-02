@@ -38,9 +38,14 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Page<ReviewDTO> loadReview(int hotelId, int page, int pageSize) {
+    public Page<ReviewDTO> loadReview(int hotelId, int page, int pageSize, int criteria) {
         // sort criteria
-        Sort sort = Sort.by("reviewDate").descending();
+        Sort sort;
+        if (criteria == 1) {
+            sort = Sort.by("reviewDate").descending();
+        } else {
+            sort = Sort.by("total").descending();
+        }
         Pageable pageable = PageRequest.of(page, pageSize, sort);
         // get list user booking
         List<UserBooking> userBookingList = bookingRepository.findUserBookingByHotelId(hotelId);
@@ -52,7 +57,7 @@ public class ReviewServiceImpl implements ReviewService {
         List<Review> listReview = new ArrayList<>(pageReview.getContent());
         List<ReviewDTO> reviewDTOList = listReview.stream().map(item -> modelMapper.map(item, ReviewDTO.class))
                 .collect(Collectors.toList());
-        for(int i = 0; i < reviewDTOList.size(); i++){
+        for (int i = 0; i < reviewDTOList.size(); i++) {
             // set user name for review
             reviewDTOList.get(i).setUsername(listReview.get(i).getUserBooking().getUsers().getUsername().substring(2));
             // set avatar for user review
@@ -64,9 +69,13 @@ public class ReviewServiceImpl implements ReviewService {
     @Transactional
     @Override
     public void addReview(ReviewRequest reviewRequest) {
+        // count total average
+        float total = (reviewRequest.getCleanliness() + reviewRequest.getService() + reviewRequest.getFacilities()
+                + reviewRequest.getLocation() + reviewRequest.getValueForMoney()) / 5;
+        // add review
         reviewRepository.addNewReview(reviewRequest.getCleanliness(), reviewRequest.getFacilities(), reviewRequest.getLocation(),
                 reviewRequest.getService(), reviewRequest.getValueForMoney(), reviewRequest.getReviewTitle(),
-                reviewRequest.getReviewDetail(), reviewRequest.getUserBookingId(), new Timestamp(System.currentTimeMillis()));
+                reviewRequest.getReviewDetail(), reviewRequest.getUserBookingId(), total, new Timestamp(System.currentTimeMillis()));
         // get user booking need to update review status
         UserBooking userBooking = bookingRepository.getBookingById(reviewRequest.getUserBookingId());
         // set status
@@ -86,7 +95,7 @@ public class ReviewServiceImpl implements ReviewService {
         // sort by total score and limit result return
         List<Review> listSorted = listReview
                 .stream()
-                .sorted((Comparator.comparing(Review::totalScore).reversed()))
+                .sorted((Comparator.comparing(Review::getTotal).reversed()))
                 .collect(Collectors.toList())
                 .subList(0, limit);
         return listSorted.stream().map(item -> modelMapper.map(item, ReviewDTO.class)).collect(Collectors.toList());
@@ -106,7 +115,7 @@ public class ReviewServiceImpl implements ReviewService {
         ArrayList<Integer> listBookingId = new ArrayList<>();
         userBookingList.forEach(item -> listBookingId.add(item.getId()));
         List<Review> listReview = reviewRepository.loadReviewByBookingIdNoPaging(listBookingId);
-        return  listReview.size();
+        return listReview.size();
     }
 
 }

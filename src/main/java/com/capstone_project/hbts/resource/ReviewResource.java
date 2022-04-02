@@ -40,7 +40,7 @@ public class ReviewResource {
      */
     @GetMapping("/reviews")
     public ResponseEntity<?> getReview(@RequestParam String hotelId, @RequestParam(defaultValue = ValidateConstant.PAGE) int page,
-                                       @RequestParam(defaultValue = ValidateConstant.PER_PAGE) int pageSize) {
+                                       @RequestParam(defaultValue = ValidateConstant.PER_PAGE) int pageSize, @RequestParam int criteria) {
         log.info("REST request to get list review by hotel id");
         int id;
         try {
@@ -49,7 +49,7 @@ public class ReviewResource {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001_LABEL));
         }
         try {
-            Page<ReviewDTO> pageReview = reviewService.loadReview(id, page, pageSize);
+            Page<ReviewDTO> pageReview = reviewService.loadReview(id, page, pageSize, criteria);
             int totalNumberReview = reviewService.totalReview(id);
             DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(pageReview.getContent(),
                     totalNumberReview, page, pageReview.getSize());
