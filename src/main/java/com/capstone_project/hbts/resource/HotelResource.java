@@ -47,6 +47,9 @@ public class HotelResource {
         this.dataDecryption = dataDecryption;
     }
 
+    /**
+     * @apiNote for searching, public for everyone
+     */
     @GetMapping("/public/search-hotel")
     public ResponseEntity<?> searchHotel(@RequestParam int districtId, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateIn,
                                          @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateOut, @RequestParam int numberOfPeople,

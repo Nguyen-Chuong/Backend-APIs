@@ -36,7 +36,7 @@ public class JwtTokenUtil {
         return getClaimFromToken(token, Claims::getId);
     }
 
-    // get all Claims from token (body, subject, id, .etc..)
+    // get all Claims from token (body, subject, id, etc...)
     public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = getAllClaimsFromToken(token);
         return claimsResolver.apply(claims);

@@ -35,7 +35,6 @@ public class ResponseResource {
 
     /**
      * @apiNote for manager/admin to send response
-     * admin/manager cannot send response twice a time till user reply them disable button reply
      */
     @PostMapping("/send-response/user")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
@@ -51,8 +50,7 @@ public class ResponseResource {
     }
 
     /**
-     * @apiNote for user to send response if user click view feedback and see no response, disable button reply that they cannot call this api
-     * or when they already clicked send response, they cannot send again till admin/manager reply
+     * @apiNote for user to send response
      */
     @PostMapping("/send-response/admin")
     public ResponseEntity<?> sendResponseToAdmin(@RequestBody ResponseUserRequest responseUserRequest) {

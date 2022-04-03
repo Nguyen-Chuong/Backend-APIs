@@ -164,7 +164,7 @@ public class RoomTypeResource {
     }
 
     /**
-     * @apiNote create a sql event to auto update deal percentage via date expired
+     * @apiNote create a sql event to auto update deal percentage when date expired
      */
     @PatchMapping("/create-event-update-deal")
     public ResponseEntity<?> createEventUpdateDeal() {
@@ -179,7 +179,7 @@ public class RoomTypeResource {
     }
 
     /**
-     * @apiNote for admin or provider can vie
+     * @apiNote for admin or provider can view
      */
     @GetMapping("/list-room-type")
     public ResponseEntity<?> getListRoomTypeByHotel(@RequestParam String hotelId) {

@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class OTPServiceImpl implements OTPService {
-    //cache based on username and OTP MAX 8
+
     private static final Integer EXPIRE_MINUTES = 3;
 
     private final LoadingCache<String, Integer> otpCache;
@@ -26,7 +26,7 @@ public class OTPServiceImpl implements OTPService {
                 });
     }
 
-    // This method is used to push the otp number against Key. Rewrite the OTP if it exists
+    // This method is used to push the otp number with Key. Rewrite the OTP if it exists
     // Using email as key
     @Override
     public int generateOtp(String key) {
@@ -36,7 +36,7 @@ public class OTPServiceImpl implements OTPService {
         return otp;
     }
 
-    // This method is used to return the otp number against Key -> Key values is email
+    // This method is used to return the otp number with Key -> Key values is email
     @Override
     public int getOtp(String key) {
         try {

@@ -26,6 +26,9 @@ public class BenefitTypeResource {
         this.benefitTypeService = benefitTypeService;
     }
 
+    /**
+     * @apiNote to get list all benefit type
+     */
     @GetMapping("/get-benefit-type")
     public ResponseEntity<?> getAllBenefitType() {
         log.info("REST request to get all benefit type");
@@ -38,6 +41,9 @@ public class BenefitTypeResource {
         }
     }
 
+    /**
+     * @apiNote for admin to add benefit type
+     */
     @PostMapping("/add-benefit-type")
     public ResponseEntity<?> addBenefitType(@RequestBody BenefitTypeRequest benefitTypeRequest) {
         log.info("REST request to add benefit type");

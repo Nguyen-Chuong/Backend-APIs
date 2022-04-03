@@ -70,6 +70,9 @@ public class BookingResource {
         }
     }
 
+    /**
+     * @apiNote get bookings need to review or not
+     */
     @GetMapping("/bookings-review/{reviewStatus}")
     public ResponseEntity<?> getUserBookingReview(@PathVariable int reviewStatus, @RequestHeader("Authorization") String jwttoken) {
         log.info("REST request to get list user's booking need to review or not");
@@ -83,6 +86,9 @@ public class BookingResource {
         }
     }
 
+    /**
+     * @apiNote to get number booking completed
+     */
     @GetMapping("/bookings-completed")
     public ResponseEntity<?> getNumberBookingsCompleted(@RequestHeader("Authorization") String jwttoken) {
         log.info("REST request to get number booking completed by user id");
@@ -96,6 +102,9 @@ public class BookingResource {
         }
     }
 
+    /**
+     * @apiNote get list booking by status
+     */
     @GetMapping("/bookings-by-status/{status}")
     public ResponseEntity<?> getUserBookingByStatus(@PathVariable int status, @RequestHeader("Authorization") String jwttoken) {
         log.info("REST request to get list user's booking by status");
@@ -109,6 +118,9 @@ public class BookingResource {
         }
     }
 
+    /**
+     * @apiNote only for admin/manager to get all bookings
+     */
     @GetMapping("/get-all-booking")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
     public ResponseEntity<?> getAllUserBooking(@RequestParam(defaultValue = ValidateConstant.PAGE) int page,
@@ -125,6 +137,9 @@ public class BookingResource {
         }
     }
 
+    /**
+     * @apiNote get booking by id
+     */
     @GetMapping("/booking")
     public ResponseEntity<?> getBookingById(@RequestParam String bookingId) {
         log.info("REST request to get user's booking by id");

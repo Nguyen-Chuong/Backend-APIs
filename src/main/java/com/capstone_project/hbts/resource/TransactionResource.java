@@ -28,7 +28,7 @@ public class TransactionResource {
     }
 
     /**
-     * @apiNote get transaction info just process
+     * @apiNote insert record and get transaction info just process
      */
     @GetMapping("/get-transaction-info")
     public ResponseEntity<?> getTransactionInfo(@RequestHeader("Authorization") String jwttoken, @RequestParam long vnp_Amount,
@@ -42,9 +42,8 @@ public class TransactionResource {
             if (transactionService.isTransactionExisted(vnp_TransactionNo)) {
                 return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_TRAN_001_LABEL));
             } else {
-                TransactionDTO transactionDTO = transactionService.getTransactionInfo(vnp_Amount, vnp_BankCode,
-                        vnp_BankTranNo, vnp_CardType, vnp_OrderInfo,
-                        vnp_PayDate, vnp_ResponseCode, vnp_TransactionNo, vnp_TxnRef, userId);
+                TransactionDTO transactionDTO = transactionService.getTransactionInfo(vnp_Amount, vnp_BankCode, vnp_BankTranNo,
+                        vnp_CardType, vnp_OrderInfo, vnp_PayDate, vnp_ResponseCode, vnp_TransactionNo, vnp_TxnRef, userId);
                 return ResponseEntity.ok().body(new ApiResponse<>(200, transactionDTO, null));
             }
         } catch (Exception e) {

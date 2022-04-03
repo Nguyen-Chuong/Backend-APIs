@@ -26,6 +26,9 @@ public class FacilityTypeResource {
         this.facilityTypeService = facilityTypeService;
     }
 
+    /**
+     * @apiNote to get all facility type
+     */
     @GetMapping("/get-facility-type")
     public ResponseEntity<?> getAllFacilityType() {
         log.info("REST request to get all facility type");
@@ -38,6 +41,9 @@ public class FacilityTypeResource {
         }
     }
 
+    /**
+     * @apiNote to add new facility type
+     */
     @PostMapping("/add-facility-type")
     public ResponseEntity<?> addFacilityType(@RequestBody FacilityTypeRequest facilityTypeRequest) {
         log.info("REST request to add facility type");

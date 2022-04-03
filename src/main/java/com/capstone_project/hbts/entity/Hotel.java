@@ -57,8 +57,6 @@ public class Hotel extends Auditable<String> implements Serializable {
 
     @Column(name = "status")
     private int status; // 1-active, 2-deactivated, 3-pending, 4-banned, 5-denied
-    // (if pending: approved -> 1-active, denied -> 5-denied) (if provider disable -> deactivated)
-    // if admin banned -> cannot re-active or request again
 
     @ManyToOne @JoinColumn(name = "district_id")
     private District district;

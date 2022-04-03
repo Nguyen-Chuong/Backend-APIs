@@ -115,7 +115,6 @@ public class UserServiceImpl implements UserService{
     public void updateVipStatus(int userId) {
         int numberBookingCompleted = bookingRepository.numberBookingCompleted(userId);
         int vipId = 0;
-        // consider number get from db cuz it can be change later
         List<VipDTO> listVipDTO = vipRepository.findAll().stream().map(item -> modelMapper.map(item, VipDTO.class))
                 .collect(Collectors.toList());
         for (VipDTO vipDTO : listVipDTO) {

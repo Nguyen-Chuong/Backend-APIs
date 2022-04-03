@@ -30,7 +30,7 @@ public class UserBookingDetail implements Serializable {
     private Integer id;
 
     @Column(name = "paid")
-    private BigDecimal paid; // this is the price that user have to pay for this room type
+    private BigDecimal paid;
 
     @Column(name = "quantity")
     private int quantity;

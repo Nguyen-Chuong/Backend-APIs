@@ -36,6 +36,9 @@ public class FacilityResource {
         this.facilityService = facilityService;
     }
 
+    /**
+     * @apiNote view list facility by type
+     */
     @GetMapping("/list-facility")
     public ResponseEntity<?> getListFacilityByType(@RequestParam String facilityTypeId) {
         log.info("REST request to get list facility by type");

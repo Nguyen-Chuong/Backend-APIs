@@ -165,7 +165,7 @@ public class ProviderResource {
     }
 
     /**
-     * @apiNote for user who forgot their password can refresh new password via email
+     * @apiNote for provider who forgot their password can refresh new password via email
      */
     @PatchMapping("/authenticate/provider/forgot-password")
     public ResponseEntity<?> changeForgotPassword(@RequestParam String email, @RequestParam String newPass) {

@@ -30,6 +30,9 @@ public class DistrictResource {
         this.dataDecryption = dataDecryption;
     }
 
+    /**
+     * @apiNote for searching page
+     */
     @GetMapping("/public/search-city-district")
     public ResponseEntity<?> searchCityDistrict(@RequestParam String text) {
         log.info("REST request to search city and district by text");
@@ -42,6 +45,9 @@ public class DistrictResource {
         }
     }
 
+    /**
+     * @apiNote get all district in city
+     */
     @GetMapping("/get-district")
     public ResponseEntity<?> getDistrictInCity(@RequestParam String cityId) {
         log.info("REST request to get all district in city");
@@ -60,6 +66,9 @@ public class DistrictResource {
         }
     }
 
+    /**
+     * @apiNote get top hot location
+     */
     @GetMapping("/public/hot-location")
     public ResponseEntity<?> getTopHotLocation(@RequestParam String topLocation) {
         log.info("REST request to get top hot location");

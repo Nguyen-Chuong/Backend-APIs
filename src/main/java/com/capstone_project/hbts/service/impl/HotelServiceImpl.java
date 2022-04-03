@@ -62,7 +62,7 @@ public class HotelServiceImpl implements HotelService {
     }
 
     // get lowest price (included sale) in a hotel
-    // check if hotel have no room => return a new empty room :)
+    // if hotel have no room => return a new empty room :)
     public RoomType getLowestPriceInHotel(Set<RoomType> roomTypes) {
         List<Long> listPrice = new ArrayList<>();
         // add room prices to list to compare

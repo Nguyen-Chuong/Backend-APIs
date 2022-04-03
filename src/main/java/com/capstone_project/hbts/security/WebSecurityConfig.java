@@ -54,7 +54,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // csrf attack
         http.cors().and().csrf().disable()
-                // dont authenticate this request
                 .authorizeRequests()
                 // can authorize here by urls .hasRole("NAME") or pre-authorize in resource
                 .antMatchers("/api/v1/authenticate/**").permitAll()
@@ -73,9 +72,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // configure AuthenticationManager so that it knows from where to load
-        // user for matching credentials - user customUserDetailsService below w/ method loadUserByUsername
-        // Use BCryptPasswordEncoder to encode password that user sent for checking
+        // configure AuthenticationManager so that it knows from where to load user for matching credentials
+        // use BCryptPasswordEncoder to encode password that user sent for checking
         super.configure(auth);
         auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
     }

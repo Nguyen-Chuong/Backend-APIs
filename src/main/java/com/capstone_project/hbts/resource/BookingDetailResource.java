@@ -28,6 +28,9 @@ public class BookingDetailResource {
         this.dataDecryption = dataDecryption;
     }
 
+    /**
+     * @apiNote view booking detail of one booking
+     */
     @GetMapping("/booking-detail")
     public ResponseEntity<?> getBookingDetailByBookingId(@RequestParam String bookingId) {
         log.info("REST request to get list booking detail by booking ID");

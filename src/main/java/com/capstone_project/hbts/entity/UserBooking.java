@@ -49,7 +49,7 @@ public class UserBooking extends Auditable<String> implements Serializable {
     private Timestamp bookingDate;
 
     @Column(name = "booked_quantity")
-    private int bookedQuantity; // number of people booked = total booking detail, process on FE
+    private int bookedQuantity;
 
     @Column(name = "other_requirement")
     private String otherRequirement;

@@ -38,9 +38,8 @@ public class UserResource {
     }
 
     /**
-     * @apiNote for only user register, manager will be added by admin
+     * @apiNote for only user register, admin and manager account cannot be registered
      */
-    // add a new admin account / assign by type, admin and manager account cannot be registered
     @PostMapping("/register/user")
     public ResponseEntity<?> registerUser(@RequestBody UserRequest userRequest) {
         log.info("REST request to register a new user : {}", userRequest);
