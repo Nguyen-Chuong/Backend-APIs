@@ -57,7 +57,7 @@ public class PaymentServiceImpl implements PaymentService {
         vnp_Params.put("vnp_CurrCode", ValidateConstant.VNP_CURRENCY_CODE);
         vnp_Params.put("vnp_Locale", ValidateConstant.VNP_LOCALE);
         vnp_Params.put("vnp_OrderInfo", paymentRequest.getDescription());
-        vnp_Params.put("vnp_IpAddr", ValidateConstant.VNP_IP_ADDRESS);
+        vnp_Params.put("vnp_IpAddr", paymentRequest.getIpAddress());
         vnp_Params.put("vnp_OrderType", ValidateConstant.VNP_ORDER_TYPE);
         vnp_Params.put("vnp_ReturnUrl", ValidateConstant.VNP_RETURN_URL);
         vnp_Params.put("vnp_TxnRef", createID());
