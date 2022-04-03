@@ -43,8 +43,10 @@ public class ReviewServiceImpl implements ReviewService {
         Sort sort;
         if (criteria == 1) {
             sort = Sort.by("reviewDate").descending();
-        } else {
+        } else if (criteria == 2) {
             sort = Sort.by("total").descending();
+        } else {
+            sort = Sort.by("total").ascending();
         }
         Pageable pageable = PageRequest.of(page, pageSize, sort);
         // get list user booking
