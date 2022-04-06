@@ -37,7 +37,7 @@ public class ReviewResource {
     /**
      * @apiNote for admin/user/provider can view
      */
-    @GetMapping("/reviews")
+    @GetMapping("/public/reviews")
     public ResponseEntity<?> getReview(@RequestParam String hotelId, @RequestParam(defaultValue = ValidateConstant.PAGE) int page,
                                        @RequestParam(defaultValue = ValidateConstant.PER_PAGE) int pageSize, @RequestParam int criteria) {
         log.info("REST request to get list review by hotel id");
