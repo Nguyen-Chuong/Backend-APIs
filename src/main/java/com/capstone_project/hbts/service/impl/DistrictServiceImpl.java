@@ -37,7 +37,7 @@ public class DistrictServiceImpl implements DistrictService {
         // new object result search from city and district searched
         for (CityDistrict cityDistrict : list) {
             ResultSearch resultSearch = new ResultSearch(cityDistrict.getId(), cityDistrict.getDistrictName()
-                    + " District, " + cityDistrict.getCityName());
+                     + cityDistrict.getCityName());
             listResultSearch.add(resultSearch);
         }
         return listResultSearch;
