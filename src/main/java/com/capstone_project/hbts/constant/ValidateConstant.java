@@ -15,28 +15,29 @@ public class ValidateConstant {
     }
 
     // mail cancel
-    public static final String EMAIL_SUBJECT_CANCEL = "Booking Canceled Travesily Booking ID ";
+    public static final String EMAIL_SUBJECT_CANCEL = "[Travesily Booking Cancelled] Booking ID ";
 
     public static String getCancelBookingContent(){
-        return "<h3>Hi, </h3></br><h3>We have confirmed the cancellation of your reservation</h3></br>" +
-                "<h3>Thank you for booking with Travesily!</h3></br>";
+        return "<p>Hi, </p></br><p>We have confirmed the cancellation of your reservation</p></br>"
+                + "<p>Thank you for booking with Travesily!</p></br>"
+                + "<p>Thanks, regards </p> <p>This email was sent by Travesily Service Center</p></br>";
     }
 
     // mail confirm
-    public static final String EMAIL_SUBJECT_CONFIRM = "Confirmation for reservation number Booking ID ";
+    public static final String EMAIL_SUBJECT_CONFIRM = "[Confirmation] Reservation number Booking ID ";
 
     public static String getConfirmBookingContent(){
-        return "<h3>Hi, </h3></br><h3>Your booking is now confirmed !</h3></br>" +
-                "<h3>Thank you for booking with Travesily!</h3></br>";
+        return "<p>Hi, </p></br><p>Your booking is now confirmed !</p></br>" + "<p>Thank you for booking with Travesily!</p></br>"
+                + "<p>Thanks, regards </p> <p>This email was sent by Travesily Service Center</p></br>";
     }
 
     // mail response user feedback
-    public static final String EMAIL_SUBJECT_RESPONSE = "Response from Travesily Customer Service Center";
+    public static final String EMAIL_SUBJECT_RESPONSE = "[Response] Travesily Service Center";
 
     public static String getResponseFeedbackContent(String message){
-        return "<h3>Hi, </h3></br> <h3>Here is new our response for your feedback: </h3></br>" + message +
-                "<h3>Thank you for contacting Travesily. We hope you have received the help you need.</h3></br>" +
-                "<h3>Thank you for using our service</h3></br>";
+        return "Hi, \n\nHere is new our response for your feedback: \n" + "'" + message + "'" +
+                "\n\nThank you for contacting Travesily. We hope you have received the help you need."
+                + "\n\nThanks \nRegards, \n\nThis email was sent by Travesily Service Center";
     }
 
     // constants payment

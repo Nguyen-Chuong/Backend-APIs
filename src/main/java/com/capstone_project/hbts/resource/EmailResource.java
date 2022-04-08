@@ -141,7 +141,7 @@ public class EmailResource {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_DATA_001_LABEL));
         }
         try {
-            emailService.sendHTMLMail(emailDecrypted, ValidateConstant.EMAIL_SUBJECT_RESPONSE,
+            emailService.send(emailDecrypted, ValidateConstant.EMAIL_SUBJECT_RESPONSE,
                     ValidateConstant.getResponseFeedbackContent(feedbackRequest.getMessage()));
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
         } catch (Exception e) {
