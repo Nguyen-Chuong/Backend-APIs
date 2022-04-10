@@ -3,6 +3,7 @@ package com.capstone_project.hbts.resource;
 import com.capstone_project.hbts.constant.ErrorConstant;
 import com.capstone_project.hbts.constant.ValidateConstant;
 import com.capstone_project.hbts.decryption.DataDecryption;
+import com.capstone_project.hbts.dto.ChartDTO;
 import com.capstone_project.hbts.dto.actor.ProviderDTO;
 import com.capstone_project.hbts.request.ProviderRequest;
 import com.capstone_project.hbts.response.ApiResponse;
@@ -12,6 +13,7 @@ import com.capstone_project.hbts.service.ProviderService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,6 +26,10 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 @RestController
 @Log4j2
@@ -182,6 +188,26 @@ public class ProviderResource {
         try {
             providerService.changeForgotPassword(emailDecrypted, newPasswordEncoded);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
+        }
+    }
+
+    /**
+     * @apiNote for provider can get chart data
+     */
+    @GetMapping("/chart-data")
+    public ResponseEntity<?> getChartData(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
+                                          @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate,
+                                          @RequestHeader("Authorization") String jwttoken) {
+        log.info("REST request to get chart data for provider");
+        try {
+            String providerName = jwtTokenUtil.getUsernameFromToken(jwttoken.substring(7));
+            LocalDate fromDateLocal = fromDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate toDateLocal = toDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            ChartDTO chartDTO = providerService.getChartData(fromDateLocal, toDateLocal, providerName);
+            return ResponseEntity.ok().body(new ApiResponse<>(200, chartDTO, null));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));

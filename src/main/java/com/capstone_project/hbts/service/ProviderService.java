@@ -1,9 +1,12 @@
 package com.capstone_project.hbts.service;
 
+import com.capstone_project.hbts.dto.ChartDTO;
 import com.capstone_project.hbts.dto.actor.ProviderDTO;
 import com.capstone_project.hbts.request.ProviderRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.time.LocalDate;
 
 public interface ProviderService {
 
@@ -61,5 +64,10 @@ public interface ProviderService {
      * provider change forgot password
      */
     void changeForgotPassword(String email, String newPass);
+
+    /**
+     * get chart data for metric
+     */
+    ChartDTO getChartData(LocalDate fromDate, LocalDate toDate, String providerName);
 
 }

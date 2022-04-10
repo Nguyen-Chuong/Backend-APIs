@@ -1,7 +1,10 @@
 package com.capstone_project.hbts.service.impl;
 
+import com.capstone_project.hbts.dto.ChartDTO;
 import com.capstone_project.hbts.dto.actor.ProviderDTO;
+import com.capstone_project.hbts.entity.Hotel;
 import com.capstone_project.hbts.entity.Provider;
+import com.capstone_project.hbts.entity.UserBooking;
 import com.capstone_project.hbts.repository.ProviderRepository;
 import com.capstone_project.hbts.request.ProviderRequest;
 import com.capstone_project.hbts.response.CustomPageImpl;
@@ -13,7 +16,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -108,6 +115,38 @@ public class ProviderServiceImpl implements ProviderService {
     @Override
     public void changeForgotPassword(String email, String newPass) {
         providerRepository.changeProviderForgotPassword(email, newPass);
+    }
+
+    @Override
+    public ChartDTO getChartData(LocalDate fromDate, LocalDate toDate, String providerName) {
+        // to get all hotel of this provider that has booking
+        Set<Hotel> setHotel = providerRepository.getProviderByUsername(providerName).getListHotel().stream()
+                .filter(item -> item.getListUserBooking().size() > 0).collect(Collectors.toSet());
+        // to get all booking of this hotel
+        List<UserBooking> listBookingOfAllHotel = new ArrayList<>();
+        for(Hotel hotel : setHotel){
+            listBookingOfAllHotel.addAll(hotel.getListUserBooking());
+        }
+        // range date in chart
+        List<LocalDate> localDate = new ArrayList<>();
+        for (LocalDate date = fromDate; date.isBefore(toDate); date = date.plusDays(1)) {
+            localDate.add(date);
+        }
+        // range date to display
+        List<String> labels = localDate.stream().map(item -> item.getDayOfMonth() + "/" + item.getMonth()).collect(Collectors.toList());
+        // data (number of booking) in that date
+        List<Integer> data = new ArrayList<>();
+        for(LocalDate date : localDate){
+            // get number of bookings
+            int number = (int) listBookingOfAllHotel.stream().filter(item -> item.getCheckIn().toInstant().atZone(ZoneId.systemDefault())
+                    .toLocalDate().equals(date)).filter(item -> item.getStatus() == 1 || item.getStatus() == 2).count();
+            data.add(number);
+        }
+        // data return
+        ChartDTO chartDTO = new ChartDTO();
+        chartDTO.setLabels(labels);
+        chartDTO.setData(data);
+        return chartDTO;
     }
 
 }
