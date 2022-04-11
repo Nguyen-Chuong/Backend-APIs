@@ -143,4 +143,9 @@ public class UserServiceImpl implements UserService{
         userRepository.deleteAccount(userId);
     }
 
+    @Override
+    public int getNumberOfUserActive() {
+        return userRepository.getNumberOfUserActive();
+    }
+
 }

@@ -77,9 +77,10 @@ public class AdminResource {
                                         @RequestParam(defaultValue = ValidateConstant.PER_PAGE) int pageSize) {
         log.info("REST request to get all user for admin");
         try {
+            int numberOfUserActive = userService.getNumberOfUserActive();
             Page<UserDTO> userDTOPage = adminService.getAllUser(PageRequest.of(page, pageSize));
             DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(userDTOPage.getContent(),
-                    userDTOPage.getTotalElements(), page, userDTOPage.getSize());
+                    numberOfUserActive, page, userDTOPage.getSize());
             return ResponseEntity.ok().body(new ApiResponse<>(200, dataPagingResponse, null));
         } catch (Exception e) {
             e.printStackTrace();

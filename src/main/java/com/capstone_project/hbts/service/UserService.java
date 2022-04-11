@@ -65,4 +65,9 @@ public interface UserService {
      */
     void deleteAccount(int userId);
 
+    /**
+     * get total number of user
+     */
+    int getNumberOfUserActive();
+
 }
