@@ -81,9 +81,10 @@ public class HotelResource {
                                          @RequestParam(defaultValue = ValidateConstant.PER_PAGE) int pageSize) {
         log.info("REST request to get all hotel by status for admin");
         try {
+            int numberOfHotelNoPaging = hotelService.getNumberOfHotelNoPaging(status);
             Page<HotelDTO> hotelDTOPage = hotelService.getAllHotels(status, PageRequest.of(page, pageSize));
             DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(hotelDTOPage.getContent(),
-                    hotelDTOPage.getTotalElements(), page, hotelDTOPage.getSize());
+                    numberOfHotelNoPaging, page, hotelDTOPage.getSize());
             return ResponseEntity.ok().body(new ApiResponse<>(200, dataPagingResponse, null));
         } catch (Exception e) {
             e.printStackTrace();

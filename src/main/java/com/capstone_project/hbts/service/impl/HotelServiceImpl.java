@@ -235,6 +235,11 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
+    public int getNumberOfHotelNoPaging(int status) {
+        return hotelRepository.getNumberHotelNoPaging(status);
+    }
+
+    @Override
     public HotelDetailDTO getDetailHotelById(int hotelId) {
         return modelMapper.map(hotelRepository.getHotelById(hotelId), HotelDetailDTO.class);
     }

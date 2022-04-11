@@ -21,6 +21,9 @@ public interface HotelRepository extends JpaRepository<Hotel, Integer> {
 
     Page<Hotel> findAllByStatus(int status, Pageable pageable);
 
+    @Query(value = "select count(h.id) from Hotel h where h.status = :status")
+    int getNumberHotelNoPaging(@Param("status") int status);
+
     @Query(value = "select * from heroku_4fe5c149618a3f9.hotel where id = :id limit 1", nativeQuery = true)
     Hotel getHotelById(@Param("id") int id);
 

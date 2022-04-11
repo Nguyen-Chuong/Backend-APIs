@@ -23,6 +23,11 @@ public interface HotelService {
     Page<HotelDTO> getAllHotels(int status, Pageable pageable);
 
     /**
+     * get number of hotel no paging for admin
+     */
+    int getNumberOfHotelNoPaging(int status);
+
+    /**
      * get detail hotel by id
      */
     HotelDetailDTO getDetailHotelById(int hotelId);
