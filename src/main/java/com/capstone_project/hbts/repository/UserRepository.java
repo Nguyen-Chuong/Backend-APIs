@@ -55,7 +55,7 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
     @Query(value = "UPDATE Users u SET u.type = 0 WHERE u.id = :userId")
     void deleteManager(@Param("userId") int userId);
 
-    @Query(value = "select count(u.id) from Users u where u.status = 1")
+    @Query(value = "select count(u.id) from Users u where u.status = 1 and u.type = 0")
     int getNumberOfUserActive();
 
     @Query(value = "select id from heroku_4fe5c149618a3f9.users where username = :username limit 1", nativeQuery = true)
