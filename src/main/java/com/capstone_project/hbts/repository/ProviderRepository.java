@@ -33,8 +33,8 @@ public interface ProviderRepository extends JpaRepository<Provider, Integer> {
     @Query(value = "SELECT p.password from Provider p WHERE p.username = :username")
     String getOldPassword(@Param("username") String username);
 
-    @Query(value = "SELECT p from Provider p ")
-    Page<Provider> findAllProvider(Pageable pageable);
+    @Query(value = "SELECT p from Provider p where p.status = :status")
+    Page<Provider> findAllProvider(@Param("status") int status, Pageable pageable);
 
     @Modifying
     @Query(value = "UPDATE Provider p set p.status = 0 WHERE p.id = :providerId")

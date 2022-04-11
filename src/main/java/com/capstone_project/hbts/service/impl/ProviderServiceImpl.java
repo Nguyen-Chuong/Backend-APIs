@@ -98,8 +98,10 @@ public class ProviderServiceImpl implements ProviderService {
     }
 
     @Override
-    public Page<ProviderDTO> getAllProvider(Pageable pageable) {
-        List<Provider> providerList = providerRepository.findAllProvider(pageable).getContent();
+    public Page<ProviderDTO> getAllProvider(int status, Pageable pageable) {
+        // status 1 active, 0 banned
+        List<Provider> providerList = providerRepository.findAllProvider(status, pageable).getContent();
+        // convert to dto
         List<ProviderDTO> providerDTOList = providerList.stream().map(item -> modelMapper.map(item, ProviderDTO.class))
                 .collect(Collectors.toList());
         return new CustomPageImpl<>(providerDTOList);

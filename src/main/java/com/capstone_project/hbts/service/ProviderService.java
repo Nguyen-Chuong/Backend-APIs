@@ -53,7 +53,7 @@ public interface ProviderService {
     /**
      * Get page of all provider
      */
-    Page<ProviderDTO> getAllProvider(Pageable pageable);
+    Page<ProviderDTO> getAllProvider(int status, Pageable pageable);
 
     /**
      * ban provider for admin

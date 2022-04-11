@@ -154,13 +154,14 @@ public class ProviderResource {
     /**
      * @apiNote for admin/ manager to view all provider
      */
-    @GetMapping("/get-all-provider")
+    @GetMapping("/get-all-provider/{status}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
     public ResponseEntity<?> getAllProvider(@RequestParam(defaultValue = ValidateConstant.PAGE) int page,
-                                            @RequestParam(defaultValue = ValidateConstant.PER_PAGE) int pageSize) {
+                                            @RequestParam(defaultValue = ValidateConstant.PER_PAGE) int pageSize,
+                                            @PathVariable int status) {
         log.info("REST request to get all provider for admin");
         try {
-            Page<ProviderDTO> providerDTOPage = providerService.getAllProvider(PageRequest.of(page, pageSize));
+            Page<ProviderDTO> providerDTOPage = providerService.getAllProvider(status, PageRequest.of(page, pageSize));
             DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(providerDTOPage.getContent(),
                     providerDTOPage.getTotalElements(), page, providerDTOPage.getSize());
             return ResponseEntity.ok().body(new ApiResponse<>(200, dataPagingResponse, null));
