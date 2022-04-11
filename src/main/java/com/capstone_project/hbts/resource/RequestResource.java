@@ -130,9 +130,10 @@ public class RequestResource {
                                                      @RequestParam(defaultValue = ValidateConstant.PER_PAGE) int pageSize) {
         log.info("REST request to view all provider's request by status");
         try {
+            int numberOfRequest = requestService.getNumberRequestByStatus(status);
             Page<RequestDTO> requestDTOPage = requestService.viewAllRequestByStatus(status, PageRequest.of(page, pageSize));
             DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(requestDTOPage.getContent(),
-                    requestDTOPage.getTotalElements(), page, requestDTOPage.getSize());
+                    numberOfRequest, page, requestDTOPage.getSize());
             return ResponseEntity.ok().body(new ApiResponse<>(200, dataPagingResponse, null));
         } catch (Exception e) {
             e.printStackTrace();

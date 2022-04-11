@@ -49,4 +49,9 @@ public interface RequestService {
      */
     void cancelRequest(int requestId);
 
+    /**
+     * for admin to view number of requests by status (no paging)
+     */
+    int getNumberRequestByStatus(int status);
+
 }

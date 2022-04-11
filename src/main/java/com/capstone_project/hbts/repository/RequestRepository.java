@@ -26,6 +26,9 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
     @Query(value = "select r from Request r where r.status = :status ORDER BY r.requestDate DESC")
     Page<Request> getAllRequestByStatus(@Param("status") int status, Pageable pageable);
 
+    @Query(value = "select count(r.id) from Request r where r.status = :status")
+    int getNumberOfRequestNoPaging(@Param("status") int status);
+
     Page<Request> findAllByOrderByRequestDateDesc(Pageable pageable);
 
     @Query(value = "select r.status from Request r where r.hotel.id = :hotelId")

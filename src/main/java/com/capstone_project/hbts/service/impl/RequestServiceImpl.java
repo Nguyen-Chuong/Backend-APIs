@@ -124,4 +124,9 @@ public class RequestServiceImpl implements RequestService {
         requestRepository.cancelRequest(requestId);
     }
 
+    @Override
+    public int getNumberRequestByStatus(int status) {
+        return requestRepository.getNumberOfRequestNoPaging(status);
+    }
+
 }
