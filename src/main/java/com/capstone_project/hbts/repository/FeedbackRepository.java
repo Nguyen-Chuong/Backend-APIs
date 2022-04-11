@@ -14,6 +14,9 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
 
     Page<Feedback> findAllByOrderByModifyDateDesc(Pageable pageable);
 
+    @Query(value = "SELECT count(f.id) from Feedback f")
+    int getNumberOfFeedbackNoPaging();
+
     @Query(value = "SELECT f from Feedback f WHERE f.sender.id = :userId")
     List<Feedback> getUserFeedback(@Param("userId") int userId);
 

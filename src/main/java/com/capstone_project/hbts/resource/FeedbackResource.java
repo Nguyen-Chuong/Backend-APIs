@@ -70,9 +70,10 @@ public class FeedbackResource {
                                             @RequestParam(defaultValue = ValidateConstant.PER_PAGE) int pageSize) {
         log.info("REST request to get all user's feedback");
         try {
+            int numberOfFeedback = feedbackService.getNumberFeedbackNoPaging();
             Page<FeedbackDTO> feedbackDTOPage = feedbackService.viewPageUserFeedback(PageRequest.of(page, pageSize));
             DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(feedbackDTOPage.getContent(),
-                    feedbackDTOPage.getTotalElements(), page, feedbackDTOPage.getSize());
+                    numberOfFeedback, page, feedbackDTOPage.getSize());
             return ResponseEntity.ok().body(new ApiResponse<>(200, dataPagingResponse, null));
         } catch (Exception e) {
             e.printStackTrace();

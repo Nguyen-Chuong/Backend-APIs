@@ -20,6 +20,11 @@ public interface FeedbackService {
     Page<FeedbackDTO> viewPageUserFeedback(Pageable pageable);
 
     /**
+     * get number of all user feedback no paging
+     */
+    int getNumberFeedbackNoPaging();
+
+    /**
      * admin view list an user's feedback
      */
     List<FeedbackDTO> getListAnUserFeedback(int userId);

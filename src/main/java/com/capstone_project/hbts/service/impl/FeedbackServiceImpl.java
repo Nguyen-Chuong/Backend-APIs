@@ -64,6 +64,11 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
+    public int getNumberFeedbackNoPaging() {
+        return feedbackRepository.getNumberOfFeedbackNoPaging();
+    }
+
+    @Override
     public List<FeedbackDTO> getListAnUserFeedback(int userId) {
         List<Feedback> list = feedbackRepository.getUserFeedback(userId);
         List<FeedbackDTO> feedbackDTOList = list.stream().map(item -> modelMapper.map(item, FeedbackDTO.class))
