@@ -36,6 +36,11 @@ public interface BookingService {
     Page<BookingListDTO> getAllBookingForAdmin(Pageable pageable);
 
     /**
+     * get number of bookings for admin no paging
+     */
+    int getNumberOfBookingForAdmin();
+
+    /**
      * get booking by booking id
      */
     UserBookingDTO getBookingById(int bookingId);

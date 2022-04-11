@@ -127,9 +127,10 @@ public class BookingResource {
                                                @RequestParam(defaultValue = ValidateConstant.PER_PAGE) int pageSize) {
         log.info("REST request to get list user's booking for admin");
         try {
+            int totalNumberOfBooking = bookingService.getNumberOfBookingForAdmin();
             Page<BookingListDTO> userBookingDTOList = bookingService.getAllBookingForAdmin(PageRequest.of(page, pageSize));
             DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(userBookingDTOList.getContent(),
-                    userBookingDTOList.getTotalElements(), page, userBookingDTOList.getSize());
+                    totalNumberOfBooking, page, userBookingDTOList.getSize());
             return ResponseEntity.ok().body(new ApiResponse<>(200, dataPagingResponse, null));
         } catch (Exception e) {
             e.printStackTrace();

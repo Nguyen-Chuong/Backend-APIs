@@ -28,6 +28,9 @@ public interface BookingRepository extends JpaRepository<UserBooking, Integer> {
     @Query(value = "SELECT u from UserBooking u WHERE u.status = :status and u.users.id = :userId")
     List<UserBooking> findBookingsByStatus(@Param("status") int status, @Param("userId") int userId);
 
+    @Query(value = "SELECT count(u.id) from UserBooking u")
+    int getNumberOfBookingNoPaging();
+
     Page<UserBooking> findAllByOrderByBookingDateDesc(Pageable pageable);
 
     Page<UserBooking> findAllByHotel_IdOrderByBookingDateDesc(int hotelId, Pageable pageable);
