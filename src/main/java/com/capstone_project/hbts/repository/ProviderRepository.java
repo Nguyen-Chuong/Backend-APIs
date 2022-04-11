@@ -36,6 +36,9 @@ public interface ProviderRepository extends JpaRepository<Provider, Integer> {
     @Query(value = "SELECT p from Provider p where p.status = :status")
     Page<Provider> findAllProvider(@Param("status") int status, Pageable pageable);
 
+    @Query(value = "SELECT count(p.id) from Provider p where p.status = :status")
+    int getNumberOfProvider(@Param("status") int status);
+
     @Modifying
     @Query(value = "UPDATE Provider p set p.status = 0 WHERE p.id = :providerId")
     void banProviderById(@Param("providerId") int providerId);

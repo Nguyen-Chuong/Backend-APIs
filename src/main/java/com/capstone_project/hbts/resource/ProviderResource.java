@@ -161,9 +161,10 @@ public class ProviderResource {
                                             @PathVariable int status) {
         log.info("REST request to get all provider for admin");
         try {
+            int numberOfProvider = providerService.getNumberProviderNoPaging(status);
             Page<ProviderDTO> providerDTOPage = providerService.getAllProvider(status, PageRequest.of(page, pageSize));
             DataPagingResponse<?> dataPagingResponse = new DataPagingResponse<>(providerDTOPage.getContent(),
-                    providerDTOPage.getTotalElements(), page, providerDTOPage.getSize());
+                    numberOfProvider, page, providerDTOPage.getSize());
             return ResponseEntity.ok().body(new ApiResponse<>(200, dataPagingResponse, null));
         } catch (Exception e) {
             e.printStackTrace();

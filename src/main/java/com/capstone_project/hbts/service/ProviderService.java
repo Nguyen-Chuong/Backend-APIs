@@ -56,6 +56,11 @@ public interface ProviderService {
     Page<ProviderDTO> getAllProvider(int status, Pageable pageable);
 
     /**
+     * Get number of all provider no paging
+     */
+    int getNumberProviderNoPaging(int status);
+
+    /**
      * ban provider for admin
      */
     void banProvider(int providerId);

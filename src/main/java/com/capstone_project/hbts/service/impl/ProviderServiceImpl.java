@@ -107,6 +107,11 @@ public class ProviderServiceImpl implements ProviderService {
         return new CustomPageImpl<>(providerDTOList);
     }
 
+    @Override
+    public int getNumberProviderNoPaging(int status) {
+        return providerRepository.getNumberOfProvider(status);
+    }
+
     @Transactional
     @Override
     public void banProvider(int providerId) {
