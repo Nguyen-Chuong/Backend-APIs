@@ -54,7 +54,6 @@ public class JwtAuthenticationResource {
         this.jwtService = jwtService;
     }
 
-
     /**
      * @apiNote for admin/manager/user can authenticate
      */
