@@ -13,6 +13,8 @@ public class ChartDTO {
 
     private List<String> labels;
 
-    private List<Integer> data;
+    private List<Integer> dataBooking;
+
+    private List<Long> dataAmount;
 
 }

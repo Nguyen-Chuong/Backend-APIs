@@ -5,6 +5,7 @@ import com.capstone_project.hbts.dto.actor.ProviderDTO;
 import com.capstone_project.hbts.entity.Hotel;
 import com.capstone_project.hbts.entity.Provider;
 import com.capstone_project.hbts.entity.UserBooking;
+import com.capstone_project.hbts.entity.UserBookingDetail;
 import com.capstone_project.hbts.repository.ProviderRepository;
 import com.capstone_project.hbts.request.ProviderRequest;
 import com.capstone_project.hbts.response.CustomPageImpl;
@@ -16,8 +17,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -124,6 +127,26 @@ public class ProviderServiceImpl implements ProviderService {
         providerRepository.changeProviderForgotPassword(email, newPass);
     }
 
+    public BigDecimal countTotalPaidForABooking(UserBooking userBooking){
+        // get % discount VIP travesily
+        int discount = userBooking.getUsers().getVip().getDiscount();
+        // get number day
+        long numberDayBooking = ChronoUnit.DAYS.between(userBooking.getCheckIn().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+                userBooking.getCheckOut().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        // get list user booking detail
+        Set<UserBookingDetail> userBookingDetails = userBooking.getListUserBookingDetail();
+        BigDecimal totalPaid = BigDecimal.valueOf(0);
+        for(UserBookingDetail item : userBookingDetails){
+            totalPaid = totalPaid.add(item.getPaid().multiply(BigDecimal.valueOf(item.getQuantity()))
+                    .multiply(BigDecimal.valueOf(numberDayBooking)));
+        }
+        // count total paid discounted by travesily VIP
+        BigDecimal totalPaidDiscountedVIP = totalPaid.multiply(BigDecimal.valueOf(1 - (double) discount/100));
+        // get tax
+        double tax = (double) userBooking.getHotel().getTaxPercentage() / 100;
+        return totalPaidDiscountedVIP.multiply(BigDecimal.valueOf(1 + tax));
+    }
+
     @Override
     public ChartDTO getChartData(LocalDate fromDate, LocalDate toDate, String providerName) {
         // to get all hotel of this provider that has booking
@@ -142,17 +165,31 @@ public class ProviderServiceImpl implements ProviderService {
         // range date to display
         List<String> labels = localDate.stream().map(item -> item.getDayOfMonth() + "/" + item.getMonth()).collect(Collectors.toList());
         // data (number of booking) in that date
-        List<Integer> data = new ArrayList<>();
+        List<Integer> dataBooking = new ArrayList<>();
         for(LocalDate date : localDate){
-            // get number of bookings
+            // get number of booking
             int number = (int) listBookingOfAllHotel.stream().filter(item -> item.getCheckIn().toInstant().atZone(ZoneId.systemDefault())
                     .toLocalDate().equals(date)).filter(item -> item.getStatus() == 1 || item.getStatus() == 2).count();
-            data.add(number);
+            dataBooking.add(number);
+        }
+        // data (amount) int that date
+        List<Long> dataAmount = new ArrayList<>();
+        for(LocalDate date : localDate){
+            // get amount of that date
+            List<UserBooking> userBookingListAmount = listBookingOfAllHotel.stream().filter(item -> item.getCheckIn().toInstant()
+                    .atZone(ZoneId.systemDefault()).toLocalDate().equals(date)).filter(item -> item.getStatus() == 2)
+                    .collect(Collectors.toList());
+            long totalAmount = 0L;
+            for(UserBooking userBooking : userBookingListAmount){
+                totalAmount = totalAmount + countTotalPaidForABooking(userBooking).longValue();
+            }
+            dataAmount.add(totalAmount);
         }
         // data return
         ChartDTO chartDTO = new ChartDTO();
         chartDTO.setLabels(labels);
-        chartDTO.setData(data);
+        chartDTO.setDataBooking(dataBooking);
+        chartDTO.setDataAmount(dataAmount);
         return chartDTO;
     }
 
