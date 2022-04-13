@@ -169,7 +169,7 @@ public class ProviderServiceImpl implements ProviderService {
         for(LocalDate date : localDate){
             // get number of booking
             int number = (int) listBookingOfAllHotel.stream().filter(item -> item.getCheckIn().toInstant().atZone(ZoneId.systemDefault())
-                    .toLocalDate().equals(date)).filter(item -> item.getStatus() == 1 || item.getStatus() == 2).count();
+                    .toLocalDate().equals(date)).filter(item -> item.getStatus() == 1 || item.getStatus() == 2).count() * 1000;
             dataBooking.add(number);
         }
         // data (amount) int that date
@@ -181,7 +181,7 @@ public class ProviderServiceImpl implements ProviderService {
                     .collect(Collectors.toList());
             long totalAmount = 0L;
             for(UserBooking userBooking : userBookingListAmount){
-                totalAmount = totalAmount + countTotalPaidForABooking(userBooking).longValue();
+                totalAmount = totalAmount + countTotalPaidForABooking(userBooking).longValue() / 1000;
             }
             dataAmount.add(totalAmount);
         }
