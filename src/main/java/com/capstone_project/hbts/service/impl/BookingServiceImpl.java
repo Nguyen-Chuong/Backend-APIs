@@ -21,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -44,10 +46,9 @@ public class BookingServiceImpl implements BookingService {
     public BigDecimal countTotalPaidForABooking(UserBooking userBooking){
         // get % discount VIP travesily
         int discount = userBooking.getUsers().getVip().getDiscount();
-        // get subtract millis second between two date
-        long millisSecond = userBooking.getCheckOut().getTime() - userBooking.getCheckIn().getTime();
         // get number day
-        int numberDayBooking = (int) millisSecond / (24 * 60 * 60 * 1000);
+        long numberDayBooking = ChronoUnit.DAYS.between(userBooking.getCheckIn().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+                userBooking.getCheckOut().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         // get list user booking detail
         Set<UserBookingDetail> userBookingDetails = userBooking.getListUserBookingDetail();
         BigDecimal totalPaid = BigDecimal.valueOf(0);
