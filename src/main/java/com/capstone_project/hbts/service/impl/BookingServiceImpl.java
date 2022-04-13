@@ -170,15 +170,13 @@ public class BookingServiceImpl implements BookingService {
         // completed a booking -> set to 2 - call when they paid money or hotel confirm
         bookingRequest.setStatus(1);
         UserBooking userBooking = modelMapper.map(bookingRequest, UserBooking.class);
-        // set hotel
+        // set hotel, user
         Hotel hotel = new Hotel();
         hotel.setId(bookingRequest.getHotelId());
-        // set user
         Users users = new Users();
         users.setId(bookingRequest.getUserId());
         userBooking.setHotel(hotel);
         userBooking.setUsers(users);
-        // save to db
         bookingRepository.save(userBooking);
 
         // get booking that just insert to db

@@ -40,7 +40,6 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setUsers(users);
         // save it to db and get record
         Transaction transactionRecord = transactionRepository.save(transaction);
-        // convert to DTO and return
         return modelMapper.map(transactionRecord, TransactionDTO.class);
     }
 

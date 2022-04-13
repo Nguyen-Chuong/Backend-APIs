@@ -41,7 +41,6 @@ public class FeedbackServiceImpl implements FeedbackService {
         users.setId(feedbackRequest.getSenderId());
         Feedback feedback = modelMapper.map(feedbackRequest, Feedback.class);
         feedback.setSender(users);
-        // save feedback
         feedbackRepository.save(feedback);
     }
 

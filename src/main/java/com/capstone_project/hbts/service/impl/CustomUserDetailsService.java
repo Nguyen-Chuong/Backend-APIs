@@ -30,14 +30,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // this method get credential from db and authenticationManager compare to credential that user sent
+        // get credential from db and authenticationManager compare credential that user sent
         if(username.startsWith("u-")){
             Users user = userRepository.getUsersByUsername(username);
             if(user == null){
                 throw new UsernameNotFoundException("can't find account");
             }
-            // if use pre-authorize via role -> config has role (role name) in format ROLE_NAME
-            // if use pre-authorize via authority -> create new table authority many to one role (rcm)
             Set<GrantedAuthority> grantedAuthoritySet = user.getListRole().stream()
                     .map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toSet());
             return new User(user.getUsername(), user.getPassword(), grantedAuthoritySet);

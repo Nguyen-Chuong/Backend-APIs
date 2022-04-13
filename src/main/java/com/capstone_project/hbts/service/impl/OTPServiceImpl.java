@@ -26,8 +26,7 @@ public class OTPServiceImpl implements OTPService {
                 });
     }
 
-    // This method is used to push the otp number with Key. Rewrite the OTP if it exists
-    // Using email as key
+    // to push the otp number with key (email). Rewrite the OTP if it exists
     @Override
     public int generateOtp(String key) {
         Random random = new Random();
@@ -36,7 +35,7 @@ public class OTPServiceImpl implements OTPService {
         return otp;
     }
 
-    // This method is used to return the otp number with Key -> Key values is email
+    // This method is used to return the otp number with key (email)
     @Override
     public int getOtp(String key) {
         try {

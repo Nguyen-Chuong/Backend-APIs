@@ -38,7 +38,6 @@ public class ImageServiceImpl implements ImageService {
             roomType.setId(imageRequest.getRoomTypeId());
             // set room type
             image.setRoomType(roomType);
-            // add all of them to list
             listImage.add(image);
         }
         // batch processing

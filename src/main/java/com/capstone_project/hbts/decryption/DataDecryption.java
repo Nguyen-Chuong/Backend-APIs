@@ -38,7 +38,6 @@ public class DataDecryption {
             byte[] dataNeedToDecrypted = Base64.getDecoder().decode(dataEncrypted);
             // init cipher decrypt mode with key
             cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
-            // get the data byte[] decrypted after decrypt
             byte[] byteDecrypted = cipher.doFinal(dataNeedToDecrypted);
             String decrypted = new String(byteDecrypted);
             return Integer.parseInt(decrypted);
@@ -65,7 +64,6 @@ public class DataDecryption {
             byte[] dataNeedToDecrypted = Base64.getDecoder().decode(dataEncrypted);
             // init cipher decrypt mode with key
             cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
-            // get the data byte[] decrypted after decrypt
             byte[] byteDecrypted = cipher.doFinal(dataNeedToDecrypted);
             return new String(byteDecrypted);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
@@ -85,7 +83,6 @@ public class DataDecryption {
             hmac512.init(secretKey);
             // convert data to byte
             byte[] dataBytes = data.getBytes(StandardCharsets.UTF_8);
-            // encrypt data to byte
             byte[] result = hmac512.doFinal(dataBytes);
             StringBuilder stringBuilder = new StringBuilder(2 * result.length);
             for (byte b : result) {

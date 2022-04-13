@@ -37,7 +37,6 @@ public class ExcelHelper {
             Iterator<Row> rowIterator = sheet.rowIterator();
             // new list data
             List<District> districtList = new ArrayList<>();
-            // number of rows
             int rowNumber = 0;
             // number of non empty rows
             int notNullRowCount = 0;
@@ -67,13 +66,11 @@ public class ExcelHelper {
                 }
                 // loop through the cell
                 District district = new District();
-                // set name district
+                // set name district, city
                 district.setNameDistrict(currentRow.getCell(0).getStringCellValue());
-                // set city
                 City city = new City();
                 city.setId(cityId);
                 district.setCity(city);
-                // add to list
                 districtList.add(district);
             }
             workbook.close();

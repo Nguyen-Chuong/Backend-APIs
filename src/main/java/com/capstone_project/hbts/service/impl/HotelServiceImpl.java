@@ -109,7 +109,6 @@ public class HotelServiceImpl implements HotelService {
             float averageService = totalService / number;float averageValueForMoney = totalValueForMoney / number;
             float averageCleanliness = totalCleanliness / number;float averageLocation = totalLocation / number;
             float averageFacilities = totalFacilities / number;
-            // set props
             ratingDTO.setTotalReview(number);
             ratingDTO.setAverageService(averageService);
             ratingDTO.setAverageValueForMoney(averageValueForMoney);
@@ -172,7 +171,6 @@ public class HotelServiceImpl implements HotelService {
                 listHotelNoPaging.remove(listHotelNoPaging.get(i));
             }
         }
-        // get size no paging
         return listHotelNoPaging.size();
     }
 
@@ -230,7 +228,6 @@ public class HotelServiceImpl implements HotelService {
             // set deal expired
             hotelDTOList.get(i).setDealExpired(getLowestPriceInHotel(resultList.get(i).getListRoomType()).getDealExpire());
         }
-        // hotel with no room have deal and price = 0
         return new CustomPageImpl<>(hotelDTOList);
     }
 
@@ -318,8 +315,6 @@ public class HotelServiceImpl implements HotelService {
         Hotel hotel = modelMapper.map(hotelRequest, Hotel.class);
         hotel.setDistrict(district);
         hotel.setProvider(provider);
-
-        // add new hotel
         hotelRepository.save(hotel);
     }
 
@@ -346,7 +341,6 @@ public class HotelServiceImpl implements HotelService {
         hotel.setPhone(hotelDTO.getPhone());
         hotel.setStar(hotelDTO.getStar());
         hotel.setTaxPercentage(hotelDTO.getTaxPercentage());
-        // save hotel again
         hotelRepository.save(hotel);
     }
 
@@ -358,7 +352,6 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public RatingDTO getRatingByHotel(int hotelId) {
-        // get hotel
         Hotel hotel = hotelRepository.getHotelById(hotelId);
         return getRatingByHotel(hotel);
     }

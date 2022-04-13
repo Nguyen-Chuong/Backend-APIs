@@ -185,7 +185,6 @@ public class ProviderServiceImpl implements ProviderService {
             }
             dataAmount.add(totalAmount);
         }
-        // data return
         ChartDTO chartDTO = new ChartDTO();
         chartDTO.setLabels(labels);
         chartDTO.setDataBooking(dataBooking);

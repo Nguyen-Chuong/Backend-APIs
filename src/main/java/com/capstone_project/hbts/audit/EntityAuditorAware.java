@@ -16,7 +16,6 @@ public class EntityAuditorAware implements AuditorAware<String> {
         if(authentication == null || !authentication.isAuthenticated()){
             return Optional.empty();
         }else {
-            // return username of authentication using jwt
             return Optional.of(((User)authentication.getPrincipal()).getUsername());
         }
     }

@@ -83,7 +83,6 @@ public class BenefitServiceImpl implements BenefitService {
             BenefitType benefitType = new BenefitType();
             benefitType.setId(benefitTypeId);
             benefit.setBenefitType(benefitType);
-            // add them to list
             benefitList.add(benefit);
         }
         // batch processing
@@ -99,7 +98,6 @@ public class BenefitServiceImpl implements BenefitService {
         benefitType.setId(1);
         // set type other
         benefit.setBenefitType(benefitType);
-        // save
         benefitRepository.save(benefit);
     }
 

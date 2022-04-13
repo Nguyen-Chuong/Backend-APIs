@@ -65,7 +65,6 @@ public class ResponseServiceImpl implements ResponseService {
 
     @Override
     public List<ResponseDTO> getAllResponseByFeedbackId(int feedbackId) {
-        // first response always be admin/ manager
         return responseRepository.findAllByFeedback_IdOrderByModifyDateAsc(feedbackId).stream()
                 .map(item -> modelMapper.map(item, ResponseDTO.class)).collect(Collectors.toList());
     }

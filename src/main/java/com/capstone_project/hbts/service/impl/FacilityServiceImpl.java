@@ -31,7 +31,6 @@ public class FacilityServiceImpl implements FacilityService {
             FacilityType facilityType = new FacilityType();
             facilityType.setId(facilityTypeId);
             facility.setFacilityType(facilityType);
-            // add them to list
             facilityList.add(facility);
         }
         // batch processing
@@ -47,7 +46,6 @@ public class FacilityServiceImpl implements FacilityService {
         facilityType.setId(1);
         // set type other
         facility.setFacilityType(facilityType);
-        // save
         facilityRepository.save(facility);
     }
 

@@ -72,16 +72,13 @@ public class RequestServiceImpl implements RequestService {
         requestRepository.denyRequest(requestId);
         // get hotel id to deny
         int hotelId = requestRepository.getRequestById(requestId).getHotel().getId();
-        // delete this hotel
         hotelRepository.updateHotelStatus(hotelId, 5);
     }
 
     @Override
     public Page<RequestDTO> viewAllRequestByStatus(int status, Pageable pageable) {
-        // 1-pending, 2-accepted, 3-denied, 4-cancelled
-        // status = 0 -> get all
+        // 0-get all, 1-pending, 2-accepted, 3-denied, 4-cancelled
         if(status == 0){
-            // get page
             Page<Request> requestPage = requestRepository.findAllByOrderByRequestDateDesc(pageable);
             // convert to list dto
             List<RequestDTO> requestDTOList = requestPage.getContent().stream()
@@ -89,7 +86,6 @@ public class RequestServiceImpl implements RequestService {
             // convert to paging
             return new CustomPageImpl<>(requestDTOList);
         } else {  // 1-pending, 2-accepted, 3-denied, 4-cancelled
-            // get page
             Page<Request> requestPage = requestRepository.getAllRequestByStatus(status, pageable);
             // convert to list dto
             List<RequestDTO> requestDTOList = requestPage.getContent().stream()

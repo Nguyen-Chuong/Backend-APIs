@@ -71,11 +71,11 @@ public class PaymentServiceImpl implements PaymentService {
             String fieldName = iterator.next();
             String fieldValue = vnp_Params.get(fieldName);
             if ((fieldValue != null) && (fieldValue.length() > 0)) {
-                // Build hash data
+                // build hash data
                 hashData.append(fieldName);
                 hashData.append('=');
                 hashData.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
-                // Build query
+                // build query
                 query.append(URLEncoder.encode(fieldName, StandardCharsets.US_ASCII.toString()));
                 query.append('=');
                 query.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
@@ -92,7 +92,6 @@ public class PaymentServiceImpl implements PaymentService {
         queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
         // generate payment url
         String paymentUrl = ValidateConstant.VNP_API_URL + "?" + queryUrl;
-        // return result w/ payment url
         PaymentResultDTO paymentResultDTO = new PaymentResultDTO();
         paymentResultDTO.setStatus("00");
         paymentResultDTO.setMessage("success");

@@ -85,7 +85,6 @@ public class ReviewServiceImpl implements ReviewService {
         reviewRepository.save(review);
         // set status
         userBooking.setReviewStatus(1);
-        // save it again
         bookingRepository.save(userBooking);
     }
 
@@ -98,11 +97,8 @@ public class ReviewServiceImpl implements ReviewService {
         userBookingList.forEach(item -> listBookingId.add(item.getId()));
         List<Review> listReview = reviewRepository.loadReviewByBookingIdNoPaging(listBookingId);
         // sort by total score and limit result return
-        List<Review> listSorted = listReview
-                .stream()
-                .sorted((Comparator.comparing(Review::getTotal).reversed()))
-                .collect(Collectors.toList())
-                .subList(0, limit);
+        List<Review> listSorted = listReview.stream().sorted((Comparator.comparing(Review::getTotal).reversed()))
+                .collect(Collectors.toList()).subList(0, limit);
         return listSorted.stream().map(item -> modelMapper.map(item, ReviewDTO.class)).collect(Collectors.toList());
     }
 

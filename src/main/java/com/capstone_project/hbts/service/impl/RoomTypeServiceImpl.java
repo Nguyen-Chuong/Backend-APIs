@@ -65,7 +65,6 @@ public class RoomTypeServiceImpl implements RoomTypeService {
         Hotel hotel = new Hotel();
         hotel.setId(roomTypeRequest.getHotelId());
         roomType.setHotel(hotel);
-        // save it
         roomTypeRepository.save(roomType);
     }
 
@@ -95,7 +94,6 @@ public class RoomTypeServiceImpl implements RoomTypeService {
         int numberOfRoomsTotal = roomType.getQuantity();
         // check if some user cancel booking in this day, plus total quantity 1
         for (UserBooking userBooking : listBookingInThisRoom) {
-            // cancelled
             if (userBooking.getStatus() == 3) {
                 numberOfRoomsTotal = numberOfRoomsTotal + 1;
             }
@@ -227,7 +225,6 @@ public class RoomTypeServiceImpl implements RoomTypeService {
             ObjectFacility obj = new ObjectFacility(item.getId(), item.getName(), item.getIcon(), listFacilityResult);
             finalResultFacility.add(obj);
         }
-        // convert to RoomDetailDTO
         return new RoomDetailDTO(roomType.getId(), roomType.getName(), roomType.getPrice(), roomType.getNumberOfPeople(),
                 roomType.getQuantity(), roomType.getAvailableRooms(), roomType.getDealPercentage(), roomType.getDealExpire(),
                 imageDTOSet, finalResultFacility, finalResultBenefit);
