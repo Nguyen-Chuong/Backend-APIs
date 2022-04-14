@@ -16,11 +16,13 @@ import com.capstone_project.hbts.service.BookingService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -219,6 +221,23 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public void updateBookingType(int bookingId, int type) {
         bookingRepository.updateBookingType(bookingId, type);
+    }
+
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void updateBookingStatusWhenUpComingOverDate(){
+        // get list all booking up coming
+        List<UserBooking> listBookingUpComing = bookingRepository.findAll().stream().filter(item -> item.getStatus() == 1).collect(Collectors.toList());
+        // new list booking need to update status
+        List<UserBooking> bookingNeedToUpdate = new ArrayList<>();
+        for(UserBooking userBooking : listBookingUpComing){
+            if(userBooking.getCheckIn().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isBefore(LocalDate.now(ZoneId.systemDefault()))){
+                // cancel it
+                userBooking.setStatus(3);
+                bookingNeedToUpdate.add(userBooking);
+            }
+        }
+        // batch processing
+        bookingRepository.saveAll(bookingNeedToUpdate);
     }
 
 }
