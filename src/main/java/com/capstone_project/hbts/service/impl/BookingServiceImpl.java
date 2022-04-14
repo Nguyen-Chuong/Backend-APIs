@@ -2,6 +2,7 @@ package com.capstone_project.hbts.service.impl;
 
 import com.capstone_project.hbts.dto.booking.BookingListDTO;
 import com.capstone_project.hbts.dto.booking.UserBookingDTO;
+import com.capstone_project.hbts.entity.Coupon;
 import com.capstone_project.hbts.entity.Hotel;
 import com.capstone_project.hbts.entity.RoomType;
 import com.capstone_project.hbts.entity.UserBooking;
@@ -39,10 +40,13 @@ public class BookingServiceImpl implements BookingService {
 
     private final BookingDetailRepository bookingDetailRepository;
 
-    public BookingServiceImpl(BookingRepository bookingRepository, ModelMapper modelMapper, BookingDetailRepository bookingDetailRepository) {
+    private final Coupon coupon;
+
+    public BookingServiceImpl(BookingRepository bookingRepository, ModelMapper modelMapper, BookingDetailRepository bookingDetailRepository, Coupon coupon) {
         this.bookingRepository = bookingRepository;
         this.modelMapper = modelMapper;
         this.bookingDetailRepository = bookingDetailRepository;
+        this.coupon = coupon;
     }
 
     public BigDecimal countTotalPaidForABooking(UserBooking userBooking){
@@ -57,6 +61,10 @@ public class BookingServiceImpl implements BookingService {
         for(UserBookingDetail item : userBookingDetails){
             totalPaid = totalPaid.add(item.getPaid().multiply(BigDecimal.valueOf(item.getQuantity()))
                     .multiply(BigDecimal.valueOf(numberDayBooking)));
+        }
+        // check if booking has coupon
+        if(userBooking.getHasCoupon() == 1){
+            totalPaid = totalPaid.subtract(BigDecimal.valueOf(this.coupon.getDiscount()));
         }
         // count total paid discounted by travesily VIP
         BigDecimal totalPaidDiscountedVIP = totalPaid.multiply(BigDecimal.valueOf(1 - (double) discount/100));

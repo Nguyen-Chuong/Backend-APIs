@@ -58,6 +58,9 @@ public class UserBooking extends Auditable<String> implements Serializable {
     @Column(name = "type")
     private int type; // 0 - default, 1 - cod , 2 - payment
 
+    @Column(name = "has_coupon")
+    private int hasCoupon;
+
     @ManyToOne @JsonIgnore @JoinColumn(name = "userId")
     private Users users;
 

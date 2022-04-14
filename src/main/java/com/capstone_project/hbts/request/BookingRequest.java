@@ -33,4 +33,6 @@ public class BookingRequest {
 
     private int type;
 
+    private int hasCoupon;
+
 }
