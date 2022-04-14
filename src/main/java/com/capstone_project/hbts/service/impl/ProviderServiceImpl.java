@@ -127,9 +127,7 @@ public class ProviderServiceImpl implements ProviderService {
         providerRepository.changeProviderForgotPassword(email, newPass);
     }
 
-    public BigDecimal countTotalPaidForABooking(UserBooking userBooking){
-        // get % discount VIP travesily
-        int discount = userBooking.getUsers().getVip().getDiscount();
+    public BigDecimal countTotalRevenueForABooking(UserBooking userBooking){
         // get number day
         long numberDayBooking = ChronoUnit.DAYS.between(userBooking.getCheckIn().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
                 userBooking.getCheckOut().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
@@ -140,11 +138,9 @@ public class ProviderServiceImpl implements ProviderService {
             totalPaid = totalPaid.add(item.getPaid().multiply(BigDecimal.valueOf(item.getQuantity()))
                     .multiply(BigDecimal.valueOf(numberDayBooking)));
         }
-        // count total paid discounted by travesily VIP
-        BigDecimal totalPaidDiscountedVIP = totalPaid.multiply(BigDecimal.valueOf(1 - (double) discount/100));
         // get tax
         double tax = (double) userBooking.getHotel().getTaxPercentage() / 100;
-        return totalPaidDiscountedVIP.multiply(BigDecimal.valueOf(1 + tax));
+        return totalPaid.multiply(BigDecimal.valueOf(1 + tax));
     }
 
     @Override
@@ -181,7 +177,7 @@ public class ProviderServiceImpl implements ProviderService {
                     .collect(Collectors.toList());
             long totalAmount = 0L;
             for(UserBooking userBooking : userBookingListAmount){
-                totalAmount = totalAmount + countTotalPaidForABooking(userBooking).longValue() / 1000;
+                totalAmount = totalAmount + countTotalRevenueForABooking(userBooking).longValue() / 1000;
             }
             dataAmount.add(totalAmount);
         }
