@@ -25,6 +25,8 @@ public class RoomDetailDTO {
 
     private int quantity;
 
+    private int status;
+
     private int availableRooms;
 
     private int dealPercentage;

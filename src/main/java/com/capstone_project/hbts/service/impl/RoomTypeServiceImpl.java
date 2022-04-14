@@ -226,8 +226,8 @@ public class RoomTypeServiceImpl implements RoomTypeService {
             finalResultFacility.add(obj);
         }
         return new RoomDetailDTO(roomType.getId(), roomType.getName(), roomType.getPrice(), roomType.getNumberOfPeople(),
-                roomType.getQuantity(), roomType.getAvailableRooms(), roomType.getDealPercentage(), roomType.getDealExpire(),
-                imageDTOSet, finalResultFacility, finalResultBenefit);
+                roomType.getQuantity(), roomType.getStatus(), roomType.getAvailableRooms(), roomType.getDealPercentage(),
+                roomType.getDealExpire(), imageDTOSet, finalResultFacility, finalResultBenefit);
     }
 
     @Transactional
