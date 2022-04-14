@@ -24,6 +24,8 @@ public class RoomTypeDTO {
 
     private int availableRooms;
 
+    private int status;
+
     private int dealPercentage;
 
     private Timestamp dealExpire;

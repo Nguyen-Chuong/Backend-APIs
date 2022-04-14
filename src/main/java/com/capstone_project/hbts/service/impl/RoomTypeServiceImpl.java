@@ -238,7 +238,7 @@ public class RoomTypeServiceImpl implements RoomTypeService {
 
     @Override
     public List<RoomTypeDTO> loadRoomTypeByHotelId(int hotelId) {
-        List<RoomType> list = roomTypeRepository.findRoomTypeByHotelId(hotelId);
+        List<RoomType> list = roomTypeRepository.findAllByHotel_Id(hotelId);
         return list.stream().map(item -> modelMapper.map(item, RoomTypeDTO.class)).collect(Collectors.toList());
     }
 

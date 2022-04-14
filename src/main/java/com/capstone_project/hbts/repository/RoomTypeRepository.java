@@ -13,6 +13,8 @@ public interface RoomTypeRepository extends JpaRepository<RoomType, Integer> {
     @Query(value = "SELECT r FROM RoomType r where r.hotel.id = :hotelId and r.status = 1")
     List<RoomType> findRoomTypeByHotelId(@Param("hotelId") int hotelId);
 
+    List<RoomType> findAllByHotel_Id(@Param("hotelId") int hotelId);
+
     @Query(value = "SELECT * FROM heroku_4fe5c149618a3f9.room_type where id = :id limit 1", nativeQuery = true)
     RoomType getRoomTypeById(@Param("id") int id);
 
