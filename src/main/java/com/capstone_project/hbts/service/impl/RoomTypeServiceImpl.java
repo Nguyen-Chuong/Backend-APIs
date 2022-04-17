@@ -92,7 +92,10 @@ public class RoomTypeServiceImpl implements RoomTypeService {
     public int numberOfRoomLeft(RoomType roomType, List<UserBooking> listBookingInThisRoom, Date dateIn, Date dateOut) {
         // get total quantity room available
         int numberOfRoomsTotal = roomType.getQuantity();
-        for (UserBooking userBooking : listBookingInThisRoom) {
+        // get list booking upcoming or completed
+        List<UserBooking> listBookingBooked = listBookingInThisRoom.stream().filter(item -> item.getStatus() != 3)
+                .collect(Collectors.toList());
+        for (UserBooking userBooking : listBookingBooked) {
             // get date user booking checkin
             Date userBookingCheckIn = new Date(userBooking.getCheckIn().getTime());
             // get date user booking check out
