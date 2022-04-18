@@ -3,6 +3,8 @@ package com.capstone_project.hbts.service;
 import com.capstone_project.hbts.dto.actor.UserDTO;
 import com.capstone_project.hbts.request.UserRequest;
 
+import java.util.List;
+
 public interface UserService {
 
     /**
@@ -69,5 +71,10 @@ public interface UserService {
      * get total number of user
      */
     int getNumberOfUserActive();
+
+    /**
+     * Get page of all user
+     */
+    List<UserDTO> searchUserByUsername(String text);
 
 }

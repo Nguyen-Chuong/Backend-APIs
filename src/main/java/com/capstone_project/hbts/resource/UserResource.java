@@ -9,6 +9,7 @@ import com.capstone_project.hbts.security.jwt.JwtTokenUtil;
 import com.capstone_project.hbts.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @Log4j2
@@ -189,6 +192,19 @@ public class UserResource {
             int userId = Integer.parseInt(jwtTokenUtil.getUserIdFromToken(jwttoken.substring(7)));
             userService.deleteAccount(userId);
             return ResponseEntity.ok().body(new ApiResponse<>(200, null, null));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));
+        }
+    }
+
+    @GetMapping("/search-user")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<?> searchUserByUsername(@RequestParam String text) {
+        log.info("REST request to search user by username for admin");
+        try {
+            List<UserDTO> userDTOList = userService.searchUserByUsername(text);
+            return ResponseEntity.ok().body(new ApiResponse<>(200, userDTOList, null));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_000_LABEL));

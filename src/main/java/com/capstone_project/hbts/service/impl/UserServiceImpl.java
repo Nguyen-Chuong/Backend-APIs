@@ -148,4 +148,10 @@ public class UserServiceImpl implements UserService{
         return userRepository.getNumberOfUserActive();
     }
 
+    @Override
+    public List<UserDTO> searchUserByUsername(String text) {
+        return userRepository.searchUserByUsername(text).stream().map(item -> modelMapper.map(item, UserDTO.class))
+                .collect(Collectors.toList());
+    }
+
 }

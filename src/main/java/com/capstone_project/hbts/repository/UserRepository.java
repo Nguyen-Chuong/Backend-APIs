@@ -65,4 +65,7 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
     @Query(value = "UPDATE Users u SET u.status = 0 WHERE u.id = :userId")
     void deleteAccount(@Param("userId") int userId);
 
+    @Query(value = "select u from Users u where u.username like lower(concat('%',:text,'%')) ")
+    List<Users> searchUserByUsername(@Param("text") String text);
+
 }
