@@ -124,6 +124,11 @@ public class ErrorConstant {
     public static final String ERR_ITEM_005_LABEL = "You can only add rooms of one hotel at a time";
 
     /**
+     * Cần thêm tối thiểu 6 ảnh room
+     */
+    public static final String ERR_ITEM_006_LABEL = "You need to add at least 6 picture per room";
+
+    /**
      * Đã đạt số lượng phòng tối đa có thể book
      */
     public static final String ERR_BOOK_001_LABEL = "You reached the maximum number rooms can book";

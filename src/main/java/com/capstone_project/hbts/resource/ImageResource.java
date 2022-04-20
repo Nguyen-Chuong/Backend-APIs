@@ -35,6 +35,9 @@ public class ImageResource {
     public ResponseEntity<?> addListImageForRoomType(@RequestBody ImageRequest imageRequest) {
         log.info("REST request to add a list image to provider's room type");
         int totalImageInDb = imageService.getTotalNumberRoomTypeImage(imageRequest.getRoomTypeId());
+        if(imageRequest.getSourceUrl().size() < 6){
+            return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_ITEM_006_LABEL));
+        }
         if (totalImageInDb >= 10 || totalImageInDb + imageRequest.getSourceUrl().size() > 10) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, null, ErrorConstant.ERR_ITEM_003_LABEL));
         }

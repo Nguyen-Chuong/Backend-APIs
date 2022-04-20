@@ -361,7 +361,8 @@ public class HotelServiceImpl implements HotelService {
         // get list hotel id top
         List<Integer> hotelIds = bookingRepository.getTopHotHotelId(top);
         // get list hotel
-        List<Hotel> hotelList = hotelRepository.findAllById(hotelIds);
+        List<Hotel> hotelList = hotelRepository.findAllById(hotelIds).stream().filter(item -> item.getStatus() == 1)
+                .collect(Collectors.toList());
         // transfer to DTO
         List<HotelDTO> hotelDTOList = hotelList.stream().map(item -> modelMapper.map(item, HotelDTO.class)).collect(Collectors.toList());
         // set property lowest price and deal percentage
