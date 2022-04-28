@@ -47,4 +47,6 @@ public class HotelDTO {
 
     private int totalHotel;
 
+    private int totalBooking;
+
 }

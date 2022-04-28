@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -373,7 +374,10 @@ public class HotelServiceImpl implements HotelService {
             hotelDTOList.get(i).setSalePercent(getLowestPriceInHotel(hotelList.get(i).getListRoomType()).getDealPercentage());
             // set deal expired
             hotelDTOList.get(i).setDealExpired(getLowestPriceInHotel(hotelList.get(i).getListRoomType()).getDealExpire());
+            // set total booking
+            hotelDTOList.get(i).setTotalBooking(hotelList.get(i).getListUserBooking().size());
         }
+        hotelDTOList.sort(Comparator.comparing(HotelDTO::getTotalBooking).reversed());
         return hotelDTOList;
     }
 
