@@ -100,7 +100,7 @@ public class EmailResource {
      */
     @PostMapping("/mail/process-booking/{status}")
     public ResponseEntity<?> sendMailCancelBooking(@RequestParam String email, @RequestParam String bookingId, @PathVariable int status) {
-        log.info("REST request to cancel booking for user");
+        log.info("REST request to process booking for user");
         String emailDecrypted;
         int id;
         try {

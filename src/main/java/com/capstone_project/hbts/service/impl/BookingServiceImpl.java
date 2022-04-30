@@ -139,6 +139,7 @@ public class BookingServiceImpl implements BookingService {
         UserBooking userBooking = bookingRepository.getBookingById(bookingId);
         UserBookingDTO userBookingDTO = modelMapper.map(userBooking, UserBookingDTO.class);
         userBookingDTO.setTotalPaid(countTotalPaidForABooking(userBooking));
+        userBookingDTO.setUsername(userBooking.getUsers().getUsername().substring(2));
         return userBookingDTO;
     }
 
